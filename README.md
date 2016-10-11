@@ -51,14 +51,47 @@ And that's it! You are now ready to fire actions without having to worry about s
 
 ## Actions
 
-- FSA
-- scopes (renderer vs broadcast)
+Actions fired should be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant, i.e. have a `type` and `payload` property.
+
+### Local actions (renderer process)
+
+By default, all actions are being broadcast from the main store to the renderer processes. However, some state should only live in the renderer (e.g. `isPanelOpen`). `electron-redux` introduces the concept of action scopes.
+
+To stop an action from propagating from renderer to main store, simply set the scope to `local`:
+
+```javascript
+function myLocalActionCreator() {
+  return {
+    type: 'MY_ACTION',
+    payload: 123,
+    meta: {
+      scope: 'local',
+    },
+  };
+}
+```
 
 
-## Aliasing
+### Aliased actions (main process)
 
-- what are they?
-- how to handle aliased actions
+Most actions will be fired from the renderer side, but not all should be executed there as well. A great example is fetching of data from an external source, e.g. using [promise middleware](https://github.com/acdlite/redux-promise). This can be achieved using the `triggerAlias` middleware mentioned [above](#install).
+
+Using the `createAliasedAction` helper, you can quite easily create actions that are are only being executed in the main process, and the result of which is being broadcast to the renderer processes.
+
+```javascript
+import { createAliasedAction } from 'electron-redux';
+
+export const importGithubProjects = createAliasedAction(
+  'IMPORT_GITHUB_PROJECTS', // unique identifier
+  (accessToken, repoFullName) => ({
+    type: 'IMPORT_GITHUB_PROJECTS',
+    payload: importProjects(accessToken, repoFullName),
+  })
+);
+```
+
+Check out [timesheets](https://github.com/hardchor/timesheets/blob/4ccaf08dee4e1a02850b5bf36e37c537fef7d710/app/shared/actions/github.js) for more examples.
+
 
 
 ## Under the hood
