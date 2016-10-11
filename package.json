@@ -1,0 +1,27 @@
+{
+  "name": "electron-redux",
+  "version": "0.0.1",
+  "description": "Use redux in the main and browser process in electron",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --out-dir dist"
+  },
+  "keywords": [
+    "electron",
+    "redux"
+  ],
+  "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "redux": "^3.4.0"
+  },
+  "peerDependencies": {
+    "redux": "^3.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-es2017": "^6.16.0"
+  }
+}
