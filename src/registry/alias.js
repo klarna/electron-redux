@@ -5,6 +5,5 @@ export default {
 
   set: (key, value) => {
     aliases[key] = value;
-    return this;
   },
 };
