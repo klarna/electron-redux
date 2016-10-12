@@ -5,7 +5,9 @@ jest.unmock('../alias');
 describe('alias', () => {
   describe('#set', () => {
     it('should set a value', () => {
-      alias.set('abc', 123);
+      expect(() => {
+        alias.set('abc', 123);
+      }).not.toThrow();
     });
   });
 
