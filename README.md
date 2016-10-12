@@ -39,7 +39,7 @@ const store = createStore(
   applyMiddleware(
     triggerAlias, // optional, see below
     ...otherMiddleware,
-    forwardToMain, // IMPORTANT! This goes last
+    forwardToRenderer, // IMPORTANT! This goes last
   )
 )
 ```
