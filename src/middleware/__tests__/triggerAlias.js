@@ -9,8 +9,8 @@ describe('triggerAlias', () => {
     const action = { type: 'SOMETHING' };
     triggerAlias()(next)(action);
 
-    expect(next.mock.calls.length).toBe(1);
-    expect(next.mock.calls[0][0]).toEqual(action);
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(next).toHaveBeenCalledWith(action);
   });
 
   it('should trigger an alias action', () => {
@@ -33,11 +33,35 @@ describe('triggerAlias', () => {
 
     triggerAlias()(next)(aliasedAction);
 
-    expect(trigger.mock.calls.length).toBe(1);
-    expect(trigger.mock.calls[0]).toEqual(payload);
+    expect(trigger).toHaveBeenCalledTimes(1);
+    expect(trigger).toHaveBeenCalledWith(...payload);
 
-    expect(next.mock.calls.length).toBe(1);
-    expect(next.mock.calls[0][0]).toEqual(action);
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(next).toHaveBeenCalledWith(action);
+  });
+
+  it('should trigger an alias action without payload', () => {
+    const next = jest.fn();
+    const action = {
+      type: 'MY_ACTION',
+      payload: 'awesome',
+    };
+    const trigger = jest.fn(() => action);
+    const aliasedAction = {
+      type: 'ALIASED',
+      meta: {
+        trigger: 'MY_ACTION',
+      },
+    };
+
+    aliasRegistry.get.mockImplementation(() => trigger);
+
+    triggerAlias()(next)(aliasedAction);
+
+    expect(trigger).toHaveBeenCalledTimes(1);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(next).toHaveBeenCalledWith(action);
   });
 
   it('should throw an error when no meta defined', () => {
