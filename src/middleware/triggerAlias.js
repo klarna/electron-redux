@@ -20,7 +20,7 @@ export function createAliasedAction(name, actionCreator) {
   });
 }
 
-const triggerAlias = store => next => action => {
+const triggerAlias = store => next => (action) => {
   // TODO: store.dispatch() instead to not skip any middleware
   if (action.type === ALIASED) {
     assert(action.meta && action.meta.trigger, 'No trigger defined');
