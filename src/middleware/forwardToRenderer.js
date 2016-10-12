@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron';
 
-const forwardToRenderer = store => next => action => {
+const forwardToRenderer = () => next => (action) => {
   // change scope to avoid endless-loop
   const rendererAction = {
     ...action,

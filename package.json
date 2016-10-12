@@ -5,23 +5,33 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src",
     "build": "babel src --out-dir dist"
   },
   "keywords": [
     "electron",
-    "redux"
+    "redux",
+    "react",
+    "desktop"
   ],
   "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "electron": "^1.4.3",
     "redux": "^3.4.0"
   },
   "peerDependencies": {
+    "electron": "^1.4.3",
     "redux": "^3.4.0"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
+    "babel-eslint": "^7.0.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
-    "babel-preset-es2017": "^6.16.0"
+    "babel-preset-es2017": "^6.16.0",
+    "eslint": "^3.7.1",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "jest": "^16.0.1"
   }
 }
