@@ -20,20 +20,15 @@ npm install --save electron-redux
 `electron-redux` comes as redux middleware that is really easy to apply:
 
 ```javascript
-import { forwardToMain, forwardToRenderer, triggerAlias } from 'electron-redux';
-
-const todoApp = combineReducers(reducers)
-
-// in the renderer store
-const store = createStore(
-  todoApp,
-  applyMiddleware(
-    forwardToMain, // IMPORTANT! This goes first
-    ...otherMiddleware,
-  )
-)
-
 // in the main store
+import {
+  forwardToRenderer,
+  triggerAlias,
+  replayActionMain,
+} from 'electron-redux';
+
+const todoApp = combineReducers(reducers);
+
 const store = createStore(
   todoApp,
   applyMiddleware(
@@ -42,9 +37,29 @@ const store = createStore(
     forwardToRenderer, // IMPORTANT! This goes last
   )
 )
+replayActionMain(store);
 ```
 
-Check out [timesheets](https://github.com/hardchor/timesheets/blob/4ccaf08dee4e1a02850b5bf36e37c537fef7d710/app/shared/store/configureStore.js) for a more advanced example.
+```javascript
+// in the renderer store
+import {
+  forwardToMain,
+  replayActionRenderer,
+} from 'electron-redux';
+
+const todoApp = combineReducers(reducers)
+
+const store = createStore(
+  todoApp,
+  applyMiddleware(
+    forwardToMain, // IMPORTANT! This goes first
+    ...otherMiddleware,
+  )
+);
+replayActionRenderer(store);
+```
+
+Check out [timesheets](https://github.com/hardchor/timesheets/blob/4991fd472dbb12b0c6e6806c6a01ea3385ab5979/app/shared/store/configureStore.js) for a more advanced example.
 
 And that's it! You are now ready to fire actions without having to worry about synchronising your state between processes.
 
@@ -74,7 +89,7 @@ function myLocalActionCreator() {
 
 ### Aliased actions (main process)
 
-Most actions will be fired from the renderer side, but not all should be executed there as well. A great example is fetching of data from an external source, e.g. using [promise middleware](https://github.com/acdlite/redux-promise). This can be achieved using the `triggerAlias` middleware mentioned [above](#install).
+Most actions will originate from the renderer side, but not all should be executed there as well. A great example is fetching of data from an external source, e.g. using [promise middleware](https://github.com/acdlite/redux-promise), which should only ever be executed once (i.e. in the main process). This can be achieved using the `triggerAlias` middleware mentioned [above](#install).
 
 Using the `createAliasedAction` helper, you can quite easily create actions that are are only being executed in the main process, and the result of which is being broadcast to the renderer processes.
 
