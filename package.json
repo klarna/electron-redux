@@ -14,7 +14,13 @@
     "react",
     "desktop"
   ],
-  "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com>",
+  "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://www.burgiblog.com)",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/hardchor/electron-redux.git"
+  },
+  "homepage": "https://github.com/hardchor/electron-redux",
+  "bugs": "https://github.com/hardchor/electron-redux/issues",
   "license": "MIT",
   "dependencies": {
     "electron": "^1.4.3",
