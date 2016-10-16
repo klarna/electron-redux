@@ -4,6 +4,7 @@ import triggerAlias from './middleware/triggerAlias';
 import createAliasedAction from './helpers/createAliasedAction';
 import replayActionMain from './helpers/replayActionMain';
 import replayActionRenderer from './helpers/replayActionRenderer';
+import getInitialStateRenderer from './helpers/getInitialStateRenderer';
 
 export {
   forwardToMain,
@@ -12,4 +13,5 @@ export {
   createAliasedAction,
   replayActionMain,
   replayActionRenderer,
+  getInitialStateRenderer,
 };

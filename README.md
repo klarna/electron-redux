@@ -32,12 +32,14 @@ const todoApp = combineReducers(reducers);
 
 const store = createStore(
   todoApp,
+  initialState, // optional
   applyMiddleware(
     triggerAlias, // optional, see below
     ...otherMiddleware,
     forwardToRenderer, // IMPORTANT! This goes last
   )
-)
+);
+
 replayActionMain(store);
 ```
 
@@ -46,17 +48,21 @@ replayActionMain(store);
 import {
   forwardToMain,
   replayActionRenderer,
+  getInitialStateRenderer,
 } from 'electron-redux';
 
-const todoApp = combineReducers(reducers)
+const todoApp = combineReducers(reducers);
+const initialState = getInitialStateRenderer();
 
 const store = createStore(
   todoApp,
+  initialState,
   applyMiddleware(
     forwardToMain, // IMPORTANT! This goes first
     ...otherMiddleware,
   )
 );
+
 replayActionRenderer(store);
 ```
 
