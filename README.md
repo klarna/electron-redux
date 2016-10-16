@@ -37,7 +37,8 @@ const store = createStore(
     ...otherMiddleware,
     forwardToRenderer, // IMPORTANT! This goes last
   )
-)
+);
+
 replayActionMain(store);
 ```
 
@@ -57,6 +58,7 @@ const store = createStore(
     ...otherMiddleware,
   )
 );
+
 replayActionRenderer(store);
 ```
 
