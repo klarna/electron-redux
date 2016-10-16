@@ -1,5 +1,8 @@
 {
   "testEnvironment": "node",
   "automock": true,
-  "clearMocks": true
+  "clearMocks": true,
+  "testPathDirs": [
+    "<rootDir>/src"
+  ]
 }
