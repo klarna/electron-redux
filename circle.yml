@@ -1,3 +1,7 @@
+general:
+  artifacts:
+    - coverage
+    - dist
 machine:
   pre:
     - mkdir ~/.yarn-cache
