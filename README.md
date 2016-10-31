@@ -3,13 +3,22 @@
 [![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
 [![Stories in Ready](https://badge.waffle.io/hardchor/electron-redux.png?label=ready&title=Ready)](https://waffle.io/hardchor/electron-redux)
 
+- [Motivation](#motivation)
+- [Install](#install)
+- [Actions](#actions)
+	- [Local actions (renderer process)](#local-actions-renderer-process)
+	- [Aliased actions (main process)](#aliased-actions-main-process)
+- [Under the hood](#under-the-hood)
+
+## Motivation
+
 Using redux with electron poses a couple of problems. Processes ([main](https://github.com/electron/electron/blob/master/docs/tutorial/quick-start.md#main-process) and [renderer](https://github.com/electron/electron/blob/master/docs/tutorial/quick-start.md#renderer-process)) are completely isolated, and the only mode of communication is [IPC](https://github.com/electron/electron/blob/master/docs/api/ipc-main.md).
 
 * Where do you keep the state?
 * How do you keep the state in sync across processes?
 
 
-## The solution
+### The solution
 
 `electron-redux` offers an easy to use solution. The redux store on the main process becomes the single source of truth, and stores in the renderer processes become mere proxies. See [under the hood](#under-the-hood).
 
@@ -75,7 +84,9 @@ And that's it! You are now ready to fire actions without having to worry about s
 
 ## Actions
 
-Actions fired should be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant, i.e. have a `type` and `payload` property.
+Actions fired *HAVE TO* be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant, i.e. have a `type` and `payload` property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
+
+*NB: `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.*
 
 ### Local actions (renderer process)
 
