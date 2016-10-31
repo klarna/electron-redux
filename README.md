@@ -3,7 +3,12 @@
 [![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
 [![Stories in Ready](https://badge.waffle.io/hardchor/electron-redux.png?label=ready&title=Ready)](https://waffle.io/hardchor/electron-redux)
 
-
+- [Motivation](#motivation)
+- [Install](#install)
+- [Actions](#actions)
+	- [Local actions (renderer process)](#local-actions-renderer-process)
+	- [Aliased actions (main process)](#aliased-actions-main-process)
+- [Under the hood](#under-the-hood)
 
 ## Motivation
 
