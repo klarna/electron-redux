@@ -84,7 +84,7 @@ And that's it! You are now ready to fire actions without having to worry about s
 
 ## Actions
 
-Actions fired *HAVE TO* be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant, i.e. have a `type` and `payload` property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
+Actions fired **HAVE TO** be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant, i.e. have a `type` and `payload` property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
 
 *NB: `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.*
 
