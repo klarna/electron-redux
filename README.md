@@ -22,6 +22,7 @@ Using redux with electron poses a couple of problems. Processes ([main](https://
 
 `electron-redux` offers an easy to use solution. The redux store on the main process becomes the single source of truth, and stores in the renderer processes become mere proxies. See [under the hood](#under-the-hood).
 
+![electron-redux basic](https://cloud.githubusercontent.com/assets/307162/20675737/385ce59e-b585-11e6-947e-3867e77c783d.png)
 
 ## Install
 
