@@ -28,10 +28,6 @@
     "flux-standard-action": "^1.0.0",
     "redux": "^3.4.0"
   },
-  "peerDependencies": {
-    "electron": "^1.4.3",
-    "redux": "^3.4.0"
-  },
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-eslint": "^7.0.0",
