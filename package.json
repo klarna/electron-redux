@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest -c .jestrc --coverage",
     "lint": "eslint 'src/**/*'",
-    "build": "babel src --out-dir dist"
+    "build": "babel src --out-dir dist",
+    "prepublish": "yarn run build"
   },
   "keywords": [
     "electron",
@@ -23,24 +24,32 @@
   "bugs": "https://github.com/hardchor/electron-redux/issues",
   "license": "MIT",
   "dependencies": {
-    "debug": "^2.2.0",
-    "electron": "^1.4.3",
+    "debug": "^2.3.3",
     "flux-standard-action": "^1.0.0",
     "redux": "^3.4.0"
   },
+  "peerDependencies": {
+    "redux": "^3.4.0"
+  },
   "devDependencies": {
-    "babel-cli": "^6.16.0",
-    "babel-eslint": "^7.0.0",
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.1",
     "babel-jest": "^17.0.2",
-    "babel-plugin-transform-object-rest-spread": "^6.16.0",
-    "babel-polyfill": "^6.16.0",
-    "babel-preset-es2015": "^6.16.0",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-es2015": "^6.18.0",
     "babel-preset-es2016": "^6.16.0",
     "babel-preset-es2017": "^6.16.0",
-    "eslint": "^3.7.1",
+    "eslint": "^3.12.0",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
     "jest": "^17.0.3",
-    "jest-cli": "^17.0.3"
-  }
+    "jest-cli": "^17.0.3",
+    "pre-commit": "^1.2.0"
+  },
+  "pre-commit": [
+    "test",
+    "lint",
+    "build"
+  ]
 }
