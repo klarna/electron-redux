@@ -50,6 +50,6 @@
   "pre-commit": [
     "test",
     "lint",
-    "dist"
+    "build"
   ]
 }
