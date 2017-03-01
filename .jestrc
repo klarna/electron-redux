@@ -1,7 +1,7 @@
 {
   "testEnvironment": "node",
   "automock": true,
-  "testPathDirs": [
+  "roots": [
     "<rootDir>/src"
   ]
 }
