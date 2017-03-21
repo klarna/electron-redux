@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+import { ipcSend } from 'electron-simple-ipc';
 import validateAction from '../helpers/validateAction';
 
 const forwardToMain = store => next => (action) => { // eslint-disable-line no-unused-vars
@@ -13,7 +13,7 @@ const forwardToMain = store => next => (action) => { // eslint-disable-line no-u
       || action.meta.scope !== 'local'
     )
   ) {
-    ipcRenderer.send('redux-action', action);
+    ipcSend('redux-action', action);
 
     // stop action in-flight
     // eslint-disable-next-line consistent-return

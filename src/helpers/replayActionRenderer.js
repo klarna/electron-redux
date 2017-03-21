@@ -1,7 +1,5 @@
-import { ipcRenderer } from 'electron';
+import { ipcReceive } from 'electron-simple-ipc';
 
 export default function replayActionRenderer(store) {
-  ipcRenderer.on('redux-action', (event, payload) => {
-    store.dispatch(payload);
-  });
+  ipcReceive('redux-action', store.dispatch);
 }
