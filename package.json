@@ -2,7 +2,7 @@
   "name": "electron-redux",
   "version": "1.2.5",
   "description": "Use redux in the main and browser process in electron",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest -c .jestrc --coverage",
     "lint": "eslint 'src/**/*'",
