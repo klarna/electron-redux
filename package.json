@@ -4,9 +4,9 @@
   "description": "Use redux in the main and browser process in electron",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest -c .jestrc --coverage",
+    "test": "rm -rf coverage && jest -c .jestrc --coverage",
     "lint": "eslint 'src/**/*'",
-    "build": "babel src --out-dir dist",
+    "build": "rm -rf dist && babel src --out-dir dist",
     "prepublish": "yarn run build"
   },
   "keywords": [
