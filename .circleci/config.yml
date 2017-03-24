@@ -6,11 +6,10 @@ jobs:
       - image: node:7.6.0
     steps:
       - checkout
-      - run:
-          name: Pre-Dependencies
-          command: mkdir ~/electron-redux/artifacts
       - restore_cache:
-          key: electron-redux-{{ .Branch }}
+          keys:
+            - electron-redux-{{ .Branch }}
+            - electron-redux-
       - run:
           name: Install Dependencies
           command: yarn
@@ -22,3 +21,9 @@ jobs:
       - run:
           name: Run Tests
           command: yarn test
+      - store_artifacts:
+          path: ~/electron-redux/dist
+          destination: dist
+      - store_artifacts:
+          path: ~/electron-redux/coverage
+          destination: coverage
