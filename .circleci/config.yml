@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/electron-redux
+    docker:
+      - image: node:7.6.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - electron-redux-{{ .Branch }}
+            - electron-redux-
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: electron-redux-{{ .Branch }}
+          paths:
+            - "~/.cache/yarn"
+            - "~/electron-redux/node_modules"
+      - run:
+          name: Run Tests
+          command: yarn test
+      - store_artifacts:
+          path: ~/electron-redux/dist
+          destination: dist
+      - store_artifacts:
+          path: ~/electron-redux/coverage
+          destination: coverage
