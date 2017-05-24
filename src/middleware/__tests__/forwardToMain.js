@@ -1,25 +1,9 @@
 import { ipcRenderer } from 'electron';
 import forwardToMain from '../forwardToMain';
-import validateAction from '../../helpers/validateAction';
 
 jest.unmock('../forwardToMain');
 
 describe('forwardToMain', () => {
-  beforeEach(() => {
-    validateAction.mockReturnValue(true);
-  });
-
-  it('should pass an action through if it doesn\'t pass validation (FSA)', () => {
-    const next = jest.fn();
-    // thunk action
-    const action = () => {};
-    validateAction.mockReturnValue(false);
-
-    forwardToMain()(next)(action);
-
-    expect(next).toHaveBeenCalledTimes(1);
-    expect(next).toHaveBeenCalledWith(action);
-  });
 
   it('should pass an action through if it starts with @@', () => {
     const next = jest.fn();

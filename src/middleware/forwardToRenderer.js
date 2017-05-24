@@ -1,9 +1,6 @@
 import { BrowserWindow } from 'electron';
-import validateAction from '../helpers/validateAction';
 
 const forwardToRenderer = () => next => (action) => {
-  if (!validateAction(action)) return next(action);
-
   // change scope to avoid endless-loop
   const rendererAction = {
     ...action,

@@ -1,5 +1,7 @@
 # electron-redux
 
+This fork doesn't enforce [FSA](https://github.com/acdlite/flux-standard-action#example)
+
 [![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/hardchor/electron-redux.svg)](https://greenkeeper.io/)
 [![Stories in Ready](https://badge.waffle.io/hardchor/electron-redux.png?label=ready&title=Ready)](https://waffle.io/hardchor/electron-redux)
@@ -83,12 +85,6 @@ Check out [timesheets](https://github.com/hardchor/timesheets/blob/4991fd472dbb1
 
 And that's it! You are now ready to fire actions without having to worry about synchronising your state between processes.
 
-
-## Actions
-
-Actions fired **HAVE TO** be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant, i.e. have a `type` and `payload` property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
-
-> NB: `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.
 
 ### Local actions (renderer process)
 

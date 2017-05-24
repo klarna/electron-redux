@@ -3,7 +3,7 @@ import replayActionMain from '../replayActionMain';
 
 jest.unmock('../replayActionMain');
 
-describe('replayActionMain', () => {
+describe('handleActionMain', () => {
   it('should replay any actions received', () => {
     const store = {
       dispatch: jest.fn(),
