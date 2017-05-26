@@ -11,8 +11,6 @@ var transit = require('transit-immutable-js');
 
 function replayActionMain(store) {
 
-  console.log(transit.fromJSON(transit.toJSON(store.getState())));
-
   Object.defineProperty(global, 'reduxState', {
     get: function get() {
       return transit.toJSON(store.getState());
