@@ -25,8 +25,10 @@
   "license": "MIT",
   "dependencies": {
     "debug": "^2.3.3",
-    "flux-standard-action": "^1.0.0",
-    "redux": "^3.4.0"
+    "immutable": "^3.8.1",
+    "redux": "^3.4.0",
+    "transit-immutable-js": "^0.7.0",
+    "transit-js": "^0.8.846"
   },
   "peerDependencies": {
     "redux": "^3.4.0"

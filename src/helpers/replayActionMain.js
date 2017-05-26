@@ -1,10 +1,13 @@
 import { ipcMain } from 'electron';
 
+const transit = require('transit-immutable-js');
+
 export default function replayActionMain(store) {
-  // we have to do this to ease remote-loading of the initial state :(
-  global.reduxState = store.getState();
-  store.subscribe(() => {
-    global.reduxState = store.getState();
+
+  Object.defineProperty(global, 'reduxState', {
+    get: () => transit.toJSON(store.getState()),
+    enumerable: true,
+    configurable: false,
   });
 
   ipcMain.on('redux-action', (event, payload) => {

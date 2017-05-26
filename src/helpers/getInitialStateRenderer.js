@@ -1,5 +1,7 @@
 import { remote } from 'electron';
 
+const transit = require('transit-immutable-js');
+
 export default function getInitialStateRenderer() {
-  return remote.getGlobal('reduxState');
+  return transit.fromJSON(remote.getGlobal('reduxState'));
 }
