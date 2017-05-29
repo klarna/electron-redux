@@ -22,6 +22,10 @@ var forwardToRenderer = function forwardToRenderer() {
       openWindows.forEach(function (_ref) {
         var webContents = _ref.webContents;
 
+        if (webContents.isDestroyed() || webContents.isCrashed()) return;
+        // Skip the webcontents source of the action because it has already been applied.
+        // This avoids breaking sync dispatch.
+        if (action.meta && webContents.id === action.meta.webContentsId) return;
         webContents.send('redux-action', rendererAction);
       });
 

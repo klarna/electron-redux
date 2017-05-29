@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 
 const forwardToMain = store => next => (action) => { // eslint-disable-line no-unused-vars
   if (typeof action === 'function') return next(action);
@@ -11,14 +11,19 @@ const forwardToMain = store => next => (action) => { // eslint-disable-line no-u
       || action.meta.scope !== 'local'
     )
   ) {
-    ipcRenderer.send('redux-action', action);
+    const webContentsId = remote.getCurrentWebContents().id;
+    const newAction = {
+      ...action,
+      meta: {
+        ...action.meta,
+        webContentsId,
+      },
+    };
+    ipcRenderer.send('redux-action', newAction);
 
-    // stop action in-flight
-    // eslint-disable-next-line consistent-return
-    // return;
+    return next(newAction);
   }
 
-  // eslint-disable-next-line consistent-return
   return next(action);
 };
 
