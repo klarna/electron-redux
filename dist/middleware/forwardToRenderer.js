@@ -11,6 +11,7 @@ var _electron = require('electron');
 var forwardToRenderer = function forwardToRenderer() {
   return function (next) {
     return function (action) {
+      if (action.meta && action.meta.scope === 'local') return next(action);
       // change scope to avoid endless-loop
       var rendererAction = _extends({}, action, {
         meta: _extends({}, action.meta, {
