@@ -36,7 +36,7 @@ describe('triggerAlias', function () {
     });
     var aliasedAction = {
       type: 'ALIASED',
-      payload,
+      payload: payload,
       meta: {
         trigger: 'MY_ACTION'
       }
@@ -95,7 +95,7 @@ describe('triggerAlias', function () {
     });
     var aliasedAction = {
       type: 'ALIASED',
-      payload
+      payload: payload
     };
 
     _alias2.default.get.mockImplementation(function () {
@@ -119,7 +119,7 @@ describe('triggerAlias', function () {
     });
     var aliasedAction = {
       type: 'ALIASED',
-      payload,
+      payload: payload,
       meta: {}
     };
 
@@ -137,7 +137,7 @@ describe('triggerAlias', function () {
     var payload = [123];
     var aliasedAction = {
       type: 'ALIASED',
-      payload,
+      payload: payload,
       meta: {
         trigger: 'MY_OTHER_ACTION'
       }

@@ -17,7 +17,7 @@ var forwardToMain = function forwardToMain(store) {
         var webContentsId = _electron.remote.getCurrentWebContents().id;
         var newAction = _extends({}, action, {
           meta: _extends({}, action.meta, {
-            webContentsId
+            webContentsId: webContentsId
           })
         });
         _electron.ipcRenderer.send('redux-action', newAction);

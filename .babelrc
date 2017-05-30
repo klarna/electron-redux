@@ -1,12 +1,4 @@
 {
-  "presets": [
-    [
-      "env", {
-        "targets": {
-          "node": 4
-        }
-      }
-    ],
-  ],
+  "presets": ["es2015"],
   "plugins": ["transform-object-rest-spread"]
 }

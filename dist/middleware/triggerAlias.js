@@ -27,7 +27,7 @@ var triggerAlias = function triggerAlias(store) {
       if (action.type === _alias.ALIASED) {
         (0, _assert2.default)(action.meta && action.meta.trigger, 'No trigger defined');
         var alias = _alias3.default.get(action.meta.trigger);
-        (0, _assert2.default)(alias, `Trigger alias ${action.meta.trigger} not found`);
+        (0, _assert2.default)(alias, 'Trigger alias ' + action.meta.trigger + ' not found');
         var args = action.payload || [];
 
         // trigger alias

@@ -33,7 +33,7 @@ describe('forwardToRenderer', function () {
     _electron.BrowserWindow.getAllWindows.mockImplementation(function () {
       return [{
         webContents: {
-          send
+          send: send
         }
       }];
     });
