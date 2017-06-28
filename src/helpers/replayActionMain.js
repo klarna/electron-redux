@@ -1,13 +1,13 @@
-import { ipcMain } from 'electron';
+import { ipcReceive } from 'electron-simple-ipc';
 
 export default function replayActionMain(store) {
   // we have to do this to ease remote-loading of the initial state :(
   global.reduxState = store.getState();
+  global.reduxStateStringified = JSON.stringify(store.getState());
   store.subscribe(() => {
     global.reduxState = store.getState();
+    global.reduxStateStringified = JSON.stringify(store.getState());
   });
 
-  ipcMain.on('redux-action', (event, payload) => {
-    store.dispatch(payload);
-  });
+  ipcReceive('redux-action', store.dispatch);
 }

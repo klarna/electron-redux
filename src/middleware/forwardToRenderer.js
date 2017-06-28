@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { ipcSend } from 'electron-simple-ipc';
 import validateAction from '../helpers/validateAction';
 
 const forwardToRenderer = () => next => (action) => {
@@ -14,10 +14,7 @@ const forwardToRenderer = () => next => (action) => {
     },
   };
 
-  const openWindows = BrowserWindow.getAllWindows();
-  openWindows.forEach(({ webContents }) => {
-    webContents.send('redux-action', rendererAction);
-  });
+  ipcSend('redux-action', rendererAction);
 
   return next(action);
 };
