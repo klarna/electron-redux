@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/electron-redux
     docker:
-      - image: node:7.6.0
+      - image: node:8
     steps:
       - checkout
       - restore_cache:
