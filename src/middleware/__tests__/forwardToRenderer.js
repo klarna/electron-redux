@@ -42,4 +42,28 @@ describe('forwardToRenderer', () => {
       },
     });
   });
+
+  it('should ignore local actions', () => {
+    const next = jest.fn();
+    const action = {
+      type: 'SOMETHING',
+      meta: {
+        scope: 'local',
+      },
+    };
+    const send = jest.fn();
+    BrowserWindow.getAllWindows.mockImplementation(() => [
+      {
+        webContents: {
+          send,
+        },
+      },
+    ]);
+
+    forwardToRenderer()(next)(action);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(next).toHaveBeenCalledWith(action);
+    expect(send).toHaveBeenCalledTimes(0);
+  });
 });
