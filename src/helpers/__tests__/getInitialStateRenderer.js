@@ -5,8 +5,9 @@ jest.unmock('../getInitialStateRenderer');
 
 describe('getInitialStateRenderer', () => {
   it('should return the initial state', () => {
-    remote.getGlobal.mockImplementation(() => 456);
+    const state = { foo: 456 };
+    remote.getGlobal.mockImplementation(() => () => JSON.stringify(state));
 
-    expect(getInitialStateRenderer()).toBe(456);
+    expect(getInitialStateRenderer()).toEqual(state);
   });
 });
