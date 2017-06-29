@@ -131,10 +131,15 @@ Check out [timesheets](https://github.com/hardchor/timesheets/blob/4ccaf08dee4e1
 
 
 
-## Under the hood
+## Contributions
 
-TODO
+Contributions via [issues](https://github.com/hardchor/electron-redux/issues/new) or [pull requests](https://github.com/hardchor/electron-redux/compare) are hugely welcome!
 
-- forwardToMain
-- forwardToRenderer
-- triggerAlias
+Feel free to let me know whether you're successfully using `electron-redux` in your project and I'm happy to add them here as well!
+
+## Contributors
+
+Special thanks go out to:
+
+* [Charlie Hess](https://github.com/CharlieHess)
+* Anyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
