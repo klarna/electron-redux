@@ -25,25 +25,24 @@ describe('replayActionMain', () => {
     expect(store.dispatch).toHaveBeenCalledWith(payload);
   });
 
-  it('should subscribe to the store and update the global state', () => {
+  it('should return the current state from the global', () => {
     const initialState = { initial: 'state' };
     const newState = { new: 'state' };
     const store = {
       dispatch: jest.fn(),
-      getState: jest.fn(() => initialState),
+      getState: jest.fn(),
       subscribe: jest.fn(),
     };
 
+    store.getState.mockReturnValueOnce(initialState);
+    store.getState.mockReturnValueOnce(newState);
+
     replayActionMain(store);
 
-    expect(global.reduxState).toEqual(initialState);
-    expect(store.subscribe).toHaveBeenCalledTimes(1);
-    expect(store.subscribe.mock.calls[0][0]).toBeInstanceOf((Function));
+    expect(global.getReduxState()).toEqual(JSON.stringify(initialState));
+    expect(store.getState).toHaveBeenCalledTimes(1);
 
-    const subscribeCb = store.subscribe.mock.calls[0][0];
-    store.getState = jest.fn(() => newState);
-    subscribeCb();
-
-    expect(global.reduxState).toEqual(newState);
+    expect(global.getReduxState()).toEqual(JSON.stringify(newState));
+    expect(store.getState).toHaveBeenCalledTimes(2);
   });
 });
