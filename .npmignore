@@ -1,6 +1,0 @@
-node_modules/
-*.log
-src/
-__mocks__/
-__tests__/
-__snapshots__/
