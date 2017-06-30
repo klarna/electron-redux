@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "files": ["dist/**"],
   "scripts": {
-    "test": "rm -rf coverage && jest -c .jestrc --coverage",
+    "test": "rm -rf coverage && jest --coverage",
     "lint": "eslint 'src/**/*'",
     "build": "rm -rf dist && babel src --out-dir dist",
     "prepublish": "yarn build",
@@ -38,7 +38,7 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.1",
-    "babel-jest": "^19.0.0",
+    "babel-jest": "^20.0.3",
     "babel-plugin-transform-object-rest-spread": "^6.20.2",
     "babel-polyfill": "^6.20.0",
     "babel-preset-env": "^1.2.2",
@@ -46,7 +46,7 @@
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
     "husky": "^0.14.1",
-    "jest": "^19.0.2",
+    "jest": "^20.0.4",
     "lint-staged": "^4.0.0",
     "prettier-eslint-cli": "^4.1.1"
   }
