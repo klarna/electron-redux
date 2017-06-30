@@ -1,9 +1,11 @@
 {
   "name": "electron-redux",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "description": "Use redux in the main and browser process in electron",
   "main": "dist/index.js",
-  "files": ["dist/**"],
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
     "test": "rm -rf coverage && jest --coverage",
     "lint": "eslint 'src/**/*'",
@@ -18,7 +20,12 @@
       "git add"
     ]
   },
-  "keywords": ["electron", "redux", "react", "desktop"],
+  "keywords": [
+    "electron",
+    "redux",
+    "react",
+    "desktop"
+  ],
   "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://www.burgiblog.com)",
   "repository": {
     "type": "git",
