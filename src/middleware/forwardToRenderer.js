@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { webContents } from 'electron';
 import validateAction from '../helpers/validateAction';
 
 const forwardToRenderer = () => next => (action) => {
@@ -14,9 +14,10 @@ const forwardToRenderer = () => next => (action) => {
     },
   };
 
-  const openWindows = BrowserWindow.getAllWindows();
-  openWindows.forEach(({ webContents }) => {
-    webContents.send('redux-action', rendererAction);
+  const allWebContents = webContents.getAllWebContents();
+
+  allWebContents.forEach((contents) => {
+    contents.send('redux-action', rendererAction);
   });
 
   return next(action);

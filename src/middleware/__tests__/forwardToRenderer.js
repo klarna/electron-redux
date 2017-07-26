@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { webContents } from 'electron';
 import forwardToRenderer from '../forwardToRenderer';
 
 jest.unmock('../forwardToRenderer');
@@ -23,13 +23,7 @@ describe('forwardToRenderer', () => {
       },
     };
     const send = jest.fn();
-    BrowserWindow.getAllWindows.mockImplementation(() => [
-      {
-        webContents: {
-          send,
-        },
-      },
-    ]);
+    webContents.getAllWebContents.mockImplementation(() => [{ send }]);
 
     forwardToRenderer()(next)(action);
 
@@ -52,13 +46,7 @@ describe('forwardToRenderer', () => {
       },
     };
     const send = jest.fn();
-    BrowserWindow.getAllWindows.mockImplementation(() => [
-      {
-        webContents: {
-          send,
-        },
-      },
-    ]);
+    webContents.getAllWebContents.mockImplementation(() => [{ send }]);
 
     forwardToRenderer()(next)(action);
 

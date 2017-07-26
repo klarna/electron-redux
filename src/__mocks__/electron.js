@@ -1,7 +1,7 @@
 export default jest.fn();
 
-export const BrowserWindow = {
-  getAllWindows: jest.fn(() => []),
+export const webContents = {
+  getAllWebContents: jest.fn(() => []),
 };
 
 export const ipcMain = {
