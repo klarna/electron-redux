@@ -1,5 +1,7 @@
 import { ipcRenderer, remote } from 'electron';
 
+let webContentsId = null; // lazy loaded
+
 const forwardToMain = store => next => (action) => { // eslint-disable-line no-unused-vars
   if (typeof action === 'function') return next(action);
   if (
@@ -11,7 +13,16 @@ const forwardToMain = store => next => (action) => { // eslint-disable-line no-u
       || action.meta.scope !== 'local'
     )
   ) {
-    const webContentsId = remote.getCurrentWebContents().id;
+    if (webContentsId === null) {
+      try {
+        webContentsId = remote.getCurrentWebContents().id;
+      } catch (e) {
+        // Catches the following error that can be emitted if current
+        // webcontents is in instance of destruction:
+        // Uncaught Error: Cannot get property 'id' on missing remote object
+        return next(action);
+      }
+    }
     const newAction = {
       ...action,
       meta: {

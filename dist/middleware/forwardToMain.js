@@ -8,13 +8,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _electron = require('electron');
 
+var webContentsId = null; // lazy loaded
+
 var forwardToMain = function forwardToMain(store) {
   return function (next) {
     return function (action) {
       // eslint-disable-line no-unused-vars
       if (typeof action === 'function') return next(action);
       if (action.type.substr(0, 2) !== '@@' && action.type.substr(0, 10) !== 'redux-form' && (!action.meta || !action.meta.scope || action.meta.scope !== 'local')) {
-        var webContentsId = _electron.remote.getCurrentWebContents().id;
+        if (webContentsId === null) {
+          try {
+            webContentsId = _electron.remote.getCurrentWebContents().id;
+          } catch (e) {
+            // Catches the following error that can be emitted if current
+            // webcontents is in instance of destruction:
+            // Uncaught Error: Cannot get property 'id' on missing remote object
+            return next(action);
+          }
+        }
         var newAction = _extends({}, action, {
           meta: _extends({}, action.meta, {
             webContentsId: webContentsId
