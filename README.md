@@ -90,7 +90,7 @@ Actions fired **HAVE TO** be [FSA](https://github.com/acdlite/flux-standard-acti
 
 > NB: `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.
 
-Furthermore, actions (and that includes `payload`(s)) **HAVE TO** be (de-)serialisable, i.e. either POJOs (simple `object`s), `array`s, or primitives. For workarounds, check out [aliased actions](#aliased-actions-main-process)
+Furthermore, actions (and that includes `payload`s) **HAVE TO** be (de-)serialisable, i.e. either POJOs (simple `object`s - that excludes native JavaScript or DOM objects like `FileList`, `Map`, etc.), `array`s, or primitives. For workarounds, check out [aliased actions](#aliased-actions-main-process)
 
 
 ### Local actions (renderer process)
