@@ -90,6 +90,9 @@ Actions fired **HAVE TO** be [FSA](https://github.com/acdlite/flux-standard-acti
 
 > NB: `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.
 
+Furthermore, actions (and that includes `payload`s) **HAVE TO** be (de-)serialisable, i.e. either POJOs (simple `object`s - that excludes native JavaScript or DOM objects like `FileList`, `Map`, etc.), `array`s, or primitives. For workarounds, check out [aliased actions](#aliased-actions-main-process)
+
+
 ### Local actions (renderer process)
 
 By default, all actions are being broadcast from the main store to the renderer processes. However, some state should only live in the renderer (e.g. `isPanelOpen`). `electron-redux` introduces the concept of action scopes.
