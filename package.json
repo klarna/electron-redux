@@ -53,7 +53,7 @@
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
     "husky": "^0.14.1",
-    "jest": "^20.0.4",
+    "jest": "^21.0.0",
     "lint-staged": "^4.0.0",
     "prettier-eslint-cli": "^4.1.1"
   }
