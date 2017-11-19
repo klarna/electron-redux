@@ -3,7 +3,7 @@
     [
       "env", {
         "targets": {
-          "node": 4
+          "ie": 9
         }
       }
     ],
