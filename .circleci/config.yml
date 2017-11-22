@@ -19,8 +19,14 @@ jobs:
             - "~/.cache/yarn"
             - "~/electron-redux/node_modules"
       - run:
+          name: Update yarn lockfile
+          command: ./node_modules/.bin/greenkeeper-lockfile-update
+      - run:
           name: Run Tests
           command: yarn test
+      - run:
+          name: Upload yarn lockfile
+          command: ./node_modules/.bin/greenkeeper-lockfile-upload
       - store_artifacts:
           path: ~/electron-redux/dist
           destination: dist
