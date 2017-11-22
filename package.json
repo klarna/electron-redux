@@ -36,7 +36,7 @@
   "license": "MIT",
   "dependencies": {
     "debug": "^2.3.3",
-    "flux-standard-action": "^1.0.0",
+    "flux-standard-action": "^2.0.0",
     "redux": "^3.4.0"
   },
   "peerDependencies": {
