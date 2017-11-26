@@ -11,14 +11,7 @@
     "lint": "eslint 'src/**/*'",
     "build": "rm -rf dist && babel src --out-dir dist",
     "prepublish": "yarn build",
-    "precommit": "lint-staged",
     "prepush": "yarn test && yarn build"
-  },
-  "lint-staged": {
-    "*.{js,jsx,css}": [
-      "prettier-eslint --single-quote --trailing-comma=all --print-width=100 --write",
-      "git add"
-    ]
   },
   "keywords": [
     "electron",
@@ -56,9 +49,6 @@
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.2.0",
     "greenkeeper-lockfile": "^1.12.0",
-    "husky": "^0.14.1",
-    "jest": "^21.2.1",
-    "lint-staged": "^5.0.0",
-    "prettier-eslint-cli": "^4.1.1"
+    "jest": "^21.2.1"
   }
 }
