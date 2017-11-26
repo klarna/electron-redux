@@ -1,4 +1,30 @@
+const redux = require('redux');
+const reducers = require('./reducers');
 
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
+const store = redux.createStore(reducers);
+const valueEl = document.getElementById('value');
+
+function render() {
+  valueEl.innerHTML = store.getState().toString();
+}
+
+render();
+
+store.subscribe(render);
+
+document.getElementById('increment').addEventListener('click', () => {
+  store.dispatch({ type: 'INCREMENT' });
+});
+document.getElementById('decrement').addEventListener('click', () => {
+  store.dispatch({ type: 'DECREMENT' });
+});
+document.getElementById('incrementIfOdd').addEventListener('click', () => {
+  if (store.getState() % 2 !== 0) {
+    store.dispatch({ type: 'INCREMENT' });
+  }
+});
+document.getElementById('incrementAsync').addEventListener('click', () => {
+  setTimeout(() => {
+    store.dispatch({ type: 'INCREMENT' });
+  }, 1000);
+});
