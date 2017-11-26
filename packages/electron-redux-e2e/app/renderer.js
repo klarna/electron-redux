@@ -1,7 +1,17 @@
-const redux = require('redux');
+const { createStore, applyMiddleware } = require('redux');
+const {
+  forwardToMain,
+  replayActionRenderer,
+  getInitialStateRenderer,
+  createAliasedAction,
+} = require('electron-redux');
 const reducers = require('./reducers');
 
-const store = redux.createStore(reducers);
+const initialState = getInitialStateRenderer();
+const store = createStore(reducers, initialState, applyMiddleware(forwardToMain));
+
+replayActionRenderer(store);
+
 const valueEl = document.getElementById('value');
 
 function render() {
@@ -15,16 +25,11 @@ store.subscribe(render);
 document.getElementById('increment').addEventListener('click', () => {
   store.dispatch({ type: 'INCREMENT' });
 });
+
 document.getElementById('decrement').addEventListener('click', () => {
   store.dispatch({ type: 'DECREMENT' });
 });
-document.getElementById('incrementIfOdd').addEventListener('click', () => {
-  if (store.getState() % 2 !== 0) {
-    store.dispatch({ type: 'INCREMENT' });
-  }
-});
-document.getElementById('incrementAsync').addEventListener('click', () => {
-  setTimeout(() => {
-    store.dispatch({ type: 'INCREMENT' });
-  }, 1000);
+
+document.getElementById('incrementAliased').addEventListener('click', () => {
+  store.dispatch(createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }))());
 });

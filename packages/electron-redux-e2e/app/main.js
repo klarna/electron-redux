@@ -1,11 +1,21 @@
-const { app, BrowserWindow } = require('electron');
-const redux = require('redux');
-const reducers = require('./reducers');
-
 const path = require('path');
 const url = require('url');
+const { app, BrowserWindow } = require('electron');
+const { createStore, applyMiddleware } = require('redux');
+const {
+  forwardToRenderer,
+  triggerAlias,
+  replayActionMain,
+  createAliasedAction,
+} = require('electron-redux');
+const reducers = require('./reducers');
 
-const store = redux.createStore(reducers);
+const store = createStore(reducers, 0, applyMiddleware(triggerAlias, forwardToRenderer));
+
+replayActionMain(store);
+
+// having to do this currently because of https://github.com/hardchor/electron-redux/issues/58
+createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -55,6 +65,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
