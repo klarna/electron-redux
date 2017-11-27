@@ -4,6 +4,7 @@ describe('Counter', () => {
   let app;
 
   beforeEach(async () => {
+    jest.setTimeout(10000);
     app = new Application({
       path: './node_modules/.bin/electron',
       args: ['.'],
