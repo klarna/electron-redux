@@ -4,6 +4,7 @@ jobs:
     working_directory: ~/electron-redux
     docker:
       - image: node:8
+      - image: robcherry/docker-chromedriver:latest
     steps:
       - checkout
       - restore_cache:
