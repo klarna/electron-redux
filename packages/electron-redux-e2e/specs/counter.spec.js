@@ -9,6 +9,8 @@ describe('Counter', () => {
       path: './node_modules/.bin/electron',
       args: ['.'],
       startTimeout: 20000,
+      host: process.env.CHROMEDRIVER_HOST || 'localhost',
+      port: process.env.CHROMEDRIVER_PORT || 9515,
     });
 
     await app.start();

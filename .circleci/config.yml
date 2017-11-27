@@ -4,6 +4,9 @@ jobs:
     working_directory: ~/electron-redux
     docker:
       - image: node:8
+        environment:
+          CHROMEDRIVER_HOST: 127.0.0.1
+          CHROMEDRIVER_PORT: 4444            
       - image: robcherry/docker-chromedriver:latest
     steps:
       - checkout
