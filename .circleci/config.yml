@@ -8,13 +8,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - electron-redux-{{ .Branch }}
-            - electron-redux-
+            - electron-redux2-{{ .Branch }}
+            - electron-redux2-
       - run:
           name: Install Dependencies
           command: yarn && ./node_modules/.bin/lerna bootstrap
       - save_cache:
-          key: electron-redux-{{ .Branch }}
+          key: electron-redux2-{{ .Branch }}
           paths:
             - "~/.cache/yarn"
             - "~/electron-redux/node_modules"
