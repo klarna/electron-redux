@@ -3,9 +3,7 @@
   "version": "1.3.1",
   "description": "Use redux in the main and browser process in electron",
   "main": "dist/index.js",
-  "files": [
-    "dist/**"
-  ],
+  "files": ["dist/**"],
   "scripts": {
     "test": "rm -rf coverage && jest --coverage",
     "lint": "eslint 'src/**/*'",
@@ -13,12 +11,7 @@
     "prepublish": "yarn build",
     "prepush": "yarn test && yarn build"
   },
-  "keywords": [
-    "electron",
-    "redux",
-    "react",
-    "desktop"
-  ],
+  "keywords": ["electron", "redux", "react", "desktop"],
   "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://www.burgiblog.com)",
   "repository": {
     "type": "git",
@@ -44,7 +37,6 @@
     "babel-jest": "^21.2.0",
     "babel-plugin-transform-object-rest-spread": "^6.20.2",
     "babel-polyfill": "^6.20.0",
-    "electron-redux-e2e": "^1.3.1",
     "greenkeeper-lockfile": "^1.12.0",
     "jest": "^21.2.1"
   }
