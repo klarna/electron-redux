@@ -29,14 +29,13 @@
     "redux": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.32",
-    "@babel/core": "^7.0.0-beta.32",
-    "@babel/preset-env": "^7.0.0-beta.32",
+    "@babel/cli": "^7.0.0-beta.34",
+    "@babel/core": "^7.0.0-beta.34",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.34",
+    "@babel/preset-env": "^7.0.0-beta.34",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.0.0",
     "babel-jest": "^21.2.0",
-    "babel-plugin-transform-object-rest-spread": "^6.20.2",
-    "babel-polyfill": "^6.20.0",
     "greenkeeper-lockfile": "^1.12.0",
     "jest": "^21.2.1"
   }

@@ -24,6 +24,9 @@ jobs:
           name: Update yarn lockfile
           command: ./node_modules/.bin/greenkeeper-lockfile-update
       - run:
+          name: Compile Assets
+          command: ./node_modules/.bin/lerna run build
+      - run:
           name: Run Tests
           command: yarn test
       - run:
