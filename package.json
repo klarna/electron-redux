@@ -13,14 +13,16 @@
     "eslint-plugin-import": "^2.2.0",
     "husky": "^0.14.1",
     "lerna": "^2.5.1",
-    "lint-staged": "^5.0.0",
+    "lint-staged": "^6.0.0",
     "prettier-eslint-cli": "^4.1.1"
   },
   "scripts": {
     "test": "lerna run test",
     "precommit": "lint-staged"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "lint-staged": {
     "*.{js,jsx,css}": [
       "prettier-eslint --single-quote --trailing-comma=all --print-width=100 --write",
