@@ -2,14 +2,11 @@
 
 [![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/hardchor/electron-redux.svg)](https://greenkeeper.io/)
-[![Stories in Ready](https://badge.waffle.io/hardchor/electron-redux.png?label=ready&title=Ready)](https://waffle.io/hardchor/electron-redux)
 
-- [Motivation](#motivation)
-- [Install](#install)
-- [Actions](#actions)
-	- [Local actions (renderer process)](#local-actions-renderer-process)
-	- [Aliased actions (main process)](#aliased-actions-main-process)
-- [Under the hood](#under-the-hood)
+* [Motivation](#motivation)
+* [Install](#install)
+* [Actions](#actions): [Local actions (renderer process)](#local-actions-renderer-process), [Aliased actions (main process)](#aliased-actions-main-process)
+* [Under the hood](#under-the-hood)
 
 ## Motivation
 
@@ -17,7 +14,6 @@ Using redux with electron poses a couple of problems. Processes ([main](https://
 
 * Where do you keep the state?
 * How do you keep the state in sync across processes?
-
 
 ### The solution
 
@@ -35,11 +31,7 @@ npm install --save electron-redux
 
 ```javascript
 // in the main store
-import {
-  forwardToRenderer,
-  triggerAlias,
-  replayActionMain,
-} from 'electron-redux';
+import { forwardToRenderer, triggerAlias, replayActionMain } from 'electron-redux';
 
 const todoApp = combineReducers(reducers);
 
@@ -50,7 +42,7 @@ const store = createStore(
     triggerAlias, // optional, see below
     ...otherMiddleware,
     forwardToRenderer, // IMPORTANT! This goes last
-  )
+  ),
 );
 
 replayActionMain(store);
@@ -58,11 +50,7 @@ replayActionMain(store);
 
 ```javascript
 // in the renderer store
-import {
-  forwardToMain,
-  replayActionRenderer,
-  getInitialStateRenderer,
-} from 'electron-redux';
+import { forwardToMain, replayActionRenderer, getInitialStateRenderer } from 'electron-redux';
 
 const todoApp = combineReducers(reducers);
 const initialState = getInitialStateRenderer();
@@ -73,7 +61,7 @@ const store = createStore(
   applyMiddleware(
     forwardToMain, // IMPORTANT! This goes first
     ...otherMiddleware,
-  )
+  ),
 );
 
 replayActionRenderer(store);
@@ -83,15 +71,13 @@ Check out [timesheets](https://github.com/hardchor/timesheets/blob/4991fd472dbb1
 
 And that's it! You are now ready to fire actions without having to worry about synchronising your state between processes.
 
-
 ## Actions
 
-Actions fired **HAVE TO** be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant, i.e. have a `type` and `payload` property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
+Actions fired **MUST** be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant, i.e. have a `type` and `payload` property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
 
 > NB: `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.
 
-Furthermore, actions (and that includes `payload`s) **HAVE TO** be (de-)serialisable, i.e. either POJOs (simple `object`s - that excludes native JavaScript or DOM objects like `FileList`, `Map`, etc.), `array`s, or primitives. For workarounds, check out [aliased actions](#aliased-actions-main-process)
-
+Furthermore, actions (and that includes `payload`s) **MUST** be (de-)serialisable, i.e. either POJOs (simple `object`s - that excludes native JavaScript or DOM objects like `FileList`, `Map`, etc.), `array`s, or primitives. For workarounds, check out [aliased actions](#aliased-actions-main-process)
 
 ### Local actions (renderer process)
 
@@ -111,7 +97,6 @@ function myLocalActionCreator() {
 }
 ```
 
-
 ### Aliased actions (main process)
 
 Most actions will originate from the renderer side, but not all should be executed there as well. A great example is fetching of data from an external source, e.g. using [promise middleware](https://github.com/acdlite/redux-promise), which should only ever be executed once (i.e. in the main process). This can be achieved using the `triggerAlias` middleware mentioned [above](#install).
@@ -126,13 +111,11 @@ export const importGithubProjects = createAliasedAction(
   (accessToken, repoFullName) => ({
     type: 'IMPORT_GITHUB_PROJECTS',
     payload: importProjects(accessToken, repoFullName),
-  })
+  }),
 );
 ```
 
 Check out [timesheets](https://github.com/hardchor/timesheets/blob/4ccaf08dee4e1a02850b5bf36e37c537fef7d710/app/shared/actions/github.js) for more examples.
-
-
 
 ## Contributions
 
