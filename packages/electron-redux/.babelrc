@@ -1,13 +1,14 @@
 {
   "presets": [
     [
-      "@babel/preset-env", {
+      "@babel/preset-env",
+      {
         "targets": {
           "node": 4
         },
         "forceAllTransforms": true
-      },
-    ],
+      }
+    ]
   ],
-  "plugins": ["transform-object-rest-spread"]
+  "plugins": ["@babel/plugin-proposal-object-rest-spread"]
 }
