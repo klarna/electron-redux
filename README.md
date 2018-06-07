@@ -1,7 +1,5 @@
 # electron-redux
 
-This fork doesn't enforce [FSA](https://github.com/acdlite/flux-standard-action#example)
-
 [![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/hardchor/electron-redux.svg)](https://greenkeeper.io/)
 [![Stories in Ready](https://badge.waffle.io/hardchor/electron-redux.png?label=ready&title=Ready)](https://waffle.io/hardchor/electron-redux)
@@ -12,6 +10,11 @@ This fork doesn't enforce [FSA](https://github.com/acdlite/flux-standard-action#
 	- [Local actions (renderer process)](#local-actions-renderer-process)
 	- [Aliased actions (main process)](#aliased-actions-main-process)
 - [Under the hood](#under-the-hood)
+
+## Differences with trunk repo
+- This fork doesn't enforce [FSA](https://github.com/acdlite/flux-standard-action#example)
+- Support for ImmuableJS but drop of support for POJSO
+- Change dispatch execution order: the process from where the action is dispatched reduces action immediately instead of waiting for the the main to dispatch action in other processes.
 
 ## Motivation
 
