@@ -1,6 +1,6 @@
 {
-  "name": "electron-redux",
-  "version": "1.2.5",
+  "name": "@getstation/electron-redux",
+  "version": "1.0.0",
   "description": "Use redux in the main and browser process in electron",
   "main": "dist/index.js",
   "scripts": {
@@ -16,6 +16,9 @@
     "desktop"
   ],
   "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://www.burgiblog.com)",
+  "contributors": [
+    "Joël Charles <joel@getstation.com>"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/hardchor/electron-redux.git"
