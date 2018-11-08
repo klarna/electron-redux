@@ -1,5 +1,5 @@
 node_modules/
 coverage/
 *.log
-
+/dist/
 /.idea/
