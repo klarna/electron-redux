@@ -1,8 +1,8 @@
-# electron-redux
+# @getstation/electron-redux
 
-[![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/hardchor/electron-redux.svg)](https://greenkeeper.io/)
-[![Stories in Ready](https://badge.waffle.io/hardchor/electron-redux.png?label=ready&title=Ready)](https://waffle.io/hardchor/electron-redux)
+[![CircleCI](https://circleci.com/gh/getstation/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
+[![Greenkeeper badge](https://badges.greenkeeper.io/getstation/electron-redux.svg)](https://greenkeeper.io/)
+[![Stories in Ready](https://badge.waffle.io/getstation/electron-redux.png?label=ready&title=Ready)](https://waffle.io/hardchor/electron-redux)
 
 - [Motivation](#motivation)
 - [Install](#install)
@@ -13,7 +13,7 @@
 
 ## Differences with trunk repo
 - This fork doesn't enforce [FSA](https://github.com/acdlite/flux-standard-action#example)
-- Support for ImmuableJS but drop of support for POJSO
+- Support for ImmutableJS but drop of support for POJSO
 - Change dispatch execution order: the process from where the action is dispatched reduces action immediately instead of waiting for the the main to dispatch action in other processes.
 
 ## Motivation
@@ -33,10 +33,10 @@ Using redux with electron poses a couple of problems. Processes ([main](https://
 ## Install
 
 ```
-npm install --save electron-redux
+npm install --save @getstation/electron-redux
 ```
 
-`electron-redux` comes as redux middleware that is really easy to apply:
+`@getstation/electron-redux` comes as redux middleware that is really easy to apply:
 
 ```javascript
 // in the main store
@@ -67,7 +67,7 @@ import {
   forwardToMain,
   replayActionRenderer,
   getInitialStateRenderer,
-} from 'electron-redux';
+} from '@getstation/electron-redux';
 
 const todoApp = combineReducers(reducers);
 const initialState = getInitialStateRenderer();
@@ -127,13 +127,3 @@ export const importGithubProjects = createAliasedAction(
 ```
 
 Check out [timesheets](https://github.com/hardchor/timesheets/blob/4ccaf08dee4e1a02850b5bf36e37c537fef7d710/app/shared/actions/github.js) for more examples.
-
-
-
-## Under the hood
-
-TODO
-
-- forwardToMain
-- forwardToRenderer
-- triggerAlias
