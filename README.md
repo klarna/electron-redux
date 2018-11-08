@@ -40,7 +40,7 @@ import {
   forwardToRenderer,
   triggerAlias,
   replayActionMain,
-} from 'electron-redux';
+} from '@getstation/electron-redux';
 
 const todoApp = combineReducers(reducers);
 
