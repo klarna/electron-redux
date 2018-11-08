@@ -19,8 +19,11 @@ jobs:
             - "~/.cache/yarn"
             - "~/electron-redux/node_modules"
       - run:
-          name: Run Tests
+          name: Run unit tests
           command: yarn test
+      - run:
+          name: Run complete tests
+          command: yarn run full-test
       - store_artifacts:
           path: ~/electron-redux/dist
           destination: dist
