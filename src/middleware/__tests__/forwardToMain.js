@@ -4,15 +4,14 @@ import forwardToMain from '../forwardToMain';
 jest.unmock('../forwardToMain');
 
 describe('forwardToMain', () => {
-
   it('should pass an action through if it starts with @@', () => {
     const next = jest.fn();
     const action = { type: '@@SOMETHING' };
 
     forwardToMain()(next)(action);
 
-    expect(next).toHaveBeenCalledTimes(1);
-    expect(next).toHaveBeenCalledWith(action);
+    expect(next.mock.calls.length).toBe(1);
+    expect(next).toBeCalledWith(action);
   });
 
   it('should pass an action through if it starts with redux-form', () => {
@@ -21,8 +20,8 @@ describe('forwardToMain', () => {
 
     forwardToMain()(next)(action);
 
-    expect(next).toHaveBeenCalledTimes(1);
-    expect(next).toHaveBeenCalledWith(action);
+    expect(next.mock.calls.length).toBe(1);
+    expect(next).toBeCalledWith(action);
   });
 
   it('should pass an action through if the scope is local', () => {
@@ -36,8 +35,8 @@ describe('forwardToMain', () => {
 
     forwardToMain()(next)(action);
 
-    expect(next).toHaveBeenCalledTimes(1);
-    expect(next).toHaveBeenCalledWith(action);
+    expect(next.mock.calls.length).toBe(1);
+    expect(next).toBeCalledWith(action);
   });
 
   it('should forward any actions to the main process', () => {
@@ -46,14 +45,13 @@ describe('forwardToMain', () => {
       type: 'SOMETHING',
       meta: {
         some: 'meta',
+        webContentsId: 1,
       },
     };
 
     forwardToMain()(next)(action);
 
-    expect(ipcRenderer.send).toHaveBeenCalledTimes(1);
-    expect(ipcRenderer.send).toHaveBeenCalledWith('redux-action', action);
-
-    expect(next).toHaveBeenCalledTimes(0);
+    expect(ipcRenderer.send.mock.calls.length).toBe(1);
+    expect(ipcRenderer.send).toBeCalledWith('redux-action', action);
   });
 });

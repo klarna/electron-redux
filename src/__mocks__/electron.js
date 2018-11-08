@@ -15,4 +15,7 @@ export const ipcRenderer = {
 
 export const remote = {
   getGlobal: jest.fn(),
+  getCurrentWebContents: jest.fn(() => ({
+    id: 1,
+  })),
 };
