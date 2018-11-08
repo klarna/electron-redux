@@ -1,9 +1,9 @@
 import { ipcMain } from 'electron';
-import replayActionMain from '../replayActionMain';
+import replayActionServer from '../replayActionServer';
 
-jest.unmock('../replayActionMain');
+const namespace = 'getstation-electron-redux-test';
 
-describe('handleActionMain', () => {
+describe('replayActionServer', () => {
   it('should replay any actions received', () => {
     const store = {
       dispatch: jest.fn(),
@@ -12,7 +12,7 @@ describe('handleActionMain', () => {
     };
     const payload = 123;
 
-    replayActionMain(store);
+    replayActionServer(namespace)(store);
 
     expect(ipcMain.on).toHaveBeenCalledTimes(1);
     expect(ipcMain.on.mock.calls[0][0]).toBe('redux-action');

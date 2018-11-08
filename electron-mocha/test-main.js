@@ -1,18 +1,20 @@
 import { ipcMain, webContents } from 'electron';
 import { applyMiddleware, createStore } from 'redux';
-import replayActionMain from '../src/helpers/replayActionMain';
-import forwardToRenderer from '../src/middleware/forwardToRenderer';
+import replayActionServer from '../src/helpers/replayActionServer';
+import forwardToClient from '../src/middleware/forwardToClient';
 import reducer from './reducers';
+
+const namespace = 'getstation-electron-redux-test';
 
 const store = createStore(
   reducer,
   {},
   applyMiddleware(
-    forwardToRenderer,
+    forwardToClient(namespace),
   ),
 );
 
-replayActionMain(store);
+replayActionServer(namespace)(store);
 
 ipcMain.on('test:dispatch-from-main', () => {
   store.dispatch({

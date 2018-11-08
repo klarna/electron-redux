@@ -1,16 +1,14 @@
 import { ipcRenderer } from 'electron';
-import replayActionRenderer from '../replayActionRenderer';
+import replayActionClient from '../replayActionClient';
 
-jest.unmock('../replayActionRenderer');
-
-describe('replayActionRenderer', () => {
+describe('replayActionClient', () => {
   it('should replay any actions received', () => {
     const store = {
       dispatch: jest.fn(),
     };
     const payload = 123;
 
-    replayActionRenderer(store);
+    replayActionClient('getstation-electron-redux-test')(store);
 
     expect(ipcRenderer.on).toHaveBeenCalledTimes(1);
     expect(ipcRenderer.on.mock.calls[0][0]).toBe('redux-action');

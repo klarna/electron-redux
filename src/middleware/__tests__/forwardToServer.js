@@ -1,14 +1,14 @@
 import { ipcRenderer } from 'electron';
-import forwardToMain from '../forwardToMain';
+import forwardToServer from '../forwardToServer';
 
-jest.unmock('../forwardToMain');
+const namespace = 'getstation-electron-redux-test';
 
-describe('forwardToMain', () => {
+describe('forwardToServer', () => {
   it('should pass an action through if it starts with @@', () => {
     const next = jest.fn();
     const action = { type: '@@SOMETHING' };
 
-    forwardToMain()(next)(action);
+    forwardToServer(namespace)()(next)(action);
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
@@ -18,7 +18,7 @@ describe('forwardToMain', () => {
     const next = jest.fn();
     const action = { type: 'redux-form' };
 
-    forwardToMain()(next)(action);
+    forwardToServer(namespace)()(next)(action);
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
@@ -33,7 +33,7 @@ describe('forwardToMain', () => {
       },
     };
 
-    forwardToMain()(next)(action);
+    forwardToServer(namespace)()(next)(action);
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
@@ -49,7 +49,7 @@ describe('forwardToMain', () => {
       },
     };
 
-    forwardToMain()(next)(action);
+    forwardToServer(namespace)()(next)(action);
 
     expect(ipcRenderer.send.mock.calls.length).toBe(1);
     expect(ipcRenderer.send).toBeCalledWith('redux-action', action);

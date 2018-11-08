@@ -1,14 +1,14 @@
 import { BrowserWindow } from 'electron';
-import forwardToRenderer from '../forwardToRenderer';
+import forwardToClient from '../forwardToClient';
 
-jest.unmock('../forwardToRenderer');
+jest.unmock('../forwardToClient');
 
-describe('forwardToRenderer', () => {
+describe('forwardToClient', () => {
   it('should pass an action through to the main store', () => {
     const next = jest.fn();
     const action = { type: 'SOMETHING' };
 
-    forwardToRenderer()(next)(action);
+    forwardToClient()(next)(action);
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
@@ -36,7 +36,7 @@ describe('forwardToRenderer', () => {
       },
     ]);
 
-    forwardToRenderer()(next)(action);
+    forwardToClient()(next)(action);
 
     expect(send.mock.calls.length).toBe(1);
     expect(send).toBeCalledWith('redux-action', {
