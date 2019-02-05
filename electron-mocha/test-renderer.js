@@ -47,8 +47,11 @@ describe('forwards actions to and from renderer', () => {
   it('should forward action from main to renderer', (done) => {
     ipcRenderer.once('test:reply-from-main', (_, newMainState) => {
       if (newMainState.test === 2) {
-        const localState = store.getState();
-        if (localState.test === 2) return done();
+        return setTimeout(() => {
+          const localState = store.getState();
+          if (localState.test === 2) return done();
+          return done(new Error(`Invalid local state ${JSON.stringify(localState)}`));
+        }, 10); // wait for the state to dispatch the update
       }
       return done(new Error(`Invalid main state ${JSON.stringify(newMainState)}`));
     });
