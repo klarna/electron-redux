@@ -22,8 +22,11 @@ describe('replayActionServer', () => {
     expect(peers.setNotificationHandler.mock.calls[0][1]).toBeInstanceOf(Function);
 
     const cb = peers.setNotificationHandler.mock.calls[0][1];
-    cb(payload);
 
+    cb({ id: 1 })(payload);
+    expect(store.dispatch).toHaveBeenCalledTimes(0);
+
+    cb({ id: 2 })(payload);
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(payload);
   });

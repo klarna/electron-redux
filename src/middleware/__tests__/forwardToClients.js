@@ -1,7 +1,5 @@
 import forwardToClients from '../forwardToClients';
 
-jest.unmock('../forwardToClient');
-
 describe('forwardToClient', () => {
   it('should pass an action through to the main store', () => {
     const next = jest.fn();
@@ -36,7 +34,7 @@ describe('forwardToClient', () => {
       broadcast: jest.fn(),
     };
 
-    forwardToClients()(next)(action);
+    forwardToClients(peers)()(next)(action);
 
     expect(peers.broadcast).toHaveBeenCalledTimes(1);
     expect(peers.broadcast).toBeCalledWith('redux-action', {
