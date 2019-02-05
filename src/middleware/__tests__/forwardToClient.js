@@ -15,7 +15,8 @@ describe('forwardToClient', () => {
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
-    expect(peers.broadcast.mock.calls.length).toBe(0);
+    expect(peers.broadcast.mock.calls.length).toBe(1);
+    expect(peers.broadcast).toBeCalledWith(action);
   });
 
   it('should forward any actions to the renderer', () => {
