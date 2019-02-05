@@ -2,7 +2,7 @@ import { ipcMain, webContents } from 'electron';
 import { applyMiddleware, createStore } from 'redux';
 import { getServer, NodeIpcServerDuplex } from 'stream-node-ipc';
 import replayActionServer from '../src/helpers/replayActionServer';
-import forwardToClient from '../src/middleware/forwardToClient';
+import forwardToClients from '../src/middleware/forwardToClients';
 import Peers from '../src/middleware/peers';
 import reducer from './reducers';
 
@@ -13,7 +13,7 @@ const store = createStore(
   reducer,
   {},
   applyMiddleware(
-    forwardToClient(peers),
+    forwardToClients(peers),
   ),
 );
 

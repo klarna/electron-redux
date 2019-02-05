@@ -10,7 +10,10 @@ describe('replayActionServer', () => {
     const peers = {
       setNotificationHandler: jest.fn(),
     };
-    const payload = 123;
+    const payload = {
+      sender: 1,
+      value: 123,
+    };
 
     replayActionServer(peers)(store);
 

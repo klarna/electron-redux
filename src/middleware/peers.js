@@ -19,7 +19,8 @@ export default class Peers {
       this.peers.add(peer);
 
       if (this.handler) {
-        peer.setNotificationHandler(...this.handler);
+        const [key, handler] = this.handler;
+        peer.setNotificationHandler(key, handler(peer));
       }
 
       peer.on('end', () => {
@@ -37,6 +38,6 @@ export default class Peers {
 
   setNotificationHandler(key, handler) {
     this.handler = [key, handler];
-    this.peers.forEach(peer => peer.setNotificationHandler(key, handler));
+    this.peers.forEach(peer => peer.setNotificationHandler(key, handler(peer)));
   }
 }

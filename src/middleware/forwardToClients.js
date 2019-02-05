@@ -1,4 +1,4 @@
-const forwardToClient = peers => (store) => {
+const forwardToClients = peers => (store) => {
   peers.handleNewConnections(store);
 
   return next => (action) => {
@@ -18,4 +18,4 @@ const forwardToClient = peers => (store) => {
   };
 };
 
-export default forwardToClient;
+export default forwardToClients;

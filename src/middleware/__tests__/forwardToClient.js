@@ -1,4 +1,4 @@
-import forwardToClient from '../forwardToClient';
+import forwardToClients from '../forwardToClients';
 
 jest.unmock('../forwardToClient');
 
@@ -9,14 +9,18 @@ describe('forwardToClient', () => {
       handleNewConnections: jest.fn(),
       broadcast: jest.fn(),
     };
-    const action = { type: 'SOMETHING' };
+    const action = {
+      type: 'SOMETHING',
+      meta: {
+        scope: 'local',
+      },
+    };
 
-    forwardToClient(peers)(next)(action);
+    forwardToClients(peers)()(next)(action);
 
-    expect(next.mock.calls.length).toBe(1);
+    expect(next).toHaveBeenCalledTimes(1);
     expect(next).toBeCalledWith(action);
-    expect(peers.broadcast.mock.calls.length).toBe(1);
-    expect(peers.broadcast).toBeCalledWith(action);
+    expect(peers.broadcast).toHaveBeenCalledTimes(0);
   });
 
   it('should forward any actions to the renderer', () => {
@@ -32,9 +36,9 @@ describe('forwardToClient', () => {
       broadcast: jest.fn(),
     };
 
-    forwardToClient()(next)(action);
+    forwardToClients()(next)(action);
 
-    expect(peers.broadcast.mock.calls.length).toBe(1);
+    expect(peers.broadcast).toHaveBeenCalledTimes(1);
     expect(peers.broadcast).toBeCalledWith('redux-action', {
       type: 'SOMETHING',
       meta: {
@@ -42,5 +46,6 @@ describe('forwardToClient', () => {
         scope: 'local',
       },
     });
+    expect(peers.broadcast).toHaveBeenCalledTimes(1);
   });
 });

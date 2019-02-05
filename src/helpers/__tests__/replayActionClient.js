@@ -8,7 +8,10 @@ describe('replayActionClient', () => {
     const peer = {
       setNotificationHandler: jest.fn(),
     };
-    const payload = 123;
+    const payload = {
+      sender: 1,
+      value: 123,
+    };
 
     replayActionClient(peer)(store);
 
