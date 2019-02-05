@@ -1,4 +1,3 @@
-import { BrowserWindow } from 'electron';
 import forwardToClient from '../forwardToClient';
 
 jest.unmock('../forwardToClient');
@@ -16,8 +15,7 @@ describe('forwardToClient', () => {
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
-    expect(peers.broadcast.mock.calls.length).toBe(1);
-    expect(peers.broadcast).toBeCalledWith('redux-action', action);
+    expect(peers.broadcast.mock.calls.length).toBe(0);
   });
 
   it('should forward any actions to the renderer', () => {

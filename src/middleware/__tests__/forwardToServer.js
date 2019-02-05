@@ -12,8 +12,7 @@ describe('forwardToServer', () => {
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
-    expect(peer.notify.mock.calls.length).toBe(1);
-    expect(peer.notify).toBeCalledWith('redux-action', action);
+    expect(peer.notify.mock.calls.length).toBe(0);
   });
 
   it('should pass an action through if it starts with redux-form', () => {
@@ -27,8 +26,7 @@ describe('forwardToServer', () => {
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
-    expect(peer.notify.mock.calls.length).toBe(1);
-    expect(peer.notify).toBeCalledWith('redux-action', action);
+    expect(peer.notify.mock.calls.length).toBe(0);
   });
 
   it('should pass an action through if the scope is local', () => {
@@ -47,8 +45,7 @@ describe('forwardToServer', () => {
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
-    expect(peer.notify.mock.calls.length).toBe(1);
-    expect(peer.notify).toBeCalledWith('redux-action', action);
+    expect(peer.notify.mock.calls.length).toBe(0);
   });
 
   it('should forward any actions to the main process', () => {
