@@ -4612,20 +4612,23 @@ stealthy-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
 
-stream-json-rpc@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/stream-json-rpc/-/stream-json-rpc-0.5.3.tgz#481c25802c9ce5de21eb82a6ee42e45130a84bd3"
-  integrity sha512-yTgjqZtKJ3ZgPDGLDC50AMHH0vWDo0q5+2D9mN+Qaj07st6RHX+MTPXcdA7dEuB17LKf9o33MmRxvXvvxSeDFg==
+stream-json-rpc@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/stream-json-rpc/-/stream-json-rpc-0.5.4.tgz#7fb793c7b70e98198dec558928d8943a5f0004d4"
+  integrity sha512-/aNpLt1TMG4WaKCpFl0bloonp+jiS5HQVf/pHBGSWBA5SnZspFGRCP2XP/tk+t+e7ZAhDtHvC4YQOEFE5PinFw==
   dependencies:
     "@magne4000/json-rpc-peer" "^0.16.0"
     bpmux "7.0.15"
     pump "^3.0.0"
     rxjs "^6.3.3"
+    uuid "^3.3.2"
 
-stream-node-ipc@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/stream-node-ipc/-/stream-node-ipc-1.0.3.tgz#ad15385ea472b72ac3eedb53bdebbdd787f1015e"
-  integrity sha512-pNoX4TQklgKtnkExDi4/jtzdLiSz/60klgVkxuSYVgo9lQjwzWUaBOthzvONWnDUf0aV1zeka/08lex4EFVXYw==
+stream-node-ipc@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/stream-node-ipc/-/stream-node-ipc-1.0.4.tgz#2f3936430093129cb8284f8bb949082780d8cc98"
+  integrity sha512-aw6vyEv8kQ/gvEbqR+5QRzwMwF7SmsZj6YEV1lYIE5K1qZWXTNdg2RaTw948bUnu62JaKD+aYlIQYLvCri72aw==
+  dependencies:
+    node-ipc "^9.1.1"
 
 string-length@^2.0.0:
   version "2.0.0"

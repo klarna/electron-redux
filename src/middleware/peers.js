@@ -7,6 +7,7 @@ export default class Peers {
     this.ipcServer = ipcServer;
     this.ServerDuplexClass = ServerDuplexClass;
     this.peers = new Set(); // List of clients
+    this.handler = undefined;
   }
 
   handleNewConnections(store) {
@@ -16,6 +17,10 @@ export default class Peers {
       peer.setRequestHandler('client-ask-initial-state', () => transit.toJSON(store.getState()));
 
       this.peers.add(peer);
+
+      if (this.handler) {
+        peer.setNotificationHandler(...this.handler);
+      }
 
       peer.on('end', () => {
         this.peers.remove(peer);
@@ -31,6 +36,7 @@ export default class Peers {
   }
 
   setNotificationHandler(key, handler) {
-    this.peers.forEach(peer => peer.setNotificationHandler(key, handler(peer)));
+    this.handler = [key, handler];
+    this.peers.forEach(peer => peer.setNotificationHandler(key, handler));
   }
 }

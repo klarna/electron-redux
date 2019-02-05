@@ -10,7 +10,7 @@ import reducer from './reducers';
 
 const ipcClient = getClient('getstation-electron-redux-test');
 const channel = rpcchannel(new NodeIpcClientDuplex(ipcClient));
-const peer = channel.peer('__default__');
+const peer = channel.peer('electron-redux-peer');
 
 describe('forwards actions to and from renderer', () => {
   let store;

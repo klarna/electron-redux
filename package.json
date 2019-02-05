@@ -32,7 +32,7 @@
     "immutable": "^3.8.1",
     "redux": "^4.0.1",
     "shortid": "^2.2.14",
-    "stream-json-rpc": "^0.5.3",
+    "stream-json-rpc": "^0.5.4",
     "transit-immutable-js": "^0.7.0",
     "transit-js": "^0.8.861",
     "xvfb-maybe": "^0.2.1"
@@ -53,7 +53,7 @@
     "jest": "^23.6.0",
     "node-ipc": "^9.1.1",
     "pre-commit": "^1.2.2",
-    "stream-node-ipc": "^1.0.3"
+    "stream-node-ipc": "^1.0.4"
   },
   "pre-commit": [
     "test",
