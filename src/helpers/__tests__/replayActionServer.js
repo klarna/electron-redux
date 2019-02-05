@@ -1,7 +1,4 @@
-import { ipcMain } from 'electron';
 import replayActionServer from '../replayActionServer';
-
-const namespace = 'getstation-electron-redux-test';
 
 describe('replayActionServer', () => {
   it('should replay any actions received', () => {
@@ -10,15 +7,18 @@ describe('replayActionServer', () => {
       getState: jest.fn(),
       subscribe: jest.fn(),
     };
+    const peers = {
+      setNotificationHandler: jest.fn(),
+    };
     const payload = 123;
 
-    replayActionServer(namespace)(store);
+    replayActionServer(peers)(store);
 
-    expect(ipcMain.on).toHaveBeenCalledTimes(1);
-    expect(ipcMain.on.mock.calls[0][0]).toBe('redux-action');
-    expect(ipcMain.on.mock.calls[0][1]).toBeInstanceOf(Function);
+    expect(peers.setNotificationHandler).toHaveBeenCalledTimes(1);
+    expect(peers.setNotificationHandler.mock.calls[0][0]).toBe('redux-action');
+    expect(peers.setNotificationHandler.mock.calls[0][1]).toBeInstanceOf(Function);
 
-    const cb = ipcMain.on.mock.calls[0][1];
+    const cb = peers.setNotificationHandler.mock.calls[0][1];
     cb('someEvent', payload);
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);

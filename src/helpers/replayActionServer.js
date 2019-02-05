@@ -1,19 +1,7 @@
-import { getIPCServer } from './nodeIpc';
-
-const ipc = require('node-ipc');
-const transit = require('transit-immutable-js');
-
-export default function replayActionServer(namespace) {
-  const ipcServer = getIPCServer(namespace);
+export default function replayActionServer(peers) {
   return (store) => {
-    Object.defineProperty(global, 'reduxState', {
-      get: () => transit.toJSON(store.getState()),
-      enumerable: true,
-      configurable: false,
-    });
-
-    ipcServer.on('redux-action', (payload, _socket) => {
-      if (payload.sender !== ipc.config.id) {
+    peers.setNotificationHandler('redux-action', peer => (payload) => {
+      if (payload.sender !== peer.id) {
         store.dispatch(payload);
       }
     });

@@ -1,6 +1,6 @@
 {
   "name": "@getstation/electron-redux",
-  "version": "1.0.1",
+  "version": "2.0.0-rc.1",
   "description": "Use redux in the main and browser process in electron",
   "main": "dist/index.js",
   "scripts": {
@@ -30,10 +30,9 @@
   "dependencies": {
     "debug": "^4.1.0",
     "immutable": "^3.8.1",
-    "lodash.memoize": "^4.1.2",
-    "node-ipc": "^9.1.1",
     "redux": "^4.0.1",
     "shortid": "^2.2.14",
+    "stream-json-rpc": "^0.5.3",
     "transit-immutable-js": "^0.7.0",
     "transit-js": "^0.8.861",
     "xvfb-maybe": "^0.2.1"
@@ -52,7 +51,9 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "jest": "^23.6.0",
-    "pre-commit": "^1.2.2"
+    "node-ipc": "^9.1.1",
+    "pre-commit": "^1.2.2",
+    "stream-node-ipc": "^1.0.3"
   },
   "pre-commit": [
     "test",

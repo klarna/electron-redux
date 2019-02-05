@@ -1,31 +1,41 @@
-import { ipcRenderer } from 'electron';
 import forwardToServer from '../forwardToServer';
-
-const namespace = 'getstation-electron-redux-test';
 
 describe('forwardToServer', () => {
   it('should pass an action through if it starts with @@', () => {
     const next = jest.fn();
+    const peer = {
+      notify: jest.fn(),
+    };
     const action = { type: '@@SOMETHING' };
 
-    forwardToServer(namespace)()(next)(action);
+    forwardToServer(peer)()(next)(action);
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
+    expect(peer.notify.mock.calls.length).toBe(1);
+    expect(peer.notify).toBeCalledWith('redux-action', action);
   });
 
   it('should pass an action through if it starts with redux-form', () => {
     const next = jest.fn();
+    const peer = {
+      notify: jest.fn(),
+    };
     const action = { type: 'redux-form' };
 
-    forwardToServer(namespace)()(next)(action);
+    forwardToServer(peer)()(next)(action);
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
+    expect(peer.notify.mock.calls.length).toBe(1);
+    expect(peer.notify).toBeCalledWith('redux-action', action);
   });
 
   it('should pass an action through if the scope is local', () => {
     const next = jest.fn();
+    const peer = {
+      notify: jest.fn(),
+    };
     const action = {
       type: 'MY_ACTION',
       meta: {
@@ -33,14 +43,19 @@ describe('forwardToServer', () => {
       },
     };
 
-    forwardToServer(namespace)()(next)(action);
+    forwardToServer(peer)()(next)(action);
 
     expect(next.mock.calls.length).toBe(1);
     expect(next).toBeCalledWith(action);
+    expect(peer.notify.mock.calls.length).toBe(1);
+    expect(peer.notify).toBeCalledWith('redux-action', action);
   });
 
   it('should forward any actions to the main process', () => {
     const next = jest.fn();
+    const peer = {
+      notify: jest.fn(),
+    };
     const action = {
       type: 'SOMETHING',
       meta: {
@@ -49,9 +64,9 @@ describe('forwardToServer', () => {
       },
     };
 
-    forwardToServer(namespace)()(next)(action);
+    forwardToServer(peer)()(next)(action);
 
-    expect(ipcRenderer.send.mock.calls.length).toBe(1);
-    expect(ipcRenderer.send).toBeCalledWith('redux-action', action);
+    expect(peer.notify.mock.calls.length).toBe(1);
+    expect(peer.notify).toBeCalledWith('redux-action', action);
   });
 });
