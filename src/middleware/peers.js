@@ -3,16 +3,15 @@ import rpcchannel from 'stream-json-rpc';
 const transit = require('transit-immutable-js');
 
 export default class Peers {
-  constructor(ipcServer, ServerDuplexClass) {
-    this.ipcServer = ipcServer;
-    this.ServerDuplexClass = ServerDuplexClass;
+  constructor(firstConnectionHandler) {
+    this.firstConnectionHandler = firstConnectionHandler;
     this.peers = new Set(); // List of clients
     this.handler = undefined;
   }
 
   handleNewConnections(store) {
-    const firstConnection = (_data, socket) => {
-      const channel = rpcchannel(new this.ServerDuplexClass(this.ipcServer, socket));
+    this.firstConnectionHandler((duplex) => {
+      const channel = rpcchannel(duplex);
       const peer = channel.peer('electron-redux-peer');
       peer.setRequestHandler('client-ask-initial-state', () => transit.toJSON(store.getState()));
 
@@ -26,10 +25,7 @@ export default class Peers {
       peer.on('end', () => {
         this.peers.remove(peer);
       });
-
-      this.ipcServer.off('data', firstConnection);
-    };
-    this.ipcServer.on('data', firstConnection);
+    });
   }
 
   broadcast(key, value) {
