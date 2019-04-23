@@ -3,17 +3,17 @@
 [![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/hardchor/electron-redux.svg)](https://greenkeeper.io/)
 
-* [Motivation](#motivation)
-* [Install](#install)
-* [Actions](#actions): [Local actions (renderer process)](#local-actions-renderer-process), [Aliased actions (main process)](#aliased-actions-main-process)
-* [Under the hood](#under-the-hood)
+- [Motivation](#motivation)
+- [Install](#install)
+- [Actions](#actions): [Local actions (renderer process)](#local-actions-renderer-process), [Aliased actions (main process)](#aliased-actions-main-process)
+- [Under the hood](#under-the-hood)
 
 ## Motivation
 
 Using redux with electron poses a couple of problems. Processes ([main](https://github.com/electron/electron/blob/master/docs/tutorial/quick-start.md#main-process) and [renderer](https://github.com/electron/electron/blob/master/docs/tutorial/quick-start.md#renderer-process)) are completely isolated, and the only mode of communication is [IPC](https://github.com/electron/electron/blob/master/docs/api/ipc-main.md).
 
-* Where do you keep the state?
-* How do you keep the state in sync across processes?
+- Where do you keep the state?
+- How do you keep the state in sync across processes?
 
 ### The solution
 
@@ -117,6 +117,41 @@ export const importGithubProjects = createAliasedAction(
 
 Check out [timesheets](https://github.com/hardchor/timesheets/blob/4ccaf08dee4e1a02850b5bf36e37c537fef7d710/app/shared/actions/github.js) for more examples.
 
+### Blacklisted actions
+
+By default actions of certain type (e.g. starting with '@@') are not propagated to the main thread. You can change this behaviour by using `forwardToMainWithParams` function.
+
+```javascript
+// in the renderer store
+import {
+  forwardToMainWithParams,
+  replayActionRenderer,
+  getInitialStateRenderer,
+} from 'electron-redux';
+
+const todoApp = combineReducers(reducers);
+const initialState = getInitialStateRenderer();
+
+const store = createStore(
+  todoApp,
+  initialState,
+  applyMiddleware(
+    forwardToMainWithParams(), // IMPORTANT! This goes first
+    ...otherMiddleware,
+  ),
+);
+
+replayActionRenderer(store);
+```
+
+You can specify patterns for actions that should not be propagated to the main thread.
+
+```javascript
+forwardToMainWithParams({
+  blacklist: [/^@@/, /^redux-form/],
+});
+```
+
 ## Contributions
 
 Contributions via [issues](https://github.com/hardchor/electron-redux/issues/new) or [pull requests](https://github.com/hardchor/electron-redux/compare) are hugely welcome!
@@ -127,5 +162,5 @@ Feel free to let me know whether you're successfully using `electron-redux` in y
 
 Special thanks go out to:
 
-* [Charlie Hess](https://github.com/CharlieHess)
-* Anyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
+- [Charlie Hess](https://github.com/CharlieHess)
+- Anyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀

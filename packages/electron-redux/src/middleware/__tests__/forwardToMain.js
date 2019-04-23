@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import forwardToMain from '../forwardToMain';
+import forwardToMain, { forwardToMainWithParams } from '../forwardToMain';
 import validateAction from '../../helpers/validateAction';
 
 jest.unmock('../forwardToMain');
@@ -9,7 +9,7 @@ describe('forwardToMain', () => {
     validateAction.mockReturnValue(true);
   });
 
-  it('should pass an action through if it doesn\'t pass validation (FSA)', () => {
+  it("should pass an action through if it doesn't pass validation (FSA)", () => {
     const next = jest.fn();
     // thunk action
     const action = () => {};
@@ -71,5 +71,46 @@ describe('forwardToMain', () => {
     expect(ipcRenderer.send).toHaveBeenCalledWith('redux-action', action);
 
     expect(next).toHaveBeenCalledTimes(0);
+  });
+});
+
+describe('forwardToMainWithParams', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    validateAction.mockReturnValue(true);
+  });
+
+  it('should forward an action through if it starts with @@', () => {
+    const next = jest.fn();
+    const action = { type: '@@SOMETHING' };
+
+    forwardToMainWithParams()()(next)(action);
+
+    expect(ipcRenderer.send).toHaveBeenCalledTimes(1);
+    expect(ipcRenderer.send).toHaveBeenCalledWith('redux-action', action);
+
+    expect(next).toHaveBeenCalledTimes(0);
+  });
+
+  it('should forward an action through if it starts with redux-form', () => {
+    const next = jest.fn();
+    const action = { type: 'redux-form' };
+
+    forwardToMainWithParams()()(next)(action);
+
+    expect(ipcRenderer.send).toHaveBeenCalledTimes(1);
+    expect(ipcRenderer.send).toHaveBeenCalledWith('redux-action', action);
+
+    expect(next).toHaveBeenCalledTimes(0);
+  });
+
+  it('should pass an action through if it is blacklisted', () => {
+    const next = jest.fn();
+    const action = { type: '@@SOMETHING' };
+
+    forwardToMainWithParams({ blacklist: [/^@@/] })()(next)(action);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(next).toHaveBeenCalledWith(action);
   });
 });
