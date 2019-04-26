@@ -3,10 +3,16 @@
 [![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/hardchor/electron-redux.svg)](https://greenkeeper.io/)
 
-- [Motivation](#motivation)
-- [Install](#install)
-- [Actions](#actions): [Local actions (renderer process)](#local-actions-renderer-process), [Aliased actions (main process)](#aliased-actions-main-process)
-- [Under the hood](#under-the-hood)
+- [electron-redux](#electron-redux)
+  - [Motivation](#motivation)
+    - [The solution](#the-solution)
+  - [Install](#install)
+  - [Actions](#actions)
+    - [Local actions (renderer process)](#local-actions-renderer-process)
+    - [Aliased actions (main process)](#aliased-actions-main-process)
+    - [Blacklisted actions](#blacklisted-actions)
+  - [Contributions](#contributions)
+  - [Contributors](#contributors)
 
 ## Motivation
 
@@ -163,4 +169,5 @@ Feel free to let me know whether you're successfully using `electron-redux` in y
 Special thanks go out to:
 
 - [Charlie Hess](https://github.com/CharlieHess)
+- [Roman Paradeev](https://github.com/sameoldmadness)
 - Anyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
