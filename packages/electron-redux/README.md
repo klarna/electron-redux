@@ -10,6 +10,7 @@
   - [Actions](#actions)
     - [Local actions (renderer process)](#local-actions-renderer-process)
     - [Aliased actions (main process)](#aliased-actions-main-process)
+    - [Blacklisted actions](#blacklisted-actions)
   - [Contributions](#contributions)
   - [Contributors](#contributors)
 
@@ -121,6 +122,41 @@ export const importGithubProjects = createAliasedAction(
 ```
 
 Check out [timesheets](https://github.com/hardchor/timesheets/blob/4ccaf08dee4e1a02850b5bf36e37c537fef7d710/app/shared/actions/github.js) for more examples.
+
+### Blacklisted actions
+
+By default actions of certain type (e.g. starting with '@@') are not propagated to the main thread. You can change this behaviour by using `forwardToMainWithParams` function.
+
+```javascript
+// in the renderer store
+import {
+  forwardToMainWithParams,
+  replayActionRenderer,
+  getInitialStateRenderer,
+} from 'electron-redux';
+
+const todoApp = combineReducers(reducers);
+const initialState = getInitialStateRenderer();
+
+const store = createStore(
+  todoApp,
+  initialState,
+  applyMiddleware(
+    forwardToMainWithParams(), // IMPORTANT! This goes first
+    ...otherMiddleware,
+  ),
+);
+
+replayActionRenderer(store);
+```
+
+You can specify patterns for actions that should not be propagated to the main thread.
+
+```javascript
+forwardToMainWithParams({
+  blacklist: [/^@@/, /^redux-form/],
+});
+```
 
 ## Contributions
 
