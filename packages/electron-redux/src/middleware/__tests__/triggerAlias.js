@@ -2,6 +2,7 @@ import triggerAlias from '../triggerAlias';
 import aliasRegistry from '../../registry/alias';
 
 jest.unmock('../triggerAlias');
+jest.unmock('../../helpers/expandAliasedAction');
 
 describe('triggerAlias', () => {
   it('should pass an action through if not ALIAS', () => {
