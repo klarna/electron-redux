@@ -10,7 +10,7 @@
   "dependencies": {
     "electron": "^1.7.9",
     "electron-redux": "^1.4.0",
-    "redux": "^3.7.2"
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "electron .",
