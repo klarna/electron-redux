@@ -11,7 +11,9 @@
     "lint": "eslint 'src/**/*'",
     "build": "rm -rf dist && babel src --out-dir dist",
     "prepare": "yarn build",
-    "prepush": "yarn test && yarn build"
+    "prepush": "yarn test && yarn build",
+    "snyk-protect": "snyk protect",
+    "prepublish": "yarn snyk-protect"
   },
   "keywords": [
     "electron",
@@ -30,10 +32,10 @@
   "dependencies": {
     "debug": "^3.0.0",
     "flux-standard-action": "^2.0.0",
-    "redux": "^3.4.0"
+    "redux": "^4.0.1"
   },
   "peerDependencies": {
-    "redux": "^3.4.0"
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.34",
@@ -44,6 +46,8 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^21.2.0",
     "greenkeeper-lockfile": "^1.12.0",
-    "jest": "^21.2.1"
-  }
+    "jest": "^21.2.1",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }

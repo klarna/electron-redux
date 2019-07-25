@@ -10,14 +10,18 @@
   "dependencies": {
     "electron": "^1.7.9",
     "electron-redux": "^1.4.0",
-    "redux": "^3.7.2"
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "electron .",
-    "test": "jest ."
+    "test": "jest .",
+    "snyk-protect": "snyk protect",
+    "prepublish": "yarn snyk-protect"
   },
   "devDependencies": {
     "jest": "^21.2.1",
+    "snyk": "^1.189.0",
     "spectron": "^3.7.2"
-  }
+  },
+  "snyk": true
 }
