@@ -15,7 +15,8 @@ replayActionRenderer(store);
 const valueEl = document.getElementById('value');
 
 function render() {
-  valueEl.innerHTML = store.getState().toString();
+  console.log(store.getState());
+  valueEl.innerHTML = store.getState().count.toString();
 }
 
 render();
@@ -31,5 +32,9 @@ document.getElementById('decrement').addEventListener('click', () => {
 });
 
 document.getElementById('incrementAliased').addEventListener('click', () => {
-  store.dispatch(createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }))());
+  store.dispatch(
+    createAliasedAction('INCREMENT_ALIASED', () => ({
+      type: 'INCREMENT',
+    }))(),
+  );
 });

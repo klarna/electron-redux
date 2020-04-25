@@ -1,27 +1,27 @@
 {
-  "name": "electron-redux-e2e",
-  "version": "1.4.0",
-  "description": "The end-to-end tests for electron-redux",
-  "main": "app/main.js",
-  "repository": "https://github.com/hardchor/electron-redux/tree/master/packages/electron-redux-e2e",
-  "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://burgiblog.com)",
-  "license": "MIT",
-  "private": true,
-  "dependencies": {
-    "electron": "^1.7.9",
-    "electron-redux": "^1.4.0",
-    "redux": "^4.0.1"
-  },
-  "scripts": {
-    "start": "electron .",
-    "test": "jest .",
-    "snyk-protect": "snyk protect",
-    "prepublish": "yarn snyk-protect"
-  },
-  "devDependencies": {
-    "jest": "^21.2.1",
-    "snyk": "^1.189.0",
-    "spectron": "^3.7.2"
-  },
-  "snyk": true
+	"name": "electron-redux-e2e",
+	"version": "2.0.0",
+	"description": "The end-to-end tests for electron-redux",
+	"main": "app/main.js",
+	"repository": "https://github.com/hardchor/electron-redux/tree/master/packages/electron-redux-e2e",
+	"author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://burgiblog.com)",
+	"license": "MIT",
+	"private": true,
+	"dependencies": {
+		"electron": "^8.0.0",
+		"electron-redux": "^2.0.0",
+		"redux": "^4.0.1"
+	},
+	"scripts": {
+		"start": "electron .",
+		"test": "jest .",
+		"snyk-protect": "snyk protect",
+		"prepublish": "yarn snyk-protect"
+	},
+	"devDependencies": {
+		"jest": "^25.0.0",
+		"snyk": "^1.189.0",
+		"spectron": "^10.0.0"
+	},
+	"snyk": true
 }
