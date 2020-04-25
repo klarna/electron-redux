@@ -1,9 +1,9 @@
-import { ALIASED } from '../alias';
+import { ALIASED } from "../alias";
 
-jest.unmock('../alias');
+jest.unmock("../alias");
 
-describe('alias', () => {
-  it('should return the ALIASED action type', () => {
-    expect(ALIASED).toBe('ALIASED');
-  });
+describe("alias", () => {
+	it("should return the ALIASED action type", () => {
+		expect(ALIASED).toBe("ALIASED");
+	});
 });

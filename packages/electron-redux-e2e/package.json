@@ -9,7 +9,7 @@
 	"private": true,
 	"dependencies": {
 		"electron": "^8.0.0",
-		"electron-redux": "^2.0.0",
+		"@mckayla/electron-redux": "^2.0.0",
 		"redux": "^4.0.1"
 	},
 	"scripts": {

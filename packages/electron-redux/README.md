@@ -3,23 +3,23 @@
 [![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/hardchor/electron-redux.svg)](https://greenkeeper.io/)
 
-- [electron-redux](#electron-redux)
-  - [Motivation](#motivation)
-    - [The solution](#the-solution)
-  - [Install](#install)
-  - [Actions](#actions)
-    - [Local actions (renderer process)](#local-actions-renderer-process)
-    - [Aliased actions (main process)](#aliased-actions-main-process)
-    - [Blacklisted actions](#blacklisted-actions)
-  - [Contributions](#contributions)
-  - [Contributors](#contributors)
+-   [electron-redux](#electron-redux)
+    -   [Motivation](#motivation)
+        -   [The solution](#the-solution)
+    -   [Install](#install)
+    -   [Actions](#actions)
+        -   [Local actions (renderer process)](#local-actions-renderer-process)
+        -   [Aliased actions (main process)](#aliased-actions-main-process)
+        -   [Blacklisted actions](#blacklisted-actions)
+    -   [Contributions](#contributions)
+    -   [Contributors](#contributors)
 
 ## Motivation
 
 Using redux with electron poses a couple of problems. Processes ([main](https://github.com/electron/electron/blob/master/docs/tutorial/quick-start.md#main-process) and [renderer](https://github.com/electron/electron/blob/master/docs/tutorial/quick-start.md#renderer-process)) are completely isolated, and the only mode of communication is [IPC](https://github.com/electron/electron/blob/master/docs/api/ipc-main.md).
 
-- Where do you keep the state?
-- How do you keep the state in sync across processes?
+-   Where do you keep the state?
+-   How do you keep the state in sync across processes?
 
 ### The solution
 
@@ -37,18 +37,22 @@ npm install --save electron-redux
 
 ```javascript
 // in the main store
-import { forwardToRenderer, triggerAlias, replayActionMain } from 'electron-redux';
+import {
+	forwardToRenderer,
+	triggerAlias,
+	replayActionMain,
+} from "electron-redux";
 
 const todoApp = combineReducers(reducers);
 
 const store = createStore(
-  todoApp,
-  initialState, // optional
-  applyMiddleware(
-    triggerAlias, // optional, see below
-    ...otherMiddleware,
-    forwardToRenderer, // IMPORTANT! This goes last
-  ),
+	todoApp,
+	initialState, // optional
+	applyMiddleware(
+		triggerAlias, // optional, see below
+		...otherMiddleware,
+		forwardToRenderer, // IMPORTANT! This goes last
+	),
 );
 
 replayActionMain(store);
@@ -56,18 +60,22 @@ replayActionMain(store);
 
 ```javascript
 // in the renderer store
-import { forwardToMain, replayActionRenderer, getInitialStateRenderer } from 'electron-redux';
+import {
+	forwardToMain,
+	replayActionRenderer,
+	getInitialStateRenderer,
+} from "electron-redux";
 
 const todoApp = combineReducers(reducers);
 const initialState = getInitialStateRenderer();
 
 const store = createStore(
-  todoApp,
-  initialState,
-  applyMiddleware(
-    forwardToMain, // IMPORTANT! This goes first
-    ...otherMiddleware,
-  ),
+	todoApp,
+	initialState,
+	applyMiddleware(
+		forwardToMain, // IMPORTANT! This goes first
+		...otherMiddleware,
+	),
 );
 
 replayActionRenderer(store);
@@ -93,13 +101,13 @@ To stop an action from propagating from renderer to main store, simply set the s
 
 ```javascript
 function myLocalActionCreator() {
-  return {
-    type: 'MY_ACTION',
-    payload: 123,
-    meta: {
-      scope: 'local',
-    },
-  };
+	return {
+		type: "MY_ACTION",
+		payload: 123,
+		meta: {
+			scope: "local",
+		},
+	};
 }
 ```
 
@@ -110,14 +118,14 @@ Most actions will originate from the renderer side, but not all should be execut
 Using the `createAliasedAction` helper, you can quite easily create actions that are are only being executed in the main process, and the result of which is being broadcast to the renderer processes.
 
 ```javascript
-import { createAliasedAction } from 'electron-redux';
+import { createAliasedAction } from "electron-redux";
 
 export const importGithubProjects = createAliasedAction(
-  'IMPORT_GITHUB_PROJECTS', // unique identifier
-  (accessToken, repoFullName) => ({
-    type: 'IMPORT_GITHUB_PROJECTS',
-    payload: importProjects(accessToken, repoFullName),
-  }),
+	"IMPORT_GITHUB_PROJECTS", // unique identifier
+	(accessToken, repoFullName) => ({
+		type: "IMPORT_GITHUB_PROJECTS",
+		payload: importProjects(accessToken, repoFullName),
+	}),
 );
 ```
 
@@ -130,21 +138,21 @@ By default actions of certain type (e.g. starting with '@@') are not propagated 
 ```javascript
 // in the renderer store
 import {
-  forwardToMainWithParams,
-  replayActionRenderer,
-  getInitialStateRenderer,
-} from 'electron-redux';
+	forwardToMainWithParams,
+	replayActionRenderer,
+	getInitialStateRenderer,
+} from "electron-redux";
 
 const todoApp = combineReducers(reducers);
 const initialState = getInitialStateRenderer();
 
 const store = createStore(
-  todoApp,
-  initialState,
-  applyMiddleware(
-    forwardToMainWithParams(), // IMPORTANT! This goes first
-    ...otherMiddleware,
-  ),
+	todoApp,
+	initialState,
+	applyMiddleware(
+		forwardToMainWithParams(), // IMPORTANT! This goes first
+		...otherMiddleware,
+	),
 );
 
 replayActionRenderer(store);
@@ -154,7 +162,7 @@ You can specify patterns for actions that should not be propagated to the main t
 
 ```javascript
 forwardToMainWithParams({
-  blacklist: [/^@@/, /^redux-form/],
+	blacklist: [/^@@/, /^redux-form/],
 });
 ```
 
@@ -168,6 +176,6 @@ Feel free to let me know whether you're successfully using `electron-redux` in y
 
 Special thanks go out to:
 
-- [Charlie Hess](https://github.com/CharlieHess)
-- [Roman Paradeev](https://github.com/sameoldmadness)
-- Anyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
+-   [Charlie Hess](https://github.com/CharlieHess)
+-   [Roman Paradeev](https://github.com/sameoldmadness)
+-   Anyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀

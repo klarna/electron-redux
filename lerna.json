@@ -1,12 +1,12 @@
 {
-  "lerna": "2.5.1",
-  "version": "1.4.0",
-  "npmClient": "yarn",
-  "useWorkspaces": true,
-  "command": {
-    "bootstrap": {
-      "npmClient": "yarn",
-      "concurrency": 1
-    }
-  }
+	"lerna": "2.5.1",
+	"version": "1.4.0",
+	"npmClient": "yarn",
+	"useWorkspaces": true,
+	"command": {
+		"bootstrap": {
+			"npmClient": "yarn",
+			"concurrency": 1
+		}
+	}
 }

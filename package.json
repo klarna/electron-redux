@@ -1,28 +1,19 @@
 {
 	"private": true,
-	"repository": "https://github.com/hardchor/electron-redux",
-	"author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://burgiblog.com)",
+	"repository": "https://github.com/partheseas/electron-redux",
+	"author": "McKayla Washburn",
 	"license": "MIT",
-	"devDependencies": {
-		"eslint": "^6.1.0",
-		"eslint-config-airbnb-base": "^14.1.0",
-		"eslint-plugin-import": "^2.2.0",
-		"husky": "^2.2.0",
-		"lerna": "^3.13.4",
-		"lint-staged": "^9.2.1",
-		"prettier-eslint-cli": "^5.0.0"
-	},
-	"scripts": {
-		"test": "lerna run test",
-		"precommit": "lint-staged"
-	},
 	"workspaces": [
 		"packages/*"
 	],
-	"lint-staged": {
-		"*.{js,jsx,css,md}": [
-			"prettier-eslint --single-quote --trailing-comma=all --print-width=100 --write",
-			"git add"
-		]
+	"devDependencies": {
+		"lerna": "^3.0.0",
+		"parcel": "^2.0.0-nightly",
+		"prettier": "^2.0.5",
+		"typescript": "^3.8.3"
+	},
+	"scripts": {
+		"fmt": "prettier --ignore-path .gitignore --write .",
+		"test": "lerna run test"
 	}
 }

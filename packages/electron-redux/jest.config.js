@@ -1,5 +1,5 @@
 module.exports = {
-  testEnvironment: 'node',
-  automock: true,
-  roots: ['<rootDir>/src'],
+	testEnvironment: "node",
+	automock: true,
+	roots: ["<rootDir>/src"],
 };
