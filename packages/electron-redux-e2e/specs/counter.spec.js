@@ -37,12 +37,4 @@ describe("Counter", () => {
 
 		expect(await app.client.getText("#value")).toEqual("-1");
 	});
-
-	it("Increases the count by one on clicking the aliased action", async () => {
-		expect(await app.client.getText("#value")).toEqual("0");
-
-		await app.client.click("#incrementAliased");
-
-		expect(await app.client.getText("#value")).toEqual("1");
-	});
 });

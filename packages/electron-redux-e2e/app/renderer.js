@@ -1,44 +1,44 @@
+require('source-map-support/register');
 const { createStore, applyMiddleware } = require("redux");
 const {
-	forwardToMain,
-	replayActionRenderer,
-	getInitialStateRenderer,
-	createAliasedAction,
-} = require("electron-redux");
+	getRendererState,
+	useRenderer,
+} = require("@mckayla/electron-redux");
+
 const reducers = require("./reducers");
 
-const initialState = getInitialStateRenderer();
-const store = createStore(
-	reducers,
-	initialState,
-	applyMiddleware(forwardToMain),
-);
+console.log(useRenderer);
 
-replayActionRenderer(store);
-
-const valueEl = document.getElementById("value");
-
-function render() {
-	console.log(store.getState());
-	valueEl.innerHTML = store.getState().count.toString();
-}
-
-render();
-
-store.subscribe(render);
-
-document.getElementById("increment").addEventListener("click", () => {
-	store.dispatch({ type: "INCREMENT" });
-});
-
-document.getElementById("decrement").addEventListener("click", () => {
-	store.dispatch({ type: "DECREMENT" });
-});
-
-document.getElementById("incrementAliased").addEventListener("click", () => {
-	store.dispatch(
-		createAliasedAction("INCREMENT_ALIASED", () => ({
-			type: "INCREMENT",
-		}))(),
+getRendererState().then(state => {
+	const store = createStore(
+		reducers,
+		state,
+		applyMiddleware(useRenderer),
 	);
+
+	const valueEl = document.getElementById("value");
+
+	const render = () => {
+		console.log(store.getState());
+		valueEl.innerHTML = store.getState().count.toString();
+	}
+
+	render();
+	store.subscribe(render);
+	
+
+	
+	
+	document.getElementById("increment").addEventListener("click", () => {
+		store.dispatch({ type: "INCREMENT" });
+	});
+	
+	document.getElementById("decrement").addEventListener("click", () => {
+		store.dispatch({ type: "DECREMENT" });
+	});
 });
+
+
+
+
+

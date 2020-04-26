@@ -1,20 +1,21 @@
-import forwardToMain, {
-	forwardToMainWithParams,
-} from "./middleware/forwardToMain";
-import forwardToRenderer from "./middleware/forwardToRenderer";
-import triggerAlias from "./middleware/triggerAlias";
-import createAliasedAction from "./helpers/createAliasedAction";
-import replayActionMain from "./helpers/replayActionMain";
-import replayActionRenderer from "./helpers/replayActionRenderer";
-import getInitialStateRenderer from "./helpers/getInitialStateRenderer";
+// export {
+// 	forwardToMain,
+// 	forwardToMainWithParams,
+// } from "./middleware/forwardToMain";
+// export { forwardToRenderer } from "./middleware/forwardToRenderer";
+// export { triggerAlias } from "./middleware/triggerAlias";
+// export { createAliasedAction } from "./helpers/createAliasedAction";
+// export { replayActionMain } from "./helpers/replayActionMain";
+// export { replayActionRenderer } from "./helpers/replayActionRenderer";
+// export { getInitialStateRenderer } from "./helpers/getInitialStateRenderer";
 
-export {
-	forwardToMain,
-	forwardToMainWithParams,
-	forwardToRenderer,
-	triggerAlias,
-	createAliasedAction,
-	replayActionMain,
-	replayActionRenderer,
-	getInitialStateRenderer,
-};
+export * from "./helpers/getRendererState";
+export * from "./middleware/useMain";
+export * from "./middleware/useRenderer";
+
+// export const getRendererState = () => ({});
+// export const useMain = () => (next: (action: any) => void) => (action: any) =>
+// 	next(action);
+// export const useRenderer = () => (next: (action: any) => void) => (
+// 	action: any,
+// ) => next(action);

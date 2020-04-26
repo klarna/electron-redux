@@ -12,7 +12,7 @@ const hydrate = (key, value) => {
 	return value;
 };
 
-export default async function getInitialStateRenderer() {
+export async function getRendererState() {
 	const state = await ipcRenderer.invoke(
 		"mckayla.electron-redux.FETCH_STATE",
 	);
