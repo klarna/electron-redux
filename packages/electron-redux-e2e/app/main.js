@@ -1,20 +1,15 @@
-console.log('wtf');
+console.log("wtf");
 
 const path = require("path");
 const url = require("url");
 const { app, BrowserWindow } = require("electron");
 const { createStore, applyMiddleware } = require("redux");
-const {
-	useMain
-} = require("@mckayla/electron-redux");
+const { useMain } = require("@mckayla/electron-redux");
 const reducers = require("./reducers");
 
 console.log(useMain);
 
-const store = createStore(
-	reducers,
-	applyMiddleware(useMain),
-);
+const store = createStore(reducers, applyMiddleware(useMain));
 
 // having to do this currently because of https://github.com/hardchor/electron-redux/issues/58
 // createAliasedAction("INCREMENT_ALIASED", () => ({ type: "INCREMENT" }));
