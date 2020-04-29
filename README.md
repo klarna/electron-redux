@@ -1,7 +1,6 @@
 # electron-redux
 
 [![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/hardchor/electron-redux.svg)](https://greenkeeper.io/)
 
 - [electron-redux](#electron-redux)
   - [Motivation](#motivation)
@@ -170,4 +169,5 @@ Special thanks go out to:
 
 - [Charlie Hess](https://github.com/CharlieHess)
 - [Roman Paradeev](https://github.com/sameoldmadness)
-- Anyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
+- [Pelle Jacobs](https://github.com/pellejacobs)
+- Everyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀

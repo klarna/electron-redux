@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron';
+const { ipcMain } = typeof window != 'undefined' ? window.require('electron') : require('electron');
 
 export default function replayActionMain(store) {
   /**

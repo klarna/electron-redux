@@ -7,7 +7,7 @@
   "repository": "https://github.com/hardchor/electron-redux",
   "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://burgiblog.com)",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.2.0",
@@ -17,8 +17,9 @@
     "prettier-eslint-cli": "^5.0.0"
   },
   "scripts": {
-    "test": "lerna run test",
-    "precommit": "lint-staged"
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "test": "lerna run test"
   },
   "workspaces": [
     "packages/*"
@@ -28,5 +29,10 @@
       "prettier-eslint --single-quote --trailing-comma=all --print-width=100 --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

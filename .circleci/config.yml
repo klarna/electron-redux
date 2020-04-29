@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/electron-redux
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:lts-browsers
     steps:
       - checkout
       - restore_cache:
@@ -12,7 +12,7 @@ jobs:
             - electron-redux2-
       - run:
           name: Install Dependencies
-          command: yarn && ./node_modules/.bin/lerna bootstrap
+          command: yarn && yarn bootstrap
       - save_cache:
           key: electron-redux2-{{ .Branch }}
           paths:
@@ -21,17 +21,11 @@ jobs:
             - "~/electron-redux/packages/electron-redux/node_modules"
             - "~/electron-redux/packages/electron-redux-e2e/node_modules"
       - run:
-          name: Update yarn lockfile
-          command: ./node_modules/.bin/greenkeeper-lockfile-update
-      - run:
           name: Compile Assets
-          command: ./node_modules/.bin/lerna run build
+          command: yarn build
       - run:
           name: Run Tests
           command: yarn test
-      - run:
-          name: Upload yarn lockfile
-          command: ./node_modules/.bin/greenkeeper-lockfile-upload
       - store_artifacts:
           path: ~/electron-redux/packages/electron-redux/dist
           destination: dist
