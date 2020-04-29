@@ -19,6 +19,7 @@
     "prepublish": "yarn snyk-protect"
   },
   "devDependencies": {
+    "eslint": "^6.1.0",
     "jest": "^21.2.1",
     "snyk": "^1.189.0",
     "spectron": "^3.7.2"
