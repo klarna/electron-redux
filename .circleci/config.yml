@@ -21,17 +21,11 @@ jobs:
             - "~/electron-redux/packages/electron-redux/node_modules"
             - "~/electron-redux/packages/electron-redux-e2e/node_modules"
       - run:
-          name: Update yarn lockfile
-          command: ./node_modules/.bin/greenkeeper-lockfile-update
-      - run:
           name: Compile Assets
           command: ./node_modules/.bin/lerna run build
       - run:
           name: Run Tests
           command: yarn test
-      - run:
-          name: Upload yarn lockfile
-          command: ./node_modules/.bin/greenkeeper-lockfile-upload
       - store_artifacts:
           path: ~/electron-redux/packages/electron-redux/dist
           destination: dist
