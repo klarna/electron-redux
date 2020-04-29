@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/electron-redux
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:lts-browsers
     steps:
       - checkout
       - restore_cache:
