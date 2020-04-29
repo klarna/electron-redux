@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "electron": "^1.7.9",
+    "electron": "^8.2.4",
     "electron-redux": "^1.4.0",
     "redux": "^4.0.1"
   },
@@ -22,7 +22,7 @@
     "eslint": "^6.1.0",
     "jest": "^21.2.1",
     "snyk": "^1.189.0",
-    "spectron": "^3.7.2"
+    "spectron": "^10.0.1"
   },
   "snyk": true
 }
