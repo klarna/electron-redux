@@ -15,4 +15,9 @@ yarn build
 yarn test
 ```
 
-<!-- # Publishing TODO -->
+# Publishing
+
+```
+yarn lerna run prepare
+yarn lerna publish patch|minor|major
+```
