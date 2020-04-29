@@ -17,8 +17,7 @@
     "prettier-eslint-cli": "^5.0.0"
   },
   "scripts": {
-    "test": "lerna run test",
-    "precommit": "lint-staged"
+    "test": "lerna run test"
   },
   "workspaces": [
     "packages/*"
@@ -28,5 +27,10 @@
       "prettier-eslint --single-quote --trailing-comma=all --print-width=100 --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
