@@ -17,6 +17,8 @@
     "prettier-eslint-cli": "^5.0.0"
   },
   "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
     "test": "lerna run test"
   },
   "workspaces": [
