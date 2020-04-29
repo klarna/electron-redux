@@ -14,15 +14,11 @@
   },
   "scripts": {
     "start": "electron .",
-    "test": "jest .",
-    "snyk-protect": "snyk protect",
-    "prepublish": "yarn snyk-protect"
+    "test": "jest ."
   },
   "devDependencies": {
     "eslint": "^6.1.0",
     "jest": "^21.2.1",
-    "snyk": "^1.189.0",
     "spectron": "^10.0.1"
-  },
-  "snyk": true
+  }
 }
