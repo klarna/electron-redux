@@ -7,7 +7,7 @@
   "repository": "https://github.com/hardchor/electron-redux",
   "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://burgiblog.com)",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.2.0",

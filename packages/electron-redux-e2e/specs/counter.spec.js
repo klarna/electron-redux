@@ -4,16 +4,17 @@ describe('Counter', () => {
   let app;
 
   beforeEach(async () => {
-    jest.setTimeout(20000);
+    jest.setTimeout(6000);
     app = new Application({
       path: './node_modules/.bin/electron',
       args: ['.'],
-      startTimeout: 20000,
+      startTimeout: 5000,
       host: process.env.CHROMEDRIVER_HOST || 'localhost',
       port: process.env.CHROMEDRIVER_PORT || 9515,
     });
 
     await app.start();
+    await app.browserWindow.isVisible();
   });
 
   afterEach(async () => {
