@@ -11,9 +11,7 @@
     "lint": "eslint 'src/**/*'",
     "build": "rm -rf dist && babel src --out-dir dist",
     "prepare": "yarn build",
-    "prepush": "yarn test && yarn build",
-    "snyk-protect": "snyk protect",
-    "prepublish": "yarn snyk-protect"
+    "prepush": "yarn test && yarn build"
   },
   "keywords": [
     "electron",
@@ -46,8 +44,6 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^21.2.0",
     "eslint": "^6.1.0",
-    "jest": "^21.2.1",
-    "snyk": "^1.189.0"
-  },
-  "snyk": true
+    "jest": "^21.2.1"
+  }
 }
