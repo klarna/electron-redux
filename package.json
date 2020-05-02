@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "electron-redux",
-  "version": "1.4.0",
+  "version": "1.5.1",
   "description": "Using redux in electron",
   "main": "index.js",
   "repository": "https://github.com/hardchor/electron-redux",
