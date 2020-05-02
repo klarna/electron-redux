@@ -1,6 +1,6 @@
 {
   "name": "electron-redux-e2e",
-  "version": "1.4.0",
+  "version": "1.5.1",
   "description": "The end-to-end tests for electron-redux",
   "main": "app/main.js",
   "repository": "https://github.com/hardchor/electron-redux/tree/master/packages/electron-redux-e2e",
@@ -9,20 +9,16 @@
   "private": true,
   "dependencies": {
     "electron": "^8.2.4",
-    "electron-redux": "^1.4.0",
+    "electron-redux": "^1.5.1",
     "redux": "^4.0.1"
   },
   "scripts": {
     "start": "electron .",
-    "test": "jest .",
-    "snyk-protect": "snyk protect",
-    "prepublish": "yarn snyk-protect"
+    "test": "jest ."
   },
   "devDependencies": {
     "eslint": "^6.1.0",
     "jest": "^21.2.1",
-    "snyk": "^1.189.0",
     "spectron": "^10.0.1"
-  },
-  "snyk": true
+  }
 }
