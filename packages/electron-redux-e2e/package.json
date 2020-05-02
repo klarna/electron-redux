@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "eslint": "^6.1.0",
-    "jest": "^21.2.1",
+    "jest": "^25.5.4",
     "spectron": "^10.0.1"
   }
 }
