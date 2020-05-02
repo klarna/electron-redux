@@ -1,8 +1,7 @@
-const { webContents } =
-  typeof window != 'undefined' ? window.require('electron') : require('electron');
+import { webContents } from 'electron';
 import validateAction from '../helpers/validateAction';
 
-const forwardToRenderer = () => next => action => {
+const forwardToRenderer = () => next => (action) => {
   if (!validateAction(action)) return next(action);
   if (action.meta && action.meta.scope === 'local') return next(action);
 
@@ -17,7 +16,7 @@ const forwardToRenderer = () => next => action => {
 
   const allWebContents = webContents.getAllWebContents();
 
-  allWebContents.forEach(contents => {
+  allWebContents.forEach((contents) => {
     contents.send('redux-action', rendererAction);
   });
 

@@ -1,5 +1,4 @@
-const { ipcRenderer } =
-  typeof window != 'undefined' ? window.require('electron') : require('electron');
+import { ipcRenderer } from 'electron';
 
 export default function replayActionRenderer(store) {
   ipcRenderer.on('redux-action', (event, payload) => {

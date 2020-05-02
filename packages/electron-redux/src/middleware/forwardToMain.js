@@ -1,5 +1,4 @@
-const { ipcRenderer } =
-  typeof window != 'undefined' ? window.require('electron') : require('electron');
+import { ipcRenderer } from 'electron';
 import validateAction from '../helpers/validateAction';
 
 // eslint-disable-next-line consistent-return, no-unused-vars
