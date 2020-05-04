@@ -8,7 +8,9 @@ const {
   replayActionMain,
   createAliasedAction,
 } = require('electron-redux');
-const reducers = require('./reducers');
+const reducers = require('../reducers');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const store = createStore(reducers, 0, applyMiddleware(triggerAlias, forwardToRenderer));
 
@@ -31,11 +33,21 @@ function createWindow() {
     },
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  if (isDevelopment) {
+    mainWindow.webContents.openDevTools();
+  }
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  if (isDevelopment) {
+    mainWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
+  } else {
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, '../renderer/index.html'),
+        protocol: 'file',
+        slashes: true,
+      }),
+    );
+  }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

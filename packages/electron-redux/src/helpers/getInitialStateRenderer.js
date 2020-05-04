@@ -1,4 +1,4 @@
-const { remote } = typeof window != 'undefined' ? window.require('electron') : require('electron');
+import { remote } from 'electron';
 
 export default function getInitialStateRenderer() {
   const getReduxState = remote.getGlobal('getReduxState');
