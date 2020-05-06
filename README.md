@@ -48,9 +48,9 @@ Actions fired **MUST** be [FSA](https://github.com/acdlite/flux-standard-action#
 
 Furthermore, actions (and that includes `payload`s) **MUST** be (de-)serialisable, i.e. either POJOs (simple `object`s - that excludes native JavaScript or DOM objects like `FileList`, `Map`, etc.), `array`s, or primitives. For workarounds, check out [aliased actions](#aliased-actions-main-process)
 
-### Local actions (renderer process)
+### Local actions
 
-By default, all actions are being broadcast from the main store to the renderer processes. However, some state should only live in the renderer (e.g. `isPanelOpen`). `electron-redux` introduces the concept of action scopes.
+By default, all actions are played in the main thread and all renderer threads. However, some state should only live in the renderer (e.g. `isPanelOpen`). `electron-redux` introduces the concept of action scopes.
 
 To stop an action from propagating from renderer to main store, simply set the scope to `local`:
 
@@ -62,6 +62,13 @@ const myLocalActionCreator = () => ({
 		scope: "local",
 	},
 });
+```
+
+We also provide a utility function for this
+
+```
+import { stopForwarding } from "@mckayla/electron-redux";
+dispatch(stopForwarding(action));
 ```
 
 ### Blacklisted actions
