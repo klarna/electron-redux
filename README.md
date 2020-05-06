@@ -1,20 +1,9 @@
 # electron-redux
 
-![package version](https://img.shields.io/badge/@mckayla%2felectron--redux-v2.0.0-afbdf7.svg)
+[![package version](https://img.shields.io/badge/@mckayla%2felectron--redux-v2.0.0-afbdf7.svg)](https://npmjs.com/package/@mckayla/electron-redux)
 ![stability](https://img.shields.io/badge/stability-release-66f29a.svg)
 [![build status](https://github.com/partheseas/electron-redux/workflows/main/badge.svg)](https://github.com/partheseas/electron-redux/actions)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
-
--   [electron-redux](#electron-redux)
-    -   [Motivation](#motivation)
-        -   [The solution](#the-solution)
-    -   [Install](#install)
-    -   [Actions](#actions)
-        -   [Local actions (renderer process)](#local-actions-renderer-process)
-        -   [Aliased actions (main process)](#aliased-actions-main-process)
-        -   [Blacklisted actions](#blacklisted-actions)
-    -   [Contributions](#contributions)
-    -   [Contributors](#contributors)
 
 ## Motivation
 
@@ -27,63 +16,27 @@ Using redux with electron poses a couple of problems. Processes ([main](https://
 
 `electron-redux` offers an easy to use solution. The redux store on the main process becomes the single source of truth, and stores in the renderer processes become mere proxies. See [under the hood](#under-the-hood).
 
-![electron-redux basic](https://cloud.githubusercontent.com/assets/307162/20675737/385ce59e-b585-11e6-947e-3867e77c783d.png)
+![electron-redux data flow](https://cloud.githubusercontent.com/assets/307162/20675737/385ce59e-b585-11e6-947e-3867e77c783d.png)
 
 ## Install
 
 ```
-npm install --save @mckayla/electron-redux
+yarn add @mckayla/electron-redux
 ```
 
-`electron-redux` comes as redux middleware that is really easy to apply:
+`electron-redux` comes as redux store enhancer that is really easy to apply:
 
 ```javascript
-// in the main store
-import {
-	forwardToRenderer,
-	triggerAlias,
-	replayActionMain,
-} from "electron-redux";
-
-const todoApp = combineReducers(reducers);
-
-const store = createStore(
-	todoApp,
-	initialState, // optional
-	applyMiddleware(
-		triggerAlias, // optional, see below
-		...otherMiddleware,
-		forwardToRenderer, // IMPORTANT! This goes last
-	),
-);
-
-replayActionMain(store);
+// in main
+import { syncMain } from "@mckayla/electron-redux";
+const store = createStore(reducer, syncMain);
 ```
 
 ```javascript
-// in the renderer store
-import {
-	forwardToMain,
-	replayActionRenderer,
-	getInitialStateRenderer,
-} from "electron-redux";
-
-const todoApp = combineReducers(reducers);
-const initialState = getInitialStateRenderer();
-
-const store = createStore(
-	todoApp,
-	initialState,
-	applyMiddleware(
-		forwardToMain, // IMPORTANT! This goes first
-		...otherMiddleware,
-	),
-);
-
-replayActionRenderer(store);
+// in renderer
+import { syncRenderer } from "@mckayla/electron-redux";
+const store = createStore(reducer, syncRenderer);
 ```
-
-Check out [timesheets](https://github.com/hardchor/timesheets/blob/4991fd472dbb12b0c6e6806c6a01ea3385ab5979/app/shared/store/configureStore.js) for a more advanced example.
 
 And that's it! You are now ready to fire actions without having to worry about synchronising your state between processes.
 
@@ -102,71 +55,18 @@ By default, all actions are being broadcast from the main store to the renderer 
 To stop an action from propagating from renderer to main store, simply set the scope to `local`:
 
 ```javascript
-function myLocalActionCreator() {
-	return {
-		type: "MY_ACTION",
-		payload: 123,
-		meta: {
-			scope: "local",
-		},
-	};
-}
+const myLocalActionCreator = () => ({
+	type: "MY_ACTION",
+	payload: 123,
+	meta: {
+		scope: "local",
+	},
+});
 ```
-
-### Aliased actions (main process)
-
-Most actions will originate from the renderer side, but not all should be executed there as well. A great example is fetching of data from an external source, e.g. using [promise middleware](https://github.com/acdlite/redux-promise), which should only ever be executed once (i.e. in the main process). This can be achieved using the `triggerAlias` middleware mentioned [above](#install).
-
-Using the `createAliasedAction` helper, you can quite easily create actions that are are only being executed in the main process, and the result of which is being broadcast to the renderer processes.
-
-```javascript
-import { createAliasedAction } from "electron-redux";
-
-export const importGithubProjects = createAliasedAction(
-	"IMPORT_GITHUB_PROJECTS", // unique identifier
-	(accessToken, repoFullName) => ({
-		type: "IMPORT_GITHUB_PROJECTS",
-		payload: importProjects(accessToken, repoFullName),
-	}),
-);
-```
-
-Check out [timesheets](https://github.com/hardchor/timesheets/blob/4ccaf08dee4e1a02850b5bf36e37c537fef7d710/app/shared/actions/github.js) for more examples.
 
 ### Blacklisted actions
 
 By default actions of certain type (e.g. starting with '@@') are not propagated to the main thread. You can change this behaviour by using `forwardToMainWithParams` function.
-
-```javascript
-// in the renderer store
-import {
-	forwardToMainWithParams,
-	replayActionRenderer,
-	getInitialStateRenderer,
-} from "electron-redux";
-
-const todoApp = combineReducers(reducers);
-const initialState = getInitialStateRenderer();
-
-const store = createStore(
-	todoApp,
-	initialState,
-	applyMiddleware(
-		forwardToMainWithParams(), // IMPORTANT! This goes first
-		...otherMiddleware,
-	),
-);
-
-replayActionRenderer(store);
-```
-
-You can specify patterns for actions that should not be propagated to the main thread.
-
-```javascript
-forwardToMainWithParams({
-	blacklist: [/^@@/, /^redux-form/],
-});
-```
 
 ## Contributions
 
