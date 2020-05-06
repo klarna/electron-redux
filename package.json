@@ -1,19 +1,17 @@
 {
 	"private": true,
 	"repository": "https://github.com/partheseas/electron-redux",
-	"author": "McKayla Washburn",
-	"license": "MIT",
 	"workspaces": [
 		"packages/*"
 	],
+	"author": "McKayla Washburn",
+	"license": "MIT",
 	"devDependencies": {
-		"lerna": "^3.0.0",
 		"parcel": "^2.0.0-nightly.234",
 		"prettier": "^2.0.5",
 		"typescript": "^3.8.3"
 	},
 	"scripts": {
-		"fmt": "prettier --ignore-path .gitignore --write .",
-		"test": "lerna run test"
+		"fmt": "prettier --ignore-path .gitignore --write ."
 	}
 }

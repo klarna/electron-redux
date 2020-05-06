@@ -4,14 +4,23 @@
 		<meta charset="UTF-8" />
 		<title>electron-redux</title>
 	</head>
-	<body>
-		<h1>electron-redux</h1>
-
-		<p>
-			Clicked: <span id="value">0</span> times
-			<button id="increment">+</button>
+	<body
+		style="
+			align-content: center;
+			align-items: center;
+			background-color: white;
+			display: grid;
+			font-family: sans-serif;
+			justify-content: center;
+			justify-items: center;
+			text-align: center;
+		"
+	>
+		<h1 id="value">0</h1>
+		<div>
 			<button id="decrement">-</button>
-		</p>
+			<button id="increment">+</button>
+		</div>
 
 		<script type="text/javascript">
 			require("./renderer.js");

@@ -8,14 +8,9 @@
 	"license": "MIT",
 	"private": true,
 	"dependencies": {
-		"@mckayla/electron-redux": "^2.0.0",
+		"@mckayla/electron-redux": "*",
 		"electron": "^8.0.0",
 		"redux": "^4.0.0"
-	},
-	"devDependencies": {
-		"jest": "^25.0.0",
-		"source-map-support": "^0.5.19",
-		"spectron": "^10.0.0"
 	},
 	"scripts": {
 		"start": "electron ."

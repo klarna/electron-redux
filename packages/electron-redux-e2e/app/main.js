@@ -1,28 +1,20 @@
-console.log("wtf");
-
-const path = require("path");
-const url = require("url");
+const { syncMain } = require("@mckayla/electron-redux");
 const { app, BrowserWindow } = require("electron");
-const { createStore, applyMiddleware } = require("redux");
-const { useMain } = require("@mckayla/electron-redux");
+const path = require("path");
+const { createStore } = require("redux");
+const url = require("url");
+
 const reducers = require("./reducers");
 
-console.log(useMain);
+const store = createStore(reducers, syncMain);
 
-const store = createStore(reducers, applyMiddleware(useMain));
-
-// having to do this currently because of https://github.com/hardchor/electron-redux/issues/58
-// createAliasedAction("INCREMENT_ALIASED", () => ({ type: "INCREMENT" }));
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 function createWindow() {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
-		width: 800,
-		height: 600,
+		width: 1380,
+		height: 830,
 		webPreferences: {
 			nodeIntegration: true,
 		},
