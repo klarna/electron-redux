@@ -18,18 +18,14 @@ Using redux with electron poses a couple of problems. Processes ([main](https://
 
 ![electron-redux data flow](https://cloud.githubusercontent.com/assets/307162/20675737/385ce59e-b585-11e6-947e-3867e77c783d.png)
 
-## Install
 
-```
-yarn add @mckayla/electron-redux
-```
-
-`electron-redux` comes as redux store enhancer that is really easy to apply:
 
 ```javascript
 // in main
 import { syncMain } from "@mckayla/electron-redux";
-const store = createStore(reducer, syncMain);
+const store = createStore(reducer, syncMain({
+	ignore: []
+});
 ```
 
 ```javascript

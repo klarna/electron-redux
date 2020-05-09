@@ -5,7 +5,7 @@ type ActionMeta = {
 	scope?: "local" | string;
 };
 
-const log = debug("mckayla.electron-redux.validateAction");
+const log = debug("mckayla.electron-redux.validation");
 
 const blacklist = [/^@@/, /^redux-form/];
 
@@ -24,7 +24,7 @@ export const validateAction = (
 ): action is FluxStandardAction<string, unknown, ActionMeta> => {
 	isFSA;
 	if (!isFSA<string, unknown, ActionMeta>(action)) {
-		log("WARNING! Action not FSA-compliant", action);
+		log("Only flux-standard-actions will be forwarded", action);
 		return false;
 	}
 

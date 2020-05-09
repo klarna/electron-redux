@@ -5,8 +5,8 @@ export default {
 	input: "src/index.ts",
 	plugins: [typescript()],
 	output: {
+		dir: "dist",
 		format: "cjs",
-		file: "dist/index.js",
 		sourcemap: true,
 	},
 };
