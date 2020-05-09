@@ -25,6 +25,6 @@ jobs:
             - run: yarn
             - run: yarn prettier --ignore-path .gitignore --check .
 
-            - run: yarn workspace @mckayla/electron-redux build
+            - run: yarn build
             # Need tests plz
             # - run: yarn workspace @mckayla/electron-redux-e2e test
