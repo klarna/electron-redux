@@ -13,6 +13,7 @@ export const forwardToMainWithParams = (params = {}) => store => next => (action
 
   // stop action in-flight
   ipcRenderer.send('redux-action', action);
+  return next(action);
 };
 
 const forwardToMain = forwardToMainWithParams({
