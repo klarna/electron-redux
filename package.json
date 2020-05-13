@@ -20,7 +20,7 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "test": "lerna run test",
-    "postinstall": "yarn run bootstrap && yarn run build"
+    "postinstall": "lerna bootstrap && lerna run build"
   },
   "workspaces": [
     "packages/*"
