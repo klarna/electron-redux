@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "test": "rm -rf coverage && jest --coverage",
-    "lint": "eslint 'src/**/*'",
+    "lint": "eslint --fix 'src/**/*'",
     "build": "rm -rf dist && babel src --out-dir dist",
     "prepare": "yarn build",
     "prepush": "yarn test && yarn build",
