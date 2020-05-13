@@ -11,7 +11,8 @@
     "lint": "eslint 'src/**/*'",
     "build": "rm -rf dist && babel src --out-dir dist",
     "prepare": "yarn build",
-    "prepush": "yarn test && yarn build"
+    "prepush": "yarn test && yarn build",
+    "postinstall": "yarn run lint && yarn run build"
   },
   "keywords": [
     "electron",
