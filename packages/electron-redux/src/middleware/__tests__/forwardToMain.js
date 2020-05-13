@@ -70,7 +70,7 @@ describe('forwardToMain', () => {
     expect(ipcRenderer.send).toHaveBeenCalledTimes(1);
     expect(ipcRenderer.send).toHaveBeenCalledWith('redux-action', action);
 
-    expect(next).toHaveBeenCalledTimes(0);
+    expect(next).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -89,7 +89,7 @@ describe('forwardToMainWithParams', () => {
     expect(ipcRenderer.send).toHaveBeenCalledTimes(1);
     expect(ipcRenderer.send).toHaveBeenCalledWith('redux-action', action);
 
-    expect(next).toHaveBeenCalledTimes(0);
+    expect(next).toHaveBeenCalledTimes(1);
   });
 
   it('should forward an action through if it starts with redux-form', () => {
@@ -101,7 +101,7 @@ describe('forwardToMainWithParams', () => {
     expect(ipcRenderer.send).toHaveBeenCalledTimes(1);
     expect(ipcRenderer.send).toHaveBeenCalledWith('redux-action', action);
 
-    expect(next).toHaveBeenCalledTimes(0);
+    expect(next).toHaveBeenCalledTimes(1);
   });
 
   it('should pass an action through if it is blacklisted', () => {
