@@ -8,11 +8,10 @@
   ],
   "scripts": {
     "test": "rm -rf coverage && jest --coverage",
-    "lint": "eslint --fix 'src/**/*'",
+    "lint": "eslint 'src/**/*'",
     "build": "rm -rf dist && babel src --out-dir dist",
     "prepare": "yarn build",
-    "prepush": "yarn test && yarn build",
-    "postinstall": "yarn run build"
+    "prepush": "yarn test && yarn build"
   },
   "keywords": [
     "electron",
