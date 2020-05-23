@@ -1,4 +1,3 @@
-import debug from "debug";
 import { ipcMain, webContents } from "electron";
 import {
 	Action,
@@ -8,11 +7,11 @@ import {
 	StoreEnhancer,
 } from "redux";
 
-const log = debug("mckayla.electron-redux.sync");
-
-import { stopForwarding, validateAction } from "../helpers";
-
-let previouslyInitialzed: Error;
+import {
+	preventDoubleInitialization,
+	stopForwarding,
+	validateAction,
+} from "../helpers";
 
 const freeze = (_: string, value: unknown): unknown => {
 	if (value instanceof Map) {
@@ -31,37 +30,43 @@ const freeze = (_: string, value: unknown): unknown => {
 
 const middleware: Middleware = (store) => {
 	ipcMain.handle("mckayla.electron-redux.FETCH_STATE", async () => {
+		// Stringify the current state, and freeze it to preserve certain types
+		// that you might want to use in your state, but aren't JSON serializable
+		// by default.
 		return JSON.stringify(store.getState(), freeze);
 	});
 
 	ipcMain.on("mckayla.electron-redux.ACTION", (event, action: Action) => {
+		// We received an action from a renderer
+		// Play it locally (in main)
 		store.dispatch(stopForwarding(action));
-	});
 
-	// We are intentionally not actually throwing the error here, we just
-	// want to capture the call stack for debugging.
-	previouslyInitialzed = new Error("Previously attached to a store at");
+		// Forward it to all of the other renderers
+		webContents.getAllWebContents().forEach((contents) => {
+			// Ignore the renderer that sent the action
+			if (contents.id !== event.sender.id) {
+				contents.send(
+					"mckayla.electron-redux.ACTION",
+					stopForwarding(action),
+				);
+			}
+		});
+	});
 
 	return (next) => (action) => {
 		if (validateAction(action)) {
-			log("forwarding following action to renderers");
 			webContents.getAllWebContents().forEach((contents) => {
+				console.log("contents.id", contents.id);
 				contents.send("mckayla.electron-redux.ACTION", action);
 			});
 		}
 
-		log("action:", action);
 		return next(action);
 	};
 };
 
 export const syncMain: StoreEnhancer = (createStore: StoreCreator) => {
-	if (previouslyInitialzed) {
-		console.error(
-			new Error("electron-redux has already been attached to a store"),
-		);
-		console.error(previouslyInitialzed);
-	}
+	preventDoubleInitialization();
 
 	return (reducer, state) => {
 		return createStore(reducer, state, applyMiddleware(middleware));

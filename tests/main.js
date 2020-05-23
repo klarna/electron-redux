@@ -1,4 +1,3 @@
-const log = require("debug")("mckayla.electron-redux.test");
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const url = require("url");
@@ -6,12 +5,12 @@ const url = require("url");
 const { increment, store } = require("./store/main");
 
 store.subscribe(() => {
-	log(store.getState());
+	console.log(store.getState());
 });
 
 setInterval(() => {
 	store.dispatch(increment());
-}, 1000);
+}, 10000);
 
 const views = [];
 

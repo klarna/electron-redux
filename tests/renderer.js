@@ -1,9 +1,8 @@
-const log = require("debug")("mckayla.electron-redux.test");
 const { decrement, increment, store } = require("./store/renderer");
 
 store.subscribe(() => {
 	const state = store.getState();
-	log(state);
+	console.log(state);
 	d.innerHTML = state.count;
 });
 

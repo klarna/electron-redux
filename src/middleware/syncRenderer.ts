@@ -1,4 +1,3 @@
-import debug from "debug";
 import { ipcRenderer } from "electron";
 import {
 	Action,
@@ -8,9 +7,12 @@ import {
 	StoreCreator,
 	StoreEnhancer,
 } from "redux";
-import { stopForwarding, validateAction } from "../helpers";
 
-const log = debug("mckayla.electron-redux.sync");
+import {
+	preventDoubleInitialization,
+	stopForwarding,
+	validateAction,
+} from "../helpers";
 
 const hydrate = (_: string, value: any) => {
 	if (value?.__hydrate_type === "__hydrate_map") {
@@ -24,7 +26,7 @@ const hydrate = (_: string, value: any) => {
 	return value;
 };
 
-export async function getRendererState(callback: (state) => void) {
+export async function getRendererState(callback: (state: unknown) => void) {
 	const state = await ipcRenderer.invoke(
 		"mckayla.electron-redux.FETCH_STATE",
 	);
@@ -36,18 +38,23 @@ export async function getRendererState(callback: (state) => void) {
 		);
 	}
 
-	// I just don't like the ().then() syntax
-	// TODO: Copy and paste shrug emoji
-	return callback(JSON.parse(state, hydrate));
+	// We do some fancy hydration on certain types like Map and Set.
+	// See also `freeze` in syncMain
+	callback(JSON.parse(state, hydrate));
 }
+
+/**
+ * This next bit is all just for being able to fill the store with the correct
+ * state asynchronously, because blocking the thread feels bad for potentially
+ * large stores.
+ */
+type InternalAction = ReturnType<typeof replaceState>;
 
 const replaceState = <S>(state: S) => ({
 	type: "mckayla.electron-redux.REPLACE_STATE" as const,
 	payload: state,
 	meta: { scope: "local" },
 });
-
-type InternalAction = ReturnType<typeof replaceState>;
 
 const wrapReducer = (reducer: Reducer) => <S, A extends Action>(
 	state: S,
@@ -68,17 +75,16 @@ const middleware: Middleware = (store) => {
 
 	return (next) => (action) => {
 		if (validateAction(action)) {
-			// TODO: We need a way to send actions from one renderer to another
-			log("forwarding following action to main");
 			ipcRenderer.send("mckayla.electron-redux.ACTION", action);
 		}
 
-		log("action:", action);
 		return next(action);
 	};
 };
 
 export const syncRenderer: StoreEnhancer = (createStore: StoreCreator) => {
+	preventDoubleInitialization();
+
 	return (reducer, state) => {
 		const store = createStore(
 			wrapReducer(reducer),
@@ -89,19 +95,16 @@ export const syncRenderer: StoreEnhancer = (createStore: StoreCreator) => {
 		// This is the reason we need to be an enhancer, rather than a middleware.
 		// We use this (along with the wrapReducer function above) to dispatch an
 		// action that initializes the store without needing to fetch it synchronously.
-
-		// Also relevant, this is internally implemented using promises. It would be really
-		// cool to use async/await syntax but we need to return a Store, not a Promise.
 		getRendererState((state) => {
 			store.dispatch(replaceState(state));
 		});
 
-		// TypeScript is fucking dumb. If you return the call to createStore
+		// XXX: TypeScript is dumb. If you return the call to createStore
 		// immediately it's fine, but even assigning it to a constant and returning
-		// will make it freak out.
+		// will make it freak out. We fix this with the line below the return.
 		return store;
-		// Even though this line is unreachable, it fixes the type signature????
-		// What the actual fuck TypeScript?
+
+		// XXX: Even though this is unreachable, it fixes the type signature????
 		return (store as unknown) as any;
 	};
 };

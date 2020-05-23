@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
-	"description": "Keep your store in sync across processes",
+	"description": "Make sure all your stores are on the same page",
 	"author": "McKayla Washburn",
 	"repository": "https://github.com/partheseas/electron-redux",
 	"bugs": "https://github.com/partheseas/electron-redux/issues",
@@ -19,7 +19,6 @@
 		"node": ">= 12"
 	},
 	"dependencies": {
-		"debug": "^4.0.0",
 		"flux-standard-action": "^2.0.0"
 	},
 	"peerDependencies": {
@@ -27,7 +26,6 @@
 		"redux": ">=4.0.0"
 	},
 	"devDependencies": {
-		"@types/debug": "^4.1.5",
 		"electron": "^8.2.5",
 		"parcel": "^2.0.0-nightly.256",
 		"prettier": "^2.0.5",
@@ -36,6 +34,7 @@
 	},
 	"scripts": {
 		"build": "parcel build src/index.ts",
-		"fmt": "prettier --ignore-path .gitignore --write ."
+		"fmt": "prettier --ignore-path .gitignore --write .",
+		"test": "electron tests/main.js"
 	}
 }
