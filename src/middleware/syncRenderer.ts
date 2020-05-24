@@ -9,22 +9,11 @@ import {
 } from "redux";
 
 import {
+	hydrate,
 	preventDoubleInitialization,
 	stopForwarding,
 	validateAction,
 } from "../helpers";
-
-const hydrate = (_: string, value: any) => {
-	if (value?.__hydrate_type === "__hydrate_map") {
-		return new Map(
-			Object.entries(value).filter(([key]) => key !== "__hydrate_type"),
-		);
-	} else if (value?.__hydrate_type === "__hydrate_set") {
-		return new Set(value.items);
-	}
-
-	return value;
-};
 
 export async function getRendererState(callback: (state: unknown) => void) {
 	const state = await ipcRenderer.invoke(
@@ -39,7 +28,7 @@ export async function getRendererState(callback: (state: unknown) => void) {
 	}
 
 	// We do some fancy hydration on certain types like Map and Set.
-	// See also `freeze` in syncMain
+	// See also `freeze`
 	callback(JSON.parse(state, hydrate));
 }
 
@@ -69,6 +58,7 @@ const wrapReducer = (reducer: Reducer) => <S, A extends Action>(
 };
 
 const middleware: Middleware = (store) => {
+	// When receiving an action from main
 	ipcRenderer.on("mckayla.electron-redux.ACTION", (_, action: Action) => {
 		store.dispatch(stopForwarding(action));
 	});

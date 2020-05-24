@@ -8,25 +8,11 @@ import {
 } from "redux";
 
 import {
+	freeze,
 	preventDoubleInitialization,
 	stopForwarding,
 	validateAction,
 } from "../helpers";
-
-const freeze = (_: string, value: unknown): unknown => {
-	if (value instanceof Map) {
-		const obj = Object.fromEntries(value);
-		obj.__hydrate_type = "__hydrate_map";
-		return obj;
-	} else if (value instanceof Set) {
-		return {
-			__hydrate_type: "__hydrate_set",
-			items: Array.from(value),
-		};
-	}
-
-	return value;
-};
 
 const middleware: Middleware = (store) => {
 	ipcMain.handle("mckayla.electron-redux.FETCH_STATE", async () => {
@@ -36,8 +22,8 @@ const middleware: Middleware = (store) => {
 		return JSON.stringify(store.getState(), freeze);
 	});
 
+	// When receiving an action from a renderer
 	ipcMain.on("mckayla.electron-redux.ACTION", (event, action: Action) => {
-		// We received an action from a renderer
 		// Play it locally (in main)
 		store.dispatch(stopForwarding(action));
 
