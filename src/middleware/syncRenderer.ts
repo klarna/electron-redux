@@ -16,16 +16,16 @@ import {
 } from "../helpers";
 
 export async function getRendererState(callback: (state: unknown) => void) {
-	const state = await ipcRenderer.invoke(
-		"mckayla.electron-redux.FETCH_STATE",
-	);
-
-	// TODO: I don't think this is the right error handling anymore
-	if (typeof state !== "string") {
-		throw new Error(
-			"No Redux store found in main process. Did you apply the middleware?",
-		);
-	}
+	// Electron will throw an error if there isn't a handler for the channel.
+	// We catch it so that we can throw a more useful error
+	const state = await ipcRenderer
+		.invoke("mckayla.electron-redux.FETCH_STATE")
+		.catch((error) => {
+			console.error(error);
+			throw new Error(
+				"No Redux store found in main process. Did you use the syncMain enhancer?",
+			);
+		});
 
 	// We do some fancy hydration on certain types like Map and Set.
 	// See also `freeze`
@@ -39,6 +39,11 @@ export async function getRendererState(callback: (state: unknown) => void) {
  */
 type InternalAction = ReturnType<typeof replaceState>;
 
+/**
+ * Creates an action that will replace the current state with the provided
+ * state. The scope is set to local in this creator function to make sure it is
+ * never forwarded.
+ */
 const replaceState = <S>(state: S) => ({
 	type: "mckayla.electron-redux.REPLACE_STATE" as const,
 	payload: state,
