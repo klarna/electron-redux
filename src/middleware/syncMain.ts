@@ -24,17 +24,14 @@ const middleware: Middleware = (store) => {
 
 	// When receiving an action from a renderer
 	ipcMain.on("mckayla.electron-redux.ACTION", (event, action: Action) => {
-		// Play it locally (in main)
-		store.dispatch(stopForwarding(action));
+		const localAction = stopForwarding(action);
+		store.dispatch(localAction);
 
 		// Forward it to all of the other renderers
 		webContents.getAllWebContents().forEach((contents) => {
 			// Ignore the renderer that sent the action
 			if (contents.id !== event.sender.id) {
-				contents.send(
-					"mckayla.electron-redux.ACTION",
-					stopForwarding(action),
-				);
+				contents.send("mckayla.electron-redux.ACTION", localAction);
 			}
 		});
 	});
