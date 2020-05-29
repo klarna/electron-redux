@@ -10,7 +10,7 @@ store.subscribe(() => {
 
 setInterval(() => {
 	store.dispatch(increment());
-}, 10000);
+}, 3000);
 
 const views = [];
 
