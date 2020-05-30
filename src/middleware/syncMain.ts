@@ -39,7 +39,6 @@ const middleware: Middleware = (store) => {
 	return (next) => (action) => {
 		if (validateAction(action)) {
 			webContents.getAllWebContents().forEach((contents) => {
-				console.log("contents.id", contents.id);
 				contents.send("mckayla.electron-redux.ACTION", action);
 			});
 		}
