@@ -1,5 +1,5 @@
-import { isFSA } from 'flux-standard-action';
 import debug from 'debug';
+import { isFSA } from './fluxStandardAction';
 
 const log = debug('electron-redux:validateAction');
 

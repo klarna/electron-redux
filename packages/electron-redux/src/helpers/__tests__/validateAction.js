@@ -1,7 +1,7 @@
 import validateAction from '../validateAction';
 
 jest.unmock('../validateAction');
-jest.unmock('flux-standard-action');
+jest.unmock('../fluxStandardAction');
 
 describe('validateAction', () => {
   it('should accept FSA-compliant actions', () => {
@@ -19,5 +19,6 @@ describe('validateAction', () => {
     expect(validateAction({})).toBeFalsy();
     expect(validateAction({ meta: {} })).toBeFalsy();
     expect(validateAction(() => {})).toBeFalsy();
+    expect(validateAction([])).toBeFalsy();
   });
 });
