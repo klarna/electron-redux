@@ -13,7 +13,7 @@
     "prepare": "yarn build",
     "prepush": "yarn test && yarn build"
   },
-  "types": "./src/index.d.ts",
+  "types": "dist/index.d.ts",
   "keywords": [
     "electron",
     "redux",
