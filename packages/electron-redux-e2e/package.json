@@ -1,6 +1,6 @@
 {
   "name": "electron-redux-e2e",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "The end-to-end tests for electron-redux",
   "main": "dist/main/main.js",
   "repository": "https://github.com/hardchor/electron-redux/tree/master/packages/electron-redux-e2e",
@@ -9,7 +9,7 @@
   "private": true,
   "dependencies": {
     "electron": "^8.2.4",
-    "electron-redux": "^1.5.3",
+    "electron-redux": "^1.5.4",
     "electron-webpack": "^2.8.2",
     "redux": "^4.0.1",
     "source-map-support": "^0.5.19",
