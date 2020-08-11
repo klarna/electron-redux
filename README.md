@@ -171,4 +171,5 @@ Special thanks go out to:
 - [Roman Paradeev](https://github.com/sameoldmadness)
 - [Pelle Jacobs](https://github.com/pellejacobs)
 - [Victor Quiroz Castro](https://github.com/victorhqc)
+- [musou1500](https://github.com/musou1500)
 - Everyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
