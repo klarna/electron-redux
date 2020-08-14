@@ -32,7 +32,7 @@ jobs:
 
       - name: Build Code
         run: yarn build
-        rnv:
+        env:
           CI: true
 
       - name: Test Code
