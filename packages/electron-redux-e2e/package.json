@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "electron": "^8.2.4",
+    "electron": "^9.2.0",
     "electron-redux": "^1.5.4",
     "electron-webpack": "^2.8.2",
     "redux": "^4.0.1",
