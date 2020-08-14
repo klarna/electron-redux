@@ -10,6 +10,7 @@
     - [Local actions (renderer process)](#local-actions-renderer-process)
     - [Aliased actions (main process)](#aliased-actions-main-process)
     - [Blacklisted actions](#blacklisted-actions)
+  - [F.A.Q.](#faq)
   - [Contributions](#contributions)
   - [Contributors](#contributors)
 
@@ -157,6 +158,22 @@ forwardToMainWithParams({
 });
 ```
 
+## F.A.Q
+
+### `electron-redux` crashes with electron 10.x
+
+As of Electron 10, the `remote` module is removed by default.
+
+We can get it back by adding `enableRemoteModule=true` to the `webPreferences`:
+
+```js
+const w = new BrowserWindow({
+  webPreferences: {
+    enableRemoteModule: true
+  }
+})
+```
+
 ## Contributions
 
 Contributions via [issues](https://github.com/hardchor/electron-redux/issues/new) or [pull requests](https://github.com/hardchor/electron-redux/compare) are hugely welcome!
@@ -172,4 +189,5 @@ Special thanks go out to:
 - [Pelle Jacobs](https://github.com/pellejacobs)
 - [Victor Quiroz Castro](https://github.com/victorhqc)
 - [musou1500](https://github.com/musou1500)
+- [Andreas Dolk](https://github.com/Treverix)
 - Everyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
