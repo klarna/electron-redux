@@ -23,14 +23,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: yarn
+        run: yarn && yarn bootstrap
 
-      - name: Build Code
+      - name: Build code
         run: yarn build
-        env:
-          CI: true
 
-      - name: Test Code
-        run: yarn test
-        env:
-          CI: true
+      - name: Unit tests
+        run: yarn test --scope electron-redux --stream
+
+      - name: E2E tests
+        uses: GabrielBB/xvfb-action@v1.2
+        with:
+          run: yarn test --scope electron-redux-e2e --stream

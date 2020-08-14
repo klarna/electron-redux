@@ -19,7 +19,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "test": "lerna run test --scope electron-redux"
+    "test": "lerna run test"
   },
   "workspaces": [
     "packages/*"
