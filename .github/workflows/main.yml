@@ -25,11 +25,6 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Check Code Styling
-        run: yarn prettier --ignore-path .gitignore --check .
-        env:
-          CI: true
-
       - name: Build Code
         run: yarn build
         env:
