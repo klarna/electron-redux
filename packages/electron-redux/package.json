@@ -23,10 +23,10 @@
   "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://www.burgiblog.com)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hardchor/electron-redux.git"
+    "url": "https://github.com/klarna/electron-redux.git"
   },
-  "homepage": "https://github.com/hardchor/electron-redux/tree/master/packages/electron-redux",
-  "bugs": "https://github.com/hardchor/electron-redux/issues",
+  "homepage": "https://github.com/klarna/electron-redux/tree/master/packages/electron-redux",
+  "bugs": "https://github.com/klarna/electron-redux/issues",
   "license": "MIT",
   "dependencies": {
     "debug": "^4.1.1",
