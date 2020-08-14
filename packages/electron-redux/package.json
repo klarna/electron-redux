@@ -1,6 +1,6 @@
 {
   "name": "electron-redux",
-  "version": "1.5.2",
+  "version": "1.5.4",
   "description": "Use redux in the main and browser process in electron",
   "main": "dist/index.js",
   "files": [
@@ -9,10 +9,11 @@
   "scripts": {
     "test": "rm -rf coverage && jest --coverage",
     "lint": "eslint 'src/**/*'",
-    "build": "rm -rf dist && babel src --out-dir dist",
+    "build": "rm -rf dist && babel src --out-dir dist && cp ./src/index.d.ts ./dist",
     "prepare": "yarn build",
     "prepush": "yarn test && yarn build"
   },
+  "types": "dist/index.d.ts",
   "keywords": [
     "electron",
     "redux",
@@ -29,7 +30,6 @@
   "license": "MIT",
   "dependencies": {
     "debug": "^4.1.1",
-    "flux-standard-action": "^2.0.0",
     "redux": "^4.0.1"
   },
   "peerDependencies": {
@@ -43,7 +43,7 @@
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^26.0.1",
-    "eslint": "^6.1.0",
+    "eslint": "^7.3.1",
     "jest": "^26.0.0"
   }
 }
