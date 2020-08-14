@@ -1,6 +1,6 @@
 # electron-redux
 
-[![CircleCI](https://circleci.com/gh/hardchor/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/hardchor/electron-redux/tree/master)
+[![CircleCI](https://circleci.com/gh/klarna/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/klarna/electron-redux/tree/master)
 
 - [electron-redux](#electron-redux)
   - [Motivation](#motivation)
@@ -159,7 +159,7 @@ forwardToMainWithParams({
 
 ## Contributions
 
-Contributions via [issues](https://github.com/hardchor/electron-redux/issues/new) or [pull requests](https://github.com/hardchor/electron-redux/compare) are hugely welcome!
+Contributions via [issues](https://github.com/klarna/electron-redux/issues/new) or [pull requests](https://github.com/klarna/electron-redux/compare) are hugely welcome!
 
 Feel free to let me know whether you're successfully using `electron-redux` in your project and I'm happy to add them here as well!
 
@@ -172,4 +172,4 @@ Special thanks go out to:
 - [Pelle Jacobs](https://github.com/pellejacobs)
 - [Victor Quiroz Castro](https://github.com/victorhqc)
 - [musou1500](https://github.com/musou1500)
-- Everyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
+- Everyone who has contributed by [asking questions & raising issues](https://github.com/klarna/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
