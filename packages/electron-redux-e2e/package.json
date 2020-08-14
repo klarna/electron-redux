@@ -3,12 +3,12 @@
   "version": "1.5.4",
   "description": "The end-to-end tests for electron-redux",
   "main": "dist/main/main.js",
-  "repository": "https://github.com/hardchor/electron-redux/tree/master/packages/electron-redux-e2e",
+  "repository": "https://github.com/klarna/electron-redux/tree/master/packages/electron-redux-e2e",
   "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://burgiblog.com)",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "electron": "^8.2.4",
+    "electron": "^9.2.0",
     "electron-redux": "^1.5.4",
     "electron-webpack": "^2.8.2",
     "redux": "^4.0.1",
@@ -24,6 +24,6 @@
   "devDependencies": {
     "eslint": "^7.3.1",
     "jest": "^26.0.0",
-    "spectron": "^10.0.1"
+    "spectron": "^11.1.0"
   }
 }

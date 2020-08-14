@@ -16,7 +16,7 @@ const store = createStore(reducers, 0, applyMiddleware(triggerAlias, forwardToRe
 
 replayActionMain(store);
 
-// having to do this currently because of https://github.com/hardchor/electron-redux/issues/58
+// having to do this currently because of https://github.com/klarna/electron-redux/issues/58
 createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
 
 // Keep a global reference of the window object, if you don't, the window will
