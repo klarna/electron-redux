@@ -8,6 +8,9 @@
   "plugins": [
     "import"
   ],
+  "globals": {
+    "window": true
+  },
   "settings": {
     "import/core-modules": [ "electron" ]
   }

@@ -5,7 +5,7 @@
   export function replayActionMain(store: Store): void;
   export function replayActionRenderer(store: Store): void;
   export function getInitialStateRenderer<T>(): T;
-  export type ForwardToMainParams = { blacklist?: RegExp[] };
+  export type ForwardToMainParams = { id?: string, blacklist?: RegExp[] };
   export function forwardToMainWithParams(
     params?: ForwardToMainParams
   ): Middleware;

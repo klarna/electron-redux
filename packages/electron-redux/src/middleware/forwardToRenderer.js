@@ -1,7 +1,7 @@
 import { webContents } from 'electron';
 import validateAction from '../helpers/validateAction';
 
-const forwardToRenderer = () => next => (action) => {
+const forwardToRenderer = () => (next) => (action) => {
   if (!validateAction(action)) return next(action);
   if (action.meta && action.meta.scope === 'local') return next(action);
 
@@ -17,7 +17,12 @@ const forwardToRenderer = () => next => (action) => {
   const allWebContents = webContents.getAllWebContents();
 
   allWebContents.forEach((contents) => {
-    contents.send('redux-action', rendererAction);
+    if (contents.getURL().startsWith('devtools://')) return;
+    contents.executeJavaScript('window.electronReduxId').then((id) => {
+      if (action.meta.id !== id || !id) {
+        contents.send('redux-action', rendererAction);
+      }
+    });
   });
 
   return next(action);
