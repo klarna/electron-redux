@@ -50,7 +50,6 @@
     "babel-jest": "^26.3.0",
     "electron": "^8.2.5",
     "eslint": "^7.9.0",
-    "eslint-config-react-app": "^5.2.1",
     "eslint-import-resolver-typescript": "^2.3.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
