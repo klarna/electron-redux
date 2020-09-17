@@ -6,3 +6,4 @@ dist
 lib
 es
 types
+*.log

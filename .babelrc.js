@@ -15,7 +15,6 @@ module.exports = {
     ]
   ],
   plugins: [
-    // don't use `loose` mode here - need to copy symbols when spreading
     '@babel/proposal-object-rest-spread',
     '@babel/plugin-proposal-optional-chaining',
     NODE_ENV === 'test' && '@babel/transform-modules-commonjs'
