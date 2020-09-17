@@ -1,4 +1,8 @@
-dist/
-node_modules/
-coverage/
-*.log
+node_modules
+
+coverage
+
+dist
+lib
+es
+types
