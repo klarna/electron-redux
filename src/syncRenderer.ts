@@ -13,9 +13,9 @@ import {
 	preventDoubleInitialization,
 	stopForwarding,
 	validateAction,
-} from "../helpers";
+} from "./utils";
 
-export async function getRendererState(callback: (state: unknown) => void) {
+async function getRendererState(callback: (state: unknown) => void) {
 	// Electron will throw an error if there isn't a handler for the channel.
 	// We catch it so that we can throw a more useful error
 	const state = await ipcRenderer

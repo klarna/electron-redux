@@ -12,7 +12,7 @@ import {
 	preventDoubleInitialization,
 	stopForwarding,
 	validateAction,
-} from "../helpers";
+} from "./utils";
 
 const middleware: Middleware = (store) => {
 	ipcMain.handle("electron-redux.FETCH_STATE", async () => {

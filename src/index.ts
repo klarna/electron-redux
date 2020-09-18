@@ -1,3 +1,9 @@
-export { stopForwarding } from "./helpers";
-export * from "./middleware/syncMain";
-export * from "./middleware/syncRenderer";
+import { syncMain } from './syncMain'
+import { stopForwarding } from "./utils";
+import { syncRenderer } from "./syncRenderer";
+
+export {
+    syncMain,
+    syncRenderer,
+    stopForwarding,
+};
