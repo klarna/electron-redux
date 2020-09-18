@@ -66,5 +66,18 @@
   "scripts": {
     "clean": "rimraf lib dist es coverage types",
     "build": "rollup -c"
-  }
+  },
+  "npmName": "electron-redux",
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ],
+  "jest": {
+    "testRegex": "(/test/.*\\.spec\\.[tj]s)$",
+  },
+  "sideEffects": false
 }

@@ -15,7 +15,7 @@ import {
 } from "../helpers";
 
 const middleware: Middleware = (store) => {
-	ipcMain.handle("mckayla.electron-redux.FETCH_STATE", async () => {
+	ipcMain.handle("electron-redux.FETCH_STATE", async () => {
 		// Stringify the current state, and freeze it to preserve certain types
 		// that you might want to use in your state, but aren't JSON serializable
 		// by default.
@@ -23,7 +23,7 @@ const middleware: Middleware = (store) => {
 	});
 
 	// When receiving an action from a renderer
-	ipcMain.on("mckayla.electron-redux.ACTION", (event, action: Action) => {
+	ipcMain.on("electron-redux.ACTION", (event, action: Action) => {
 		const localAction = stopForwarding(action);
 		store.dispatch(localAction);
 
@@ -31,7 +31,7 @@ const middleware: Middleware = (store) => {
 		webContents.getAllWebContents().forEach((contents) => {
 			// Ignore the renderer that sent the action
 			if (contents.id !== event.sender.id) {
-				contents.send("mckayla.electron-redux.ACTION", localAction);
+				contents.send("electron-redux.ACTION", localAction);
 			}
 		});
 	});
@@ -39,7 +39,7 @@ const middleware: Middleware = (store) => {
 	return (next) => (action) => {
 		if (validateAction(action)) {
 			webContents.getAllWebContents().forEach((contents) => {
-				contents.send("mckayla.electron-redux.ACTION", action);
+				contents.send("electron-redux.ACTION", action);
 			});
 		}
 
