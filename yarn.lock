@@ -2048,7 +2048,7 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^2.20.0:
+commander@^2.12.2, commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
@@ -5921,6 +5921,13 @@ typescript@^3.8.3:
   version "3.9.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
+
+typings-tester@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/typings-tester/-/typings-tester-0.3.2.tgz#04cc499d15ab1d8b2d14dd48415a13d01333bc5b"
+  integrity sha512-HjGoAM2UoGhmSKKy23TYEKkxlphdJFdix5VvqWFLzH1BJVnnwG38tpC6SXPgqhfFGfHY77RlN1K8ts0dbWBQ7A==
+  dependencies:
+    commander "^2.12.2"
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
