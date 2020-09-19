@@ -3,16 +3,6 @@ import { Application } from "spectron";
 describe("End to End Tests", () => {
   let app: Application;
 
-  app = new Application({
-    path: "./node_modules/.bin/electron",
-    args: ["./e2e_dist/main/main.js"],
-    startTimeout: 5000,
-    host: process.env.CHROMEDRIVER_HOST || "localhost",
-    port: parseInt(process.env.CHROMEDRIVER_PORT || "9515"),
-  });
-
-  app.start();
-
   const getText = (selector) =>
     app.client.$(selector).then((el) => el.getText());
   const click = (selector) => app.client.$(selector).then((el) => el.click());
