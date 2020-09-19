@@ -82,7 +82,7 @@ export const syncRenderer: StoreEnhancer = (createStore: StoreCreator) => {
 
 	return (reducer, state) => {
 		const store = createStore(
-			wrapReducer(reducer as any),
+			wrapReducer(reducer as any), // TODO: this needs some ❤️
 			state,
 			applyMiddleware(middleware),
 		);
@@ -94,11 +94,13 @@ export const syncRenderer: StoreEnhancer = (createStore: StoreCreator) => {
 			store.dispatch(replaceState(state));
 		});
 
+		// TODO: this needs some ❤️
 		// XXX: TypeScript is dumb. If you return the call to createStore
 		// immediately it's fine, but even assigning it to a constant and returning
 		// will make it freak out. We fix this with the line below the return.
 		return store;
 
+		// TODO: this needs some ❤️
 		// XXX: Even though this is unreachable, it fixes the type signature????
 		return (store as unknown) as any;
 	};
