@@ -7,3 +7,4 @@ lib
 es
 types
 *.log
+e2e_dist

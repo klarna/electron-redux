@@ -21,6 +21,15 @@
     "src",
     "types"
   ],
+  "scripts": {
+    "clean": "rimraf lib dist es coverage types",
+    "start:electron": "electron-webpack dev",
+    "build": "rollup -c",
+    "build:electron": "electron-webpack",
+    "check-types": "tsc --noEmit",
+    "test": "jest",
+    "pretest": "yarn build && yarn build:electron"
+  },
   "engines": {
     "node": ">= 12"
   },
@@ -48,7 +57,9 @@
     "@typescript-eslint/parser": "^4.1.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
-    "electron": "^8.2.5",
+    "electron": "^9.2.0",
+    "electron-webpack": "^2.8.2",
+    "electron-webpack-ts": "^4.0.1",
     "eslint": "^7.9.0",
     "eslint-import-resolver-typescript": "^2.3.0",
     "eslint-plugin-import": "^2.22.0",
@@ -61,14 +72,10 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.27.2",
+    "spectron": "^11.1.0",
     "typescript": "^3.8.3",
-    "typings-tester": "^0.3.2"
-  },
-  "scripts": {
-    "clean": "rimraf lib dist es coverage types",
-    "build": "rollup -c",
-    "test": "jest",
-    "pretest": "yarn build"
+    "typings-tester": "^0.3.2",
+    "webpack": "^4.44.2"
   },
   "npmName": "electron-redux",
   "npmFileMap": [
@@ -81,6 +88,15 @@
   ],
   "jest": {
     "testRegex": "(/tests/.*\\.spec\\.[tj]s)$"
+  },
+  "electronWebpack": {
+    "main": {
+      "sourceDirectory": "tests/e2e/main"
+    },
+    "renderer": {
+      "sourceDirectory": "tests/e2e/renderer"
+    },
+    "commonDistDirectory": "e2e_dist"
   },
   "sideEffects": false
 }
