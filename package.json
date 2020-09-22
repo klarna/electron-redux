@@ -4,7 +4,7 @@
   "description": "Redux & Electron: Make sure all your stores are on the same page",
   "repository": "https://github.com/klarna/electron-redux.git",
   "authors": [
-    "Burkhard Reffeling <burkhard.reffeling@klarna.com> (https://github.com/gaearon)",
+    "Burkhard Reffeling <burkhard.reffeling@klarna.com> (https://github.com/hardchor)",
     "McKayla Washburn <mckayla@hey.com> (https://github.com/partheseas)",
     "Maciej Malkowski <maciej.malkowski@klarna.com> (https://github.com/matmalkowski)"
   ],
