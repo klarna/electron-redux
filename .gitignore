@@ -1,4 +1,10 @@
-dist/
-node_modules/
-coverage/
+node_modules
+
+coverage
+
+dist
+lib
+es
+types
 *.log
+e2e_dist
