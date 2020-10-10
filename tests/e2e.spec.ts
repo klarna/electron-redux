@@ -3,9 +3,10 @@ import { Application } from "spectron";
 describe("End to End Tests", () => {
   let app: Application;
 
-  const getText = (selector) =>
+  const getText = (selector: string) =>
     app.client.$(selector).then((el) => el.getText());
-  const click = (selector) => app.client.$(selector).then((el) => el.click());
+  const click = (selector: string) =>
+    app.client.$(selector).then((el) => el.click());
 
   beforeEach(async () => {
     jest.setTimeout(6000);
@@ -18,6 +19,7 @@ describe("End to End Tests", () => {
     });
 
     await app.start();
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     await app.browserWindow.isVisible();
   });
 
@@ -33,6 +35,7 @@ describe("End to End Tests", () => {
     await click("#increment");
 
     expect(await getText("#value")).toEqual("1");
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     expect(await app.browserWindow.getTitle()).toEqual("1");
   });
 
@@ -42,6 +45,7 @@ describe("End to End Tests", () => {
     await click("#decrement");
 
     expect(await getText("#value")).toEqual("-1");
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     expect(await app.browserWindow.getTitle()).toEqual("-1");
   });
 });
