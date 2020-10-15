@@ -1,5 +1,5 @@
-import { syncMain} from '../..';
+import { syncMain } from '../..'
 import { createStore, Store } from 'redux'
-import { reducer, CounterState, Actions } from '../counter';
+import { reducer, CounterState, Actions } from '../counter'
 
-const store: Store<CounterState, Actions> = createStore(reducer, syncMain);
+const store: Store<CounterState, Actions> = createStore(reducer, syncMain)
