@@ -30,7 +30,8 @@
         "test": "jest",
         "lint": "eslint . --ext .ts",
         "format": "prettier --write .",
-        "pretest": "yarn build && yarn build:electron"
+        "pretest": "yarn build && yarn build:electron",
+        "commit": "cz"
     },
     "engines": {
         "node": ">= 12"
@@ -59,6 +60,8 @@
         "@typescript-eslint/parser": "^4.4.0",
         "babel-eslint": "^10.1.0",
         "babel-jest": "^26.3.0",
+        "commitizen": "^4.2.1",
+        "cz-conventional-changelog": "3.3.0",
         "electron": "^9.2.0",
         "electron-webpack": "^2.8.2",
         "electron-webpack-ts": "^4.0.1",
@@ -111,5 +114,10 @@
     "lint-staged": {
         "**/*": "prettier --write --ignore-unknown"
     },
-    "sideEffects": false
+    "sideEffects": false,
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    }
 }
