@@ -80,6 +80,7 @@
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-terser": "^7.0.2",
         "rollup-plugin-typescript2": "^0.27.2",
+        "semantic-release": "^17.2.1",
         "spectron": "^11.1.0",
         "typescript": "^4.0.3",
         "typings-tester": "^0.3.2",
