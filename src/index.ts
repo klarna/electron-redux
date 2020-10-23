@@ -1,5 +1,5 @@
-import { syncMain } from './syncMain'
+import { mainStateSyncEnhancer } from './mainStateSyncEnhancer'
 import { stopForwarding } from './utils'
-import { syncRenderer } from './syncRenderer'
+import { rendererStateSyncEnhancer } from './rendererStateSyncEnhancer'
 
-export { syncMain, syncRenderer, stopForwarding }
+export { mainStateSyncEnhancer, rendererStateSyncEnhancer, stopForwarding }
