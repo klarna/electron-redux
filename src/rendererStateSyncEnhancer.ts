@@ -1,19 +1,24 @@
 import { ipcRenderer } from 'electron'
 import { Action, applyMiddleware, Middleware, Reducer, StoreCreator, StoreEnhancer } from 'redux'
 
-import { hydrate, preventDoubleInitialization, stopForwarding, validateAction } from './utils'
+import { preventDoubleInitialization, stopForwarding, validateAction } from './utils'
 
-async function getRendererState(callback: (state: unknown) => void) {
+async function fetchInitialState(
+    options: RendererStateSyncEnhancerOptions,
+    callback: (state: unknown) => void
+) {
     // Electron will throw an error if there isn't a handler for the channel.
     // We catch it so that we can throw a more useful error
-    const state = await ipcRenderer.invoke('electron-redux.FETCH_STATE').catch((error) => {
-        console.error(error)
-        throw new Error('No Redux store found in main process. Did you use the syncMain enhancer?')
+    const state = await ipcRenderer.invoke('electron-redux.INIT_STATE').catch((error) => {
+        console.warn(error)
+        throw new Error(
+            'No Redux store found in main process. Did you use the mainStateSyncEnhancer in the MAIN process?'
+        )
     })
 
     // We do some fancy hydration on certain types like Map and Set.
     // See also `freeze`
-    callback(JSON.parse(state, hydrate))
+    callback(JSON.parse(state, options.reviver))
 }
 
 /**
@@ -61,7 +66,27 @@ const middleware: Middleware = (store) => {
     }
 }
 
-export const syncRenderer: StoreEnhancer = (createStore: StoreCreator) => {
+export type RendererStateSyncEnhancerOptions = {
+    /**
+     * Custom function used during de-serialization of the redux store to transform the object.
+     * This function is called for each member of the object. If a member contains nested objects,
+     * the nested objects are transformed before the parent object is.
+     */
+    reviver?: (this: unknown, key: string, value: unknown) => unknown
+}
+
+const defaultOptions: RendererStateSyncEnhancerOptions = {}
+
+/**
+ * Creates new instance of renderer process redux enhancer.
+ * Upon initialization, it will fetch the state from the main process & subscribe for event
+ *  communication required to keep the actions in sync.
+ * @param {RendererStateSyncEnhancerOptions} options Additional settings for enhancer
+ * @returns StoreEnhancer
+ */
+export const rendererStateSyncEnhancer = (options = defaultOptions): StoreEnhancer => (
+    createStore: StoreCreator
+) => {
     preventDoubleInitialization()
 
     return (reducer, state) => {
@@ -74,7 +99,7 @@ export const syncRenderer: StoreEnhancer = (createStore: StoreCreator) => {
         // This is the reason we need to be an enhancer, rather than a middleware.
         // We use this (along with the wrapReducer function above) to dispatch an
         // action that initializes the store without needing to fetch it synchronously.
-        getRendererState((state) => {
+        fetchInitialState(options, (state) => {
             store.dispatch(replaceState(state))
         })
 
