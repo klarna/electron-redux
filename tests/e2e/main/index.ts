@@ -3,11 +3,11 @@ import url from 'url'
 import { app, BrowserWindow } from 'electron'
 import { createStore } from 'redux'
 import { reducer } from '../../counter'
-import { syncMain } from '../../..'
+import { mainStateSyncEnhancer } from '../../..'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
-const store = createStore(reducer, syncMain)
+const store = createStore(reducer, mainStateSyncEnhancer())
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

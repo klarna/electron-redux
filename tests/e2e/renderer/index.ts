@@ -1,8 +1,8 @@
 import { createStore } from 'redux'
 import { reducer } from '../../counter'
-import { syncRenderer } from '../../../'
+import { rendererStateSyncEnhancer } from '../../../'
 
-const store = createStore(reducer, syncRenderer)
+const store = createStore(reducer, rendererStateSyncEnhancer())
 
 function mount() {
     document.getElementById('app')!.innerHTML = `
