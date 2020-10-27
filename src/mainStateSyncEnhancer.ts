@@ -36,7 +36,7 @@ function createMiddleware(options: MainStateSyncEnhancerOptions) {
         })
 
         return (next) => (action) => {
-            if (validateAction(action)) {
+            if (validateAction(action, options.denyList)) {
                 webContents.getAllWebContents().forEach((contents) => {
                     // Ignore chromium devtools
                     if (contents.getURL().startsWith('devtools://')) return

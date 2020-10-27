@@ -3,18 +3,18 @@ import { Action, applyMiddleware, Middleware, StoreCreator, StoreEnhancer } from
 import { IPCEvents } from './constants'
 import { fetchInitialState, fetchInitialStateAsync } from './fetchState'
 import { replaceState, withStoreReplacer } from './fetchState/replaceState'
-import { defaultRendererOptions } from './options/RendererStateSyncEnhancerOptions'
+import { defaultRendererOptions, RendererStateSyncEnhancerOptions } from './options/RendererStateSyncEnhancerOptions'
 
 import { preventDoubleInitialization, stopForwarding, validateAction } from './utils'
 
-const middleware: Middleware = (store) => {
+const createMiddleware = (options: RendererStateSyncEnhancerOptions): Middleware => (store) => {
     // When receiving an action from main
     ipcRenderer.on(IPCEvents.ACTION, (_, action: Action) => {
         store.dispatch(stopForwarding(action))
     })
 
     return (next) => (action) => {
-        if (validateAction(action)) {
+        if (validateAction(action, options.denyList)) {
             ipcRenderer.send(IPCEvents.ACTION, action)
         }
 
@@ -39,7 +39,7 @@ export const rendererStateSyncEnhancer = (options = defaultRendererOptions): Sto
         const store = createStore(
             options.lazyInit ? withStoreReplacer(reducer) : reducer,
             initialState,
-            applyMiddleware(middleware)
+            applyMiddleware(createMiddleware(options))
         )
 
         if (options.lazyInit) {

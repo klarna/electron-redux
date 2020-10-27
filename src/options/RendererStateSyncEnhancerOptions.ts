@@ -7,6 +7,11 @@ export type RendererStateSyncEnhancerOptions = {
     deserializer?: (this: unknown, key: string, value: unknown) => unknown
 
     /**
+     * Custom list for actions that should never replay across stores
+     */
+    denyList?: RegExp[]
+
+    /**
      * By default, the renderer store is initialized from the main store synchronously.
      * Since the synchronous fetching of the state is blocking the renderer process until it gets the state
      * from the main process, it might be better with huge stores to initialize them in an asynchronous manner,

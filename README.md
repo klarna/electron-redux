@@ -73,9 +73,9 @@ By default, all actions are broadcast to all registered stores. However, some st
 
 To stop an action from propagating from renderer to main store, simply set the scope to local by decorating your action with `stopForwarding` function. Read more about it in the [docs](#todo)
 
-### Blacklisted actions
+### Blocked actions
 
-By default, some of the actions are blacklisted from broadcasting / propagating, those include actions starting with `@@` and `redux-form`. The list of ignored actions can be modified with [options](#todo).
+By default, some of the actions are blocked from broadcasting / propagating, those include actions starting with `@@` and `redux-form`. The list of ignored actions can be modified with [options](#todo).
 
 ## Changelog
 
