@@ -1,4 +1,4 @@
-import { FluxStandardAction, isFSA } from 'flux-standard-action'
+import { isFSA, FluxStandardAction } from './isFSA'
 
 // Certain actions that we should never replay across stores
 const blacklist = [/^@@/, /^redux-form/]
@@ -12,7 +12,7 @@ type ActionMeta = {
  * stopForwarding allows you to give it an action, and it will return an
  * equivalent action that will only play in the current process
  */
-export const stopForwarding = (action: FluxStandardAction<string, unknown, ActionMeta>) => ({
+export const stopForwarding = (action: FluxStandardAction<ActionMeta>) => ({
     ...action,
     meta: {
         ...action.meta,
@@ -23,11 +23,9 @@ export const stopForwarding = (action: FluxStandardAction<string, unknown, Actio
 /**
  * validateAction ensures that the action meets the right format and isn't scoped locally
  */
-export const validateAction = (
-    action: unknown
-): action is FluxStandardAction<string, unknown, ActionMeta> => {
+export const validateAction = (action: any): action is FluxStandardAction<ActionMeta> => {
     return (
-        isFSA<string, unknown, ActionMeta>(action) &&
+        isFSA(action) &&
         action.meta?.scope !== 'local' &&
         blacklist.every((rule) => !rule.test(action.type))
     )
