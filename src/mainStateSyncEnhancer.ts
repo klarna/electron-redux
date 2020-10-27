@@ -17,8 +17,11 @@ function createMiddleware(options: MainStateSyncEnhancerOptions) {
 
             // Forward it to all of the other renderers
             webContents.getAllWebContents().forEach((contents) => {
-                // Ignore the renderer that sent the action
-                if (contents.id !== event.sender.id) {
+                // Ignore the renderer that sent the action and chromium devtools
+                if (
+                    contents.id !== event.sender.id &&
+                    !contents.getURL().startsWith('devtools://')
+                ) {
                     contents.send('electron-redux.ACTION', localAction)
                 }
             })
@@ -27,6 +30,8 @@ function createMiddleware(options: MainStateSyncEnhancerOptions) {
         return (next) => (action) => {
             if (validateAction(action)) {
                 webContents.getAllWebContents().forEach((contents) => {
+                    // Ignore chromium devtools
+                    if (contents.getURL().startsWith('devtools://')) return
                     contents.send('electron-redux.ACTION', action)
                 })
             }
