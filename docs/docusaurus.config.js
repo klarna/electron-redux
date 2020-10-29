@@ -1,8 +1,8 @@
 module.exports = {
   title: 'electron-redux',
   tagline: 'Use redux in the main and browser processes in Electron.',
-  url: 'https://klarna.github.io/electron-redux',
-  baseUrl: '/',
+  url: 'https://klarna.github.io',
+  baseUrl: '/electron-redux/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'klarna', 
