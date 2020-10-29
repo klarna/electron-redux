@@ -5,9 +5,6 @@ on:
     branches:
     - master
     - alpha # remove this once v2 is released
-    
-    paths:
-     - docs
 
 # install dependencies, build, and push to `gh-pages`
 jobs:
@@ -17,11 +14,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         persist-credentials: false
-
-    - name: Set up Node 
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
 
     - name: Install and build
       working-directory: docs
