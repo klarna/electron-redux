@@ -9,6 +9,9 @@ When working with Electron, using Redux poses couple of problems, since main and
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/klarna/electron-redux/Release)
 ![npm (tag)](https://img.shields.io/npm/v/electron-redux/alpha)
 ![npm](https://img.shields.io/npm/dm/electron-redux)
+![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/electron-redux/alpha)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 ## Installation
 
