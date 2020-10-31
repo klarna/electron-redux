@@ -1,5 +1,5 @@
 import { fetchInitialState, fetchInitialStateAsync } from '../src/fetchState'
-import { INIT_STATE, INIT_STATE_ASYNC } from '../src/constants'
+import { IPCEvents } from '../src/constants'
 jest.mock('electron', () => ({
     ipcRenderer: {
         sendSync: jest.fn(),
@@ -14,7 +14,7 @@ describe('Store synchronization', () => {
             const ipcSpy = jest.spyOn(ipcRenderer, 'sendSync').mockReturnValue('{ "count": 1 }')
             const state = fetchInitialState({})
             expect(ipcSpy).toHaveBeenCalledTimes(1)
-            expect(ipcSpy).toHaveBeenCalledWith(INIT_STATE)
+            expect(ipcSpy).toHaveBeenCalledWith(IPCEvents.INIT_STATE)
             expect(state).toEqual({ count: 1 })
         })
     })
@@ -23,7 +23,7 @@ describe('Store synchronization', () => {
             const ipcSpy = jest.spyOn(ipcRenderer, 'invoke').mockResolvedValue('{ "count": 1 }')
             fetchInitialStateAsync({}, (state) => {
                 expect(ipcSpy).toHaveBeenCalledTimes(1)
-                expect(ipcSpy).toHaveBeenCalledWith(INIT_STATE_ASYNC)
+                expect(ipcSpy).toHaveBeenCalledWith(IPCEvents.INIT_STATE_ASYNC)
                 expect(state).toEqual({ count: 1 })
                 done()
             })

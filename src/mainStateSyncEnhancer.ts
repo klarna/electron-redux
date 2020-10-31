@@ -1,6 +1,6 @@
 import { ipcMain, webContents } from 'electron'
 import { Action, applyMiddleware, Middleware, StoreCreator, StoreEnhancer } from 'redux'
-import { ACTION, INIT_STATE, INIT_STATE_ASYNC } from './constants'
+import { IPCEvents } from './constants'
 import {
     defaultMainOptions,
     MainStateSyncEnhancerOptions,
@@ -10,16 +10,16 @@ import { preventDoubleInitialization, stopForwarding, validateAction } from './u
 
 function createMiddleware(options: MainStateSyncEnhancerOptions) {
     const middleware: Middleware = (store) => {
-        ipcMain.handle(INIT_STATE_ASYNC, async () => {
+        ipcMain.handle(IPCEvents.INIT_STATE_ASYNC, async () => {
             return JSON.stringify(store.getState(), options.replacer)
         })
 
-        ipcMain.on(INIT_STATE, (event) => {
+        ipcMain.on(IPCEvents.INIT_STATE, (event) => {
             event.returnValue = JSON.stringify(store.getState(), options.replacer)
         })
 
         // When receiving an action from a renderer
-        ipcMain.on(ACTION, (event, action: Action) => {
+        ipcMain.on(IPCEvents.ACTION, (event, action: Action) => {
             const localAction = stopForwarding(action)
             store.dispatch(localAction)
 
@@ -30,7 +30,7 @@ function createMiddleware(options: MainStateSyncEnhancerOptions) {
                     contents.id !== event.sender.id &&
                     !contents.getURL().startsWith('devtools://')
                 ) {
-                    contents.send(ACTION, localAction)
+                    contents.send(IPCEvents.ACTION, localAction)
                 }
             })
         })
@@ -40,7 +40,7 @@ function createMiddleware(options: MainStateSyncEnhancerOptions) {
                 webContents.getAllWebContents().forEach((contents) => {
                     // Ignore chromium devtools
                     if (contents.getURL().startsWith('devtools://')) return
-                    contents.send(ACTION, action)
+                    contents.send(IPCEvents.ACTION, action)
                 })
             }
 

@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
 import { Action, applyMiddleware, Middleware, StoreCreator, StoreEnhancer } from 'redux'
-import { ACTION } from './constants'
+import { IPCEvents } from './constants'
 import { fetchInitialState, fetchInitialStateAsync } from './fetchState'
 import { replaceState, withStoreReplacer } from './fetchState/replaceState'
 import { defaultRendererOptions } from './options/RendererStateSyncEnhancerOptions'
@@ -9,13 +9,13 @@ import { preventDoubleInitialization, stopForwarding, validateAction } from './u
 
 const middleware: Middleware = (store) => {
     // When receiving an action from main
-    ipcRenderer.on(ACTION, (_, action: Action) => {
+    ipcRenderer.on(IPCEvents.ACTION, (_, action: Action) => {
         store.dispatch(stopForwarding(action))
     })
 
     return (next) => (action) => {
         if (validateAction(action)) {
-            ipcRenderer.send(ACTION, action)
+            ipcRenderer.send(IPCEvents.ACTION, action)
         }
 
         return next(action)

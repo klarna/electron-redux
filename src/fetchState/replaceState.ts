@@ -1,11 +1,12 @@
 import { AnyAction, Reducer } from 'redux'
 import { FluxStandardAction } from '../utils/isFSA'
 import { ActionMeta } from '../utils'
-import { REPLACE_STATE } from '../constants'
 
 interface ReplaceStateAction<S> extends FluxStandardAction<ActionMeta> {
     payload: S
 }
+
+const REPLACE_STATE = 'electron-redux.REPLACE_STATE'
 
 /**
  * Creates an action that will replace the current state with the provided
