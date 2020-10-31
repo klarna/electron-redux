@@ -4,7 +4,7 @@ import { isFSA, FluxStandardAction } from './isFSA'
 const blacklist = [/^@@/, /^redux-form/]
 
 // Gives us just enough action type info to work for the functions below
-type ActionMeta = {
+export type ActionMeta = {
     scope?: 'local' | string
 }
 

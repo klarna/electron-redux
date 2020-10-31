@@ -7,10 +7,9 @@ const store = createStore(reducer, rendererStateSyncEnhancer())
 function mount() {
     document.getElementById('app')!.innerHTML = `
       <p>
-        Clicked: <span id="value">0</span> times
+        Clicked: <span id="value">0</span> times </br>
         <button id="increment">+</button>
         <button id="decrement">-</button>
-        <button id="incrementAliased">Increment (aliased)</button>
       </p>
     `
 
@@ -21,10 +20,6 @@ function mount() {
     document.getElementById('decrement')!.addEventListener('click', () => {
         store.dispatch({ type: 'DECREMENT' })
     })
-
-    // document.getElementById('incrementAliased').addEventListener('click', () => {
-    //   store.dispatch(createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }))());
-    // });
 }
 
 function renderValue() {

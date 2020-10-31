@@ -7,7 +7,11 @@ import { mainStateSyncEnhancer } from '../../..'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
-const store = createStore(reducer, mainStateSyncEnhancer())
+const defaultState = {
+    count: 10,
+}
+
+const store = createStore(reducer, defaultState, mainStateSyncEnhancer())
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -38,6 +42,7 @@ function createWindow() {
             })
         )
     }
+    renderValue()
 
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {

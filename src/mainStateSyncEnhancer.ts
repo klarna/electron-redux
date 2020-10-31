@@ -1,17 +1,25 @@
 import { ipcMain, webContents } from 'electron'
 import { Action, applyMiddleware, Middleware, StoreCreator, StoreEnhancer } from 'redux'
+import { ACTION, INIT_STATE, INIT_STATE_ASYNC } from './constants'
+import {
+    defaultMainOptions,
+    MainStateSyncEnhancerOptions,
+} from './options/MainStateSyncEnhancerOptions'
 
 import { preventDoubleInitialization, stopForwarding, validateAction } from './utils'
 
 function createMiddleware(options: MainStateSyncEnhancerOptions) {
     const middleware: Middleware = (store) => {
-        ipcMain.handle('electron-redux.INIT_STATE', async () => {
-            // Serialize the initial state using custom replacer
+        ipcMain.handle(INIT_STATE_ASYNC, async () => {
             return JSON.stringify(store.getState(), options.replacer)
         })
 
+        ipcMain.on(INIT_STATE, (event) => {
+            event.returnValue = JSON.stringify(store.getState(), options.replacer)
+        })
+
         // When receiving an action from a renderer
-        ipcMain.on('electron-redux.ACTION', (event, action: Action) => {
+        ipcMain.on(ACTION, (event, action: Action) => {
             const localAction = stopForwarding(action)
             store.dispatch(localAction)
 
@@ -22,7 +30,7 @@ function createMiddleware(options: MainStateSyncEnhancerOptions) {
                     contents.id !== event.sender.id &&
                     !contents.getURL().startsWith('devtools://')
                 ) {
-                    contents.send('electron-redux.ACTION', localAction)
+                    contents.send(ACTION, localAction)
                 }
             })
         })
@@ -32,7 +40,7 @@ function createMiddleware(options: MainStateSyncEnhancerOptions) {
                 webContents.getAllWebContents().forEach((contents) => {
                     // Ignore chromium devtools
                     if (contents.getURL().startsWith('devtools://')) return
-                    contents.send('electron-redux.ACTION', action)
+                    contents.send(ACTION, action)
                 })
             }
 
@@ -42,23 +50,12 @@ function createMiddleware(options: MainStateSyncEnhancerOptions) {
     return middleware
 }
 
-export type MainStateSyncEnhancerOptions = {
-    /**
-     * Custom store serializaton function. This function is called for each member of the object.
-     * If a member contains nested objects,
-     * the nested objects are transformed before the parent object is.
-     */
-    replacer?: (this: unknown, key: string, value: unknown) => unknown
-}
-
-const defaultOptions: MainStateSyncEnhancerOptions = {}
-
 /**
  * Creates new instance of main process redux enhancer.
  * @param {MainStateSyncEnhancerOptions} options Additional enhancer options
  * @returns StoreEnhancer
  */
-export const mainStateSyncEnhancer = (options = defaultOptions): StoreEnhancer => (
+export const mainStateSyncEnhancer = (options = defaultMainOptions): StoreEnhancer => (
     createStore: StoreCreator
 ) => {
     preventDoubleInitialization()
