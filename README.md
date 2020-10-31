@@ -1,0 +1,90 @@
+🚧 THIS IS **ALPHA** version of the library - the API still might change 🚧
+
+# electron-redux
+
+Electron-Redux is an Redux Store Enhancer that helps you loosely synchronize the redux stores in multiple electron processes.
+
+When working with Electron, using Redux poses couple of problems, since main and renderer processes are isolated and IPC is a single way of communication between them. This library, enables you to register all your Redux stores in the main & renderer process, and enable cross-process action dispatching & _loose_ store synchronization.
+
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/klarna/electron-redux/Release)
+![npm (tag)](https://img.shields.io/npm/v/electron-redux/alpha)
+![npm](https://img.shields.io/npm/dm/electron-redux)
+
+## Installation
+
+```sh
+# with yarn
+yarn add electron-redux@alpha
+
+# with npm
+npm install electron-redux@alpha
+```
+
+For more details, please see [the Installation docs page](#todo).
+
+## Documentation
+
+electron-redux docs are located at **electron-redux.js.org**. You can find there:
+
+-   [Getting started](#todo)
+-   [Recipes](#todo)
+-   [API Reference](#todo)
+
+## Quick start
+
+electron-redux comes as a [Redux StoreEnhancer](https://redux.js.org/understanding/thinking-in-redux/glossary#store-enhancer). To initialize your stores using it, you just need decorate your stores in the `main` and `renderer` process of electron with provided enhancers:
+
+```ts
+// main.ts
+import { mainStateSyncEnhancer } from 'electron-redux'
+
+const store = createStore(reducer, mainStateSyncEnhancer())
+```
+
+```ts
+// renderer.ts
+import { rendererStateSyncEnhancer } from 'electron-redux'
+
+const store = createStore(reducer, rendererStateSyncEnhancer())
+```
+
+That's it!
+
+You are now ready to fire actions in any of the stores / processes, and depending on the [scope](#scoped-actions) the main store will broadcast them to correct processes.
+
+Please check out the [docs](#todo) for more recipes and examples!
+
+## Actions
+
+Actions fired **MUST be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant**, i.e. have a type and payload property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
+
+> Nota bene, `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.
+
+Furthermore, actions (and that includes payloads) **MUST be serializable**.
+
+> You can extend default JSON serialization used, by [providing your own serialization/deserialization functions](#todo).
+
+### Scoped actions
+
+By default, all actions are broadcasted to all registered stores. However, some state should only live in the renderer (e.g. isPanelOpen). electron-redux introduces the concept of action scopes.
+
+To stop an action from propagating from renderer to main store, simply set the scope to local by decorating your action with `stopForwarding` function. Read more about it in the [docs](#todo)
+
+### Blacklisted actions
+
+By default, some of the actions are blacklisted from broadcasting / propagating, those include actions starting with `@@` and `redux-form`. The list of ignored actions can be modified with [options](#todo).
+
+## Changelog
+
+This project adheres to [Semantic Versioning](http://semver.org/).
+Every release, along with the migration instructions, is documented on the GitHub [Releases](https://github.com/klarna/electron-redux/releases) page.
+
+## Contributing
+
+Contributions via [issues](https://github.com/klarna/electron-redux/issues/new) or [pull requests](https://github.com/klarna/electron-redux/compare) are hugely welcome! Remember to read our [contributing guidelines](.github/CONTRIBUTING.md) to get started!
+
+By contributing to electron-redux, you agree to abide by [the code of conduct](.github/CODE_OF_CONDUCT.md).
+
+## License
+
+[MIT](LICENSE.md)
