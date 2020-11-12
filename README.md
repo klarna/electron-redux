@@ -35,7 +35,7 @@ electron-redux docs are located at **electron-redux.js.org**. You can find there
 
 ## Quick start
 
-electron-redux comes as a [Redux StoreEnhancer](https://redux.js.org/understanding/thinking-in-redux/glossary#store-enhancer). To initialize your stores using it, you just need decorate your stores in the `main` and `renderer` process of electron with provided enhancers:
+electron-redux comes as a [Redux StoreEnhancer](https://redux.js.org/understanding/thinking-in-redux/glossary#store-enhancer). To initialize your stores, you just need to decorate them in the `main` and `renderer` processes of electron with their respective enhancers:
 
 ```ts
 // main.ts
@@ -53,13 +53,13 @@ const store = createStore(reducer, rendererStateSyncEnhancer())
 
 That's it!
 
-You are now ready to fire actions in any of the stores / processes, and depending on the [scope](#scoped-actions) the main store will broadcast them to correct processes.
+You are now ready to fire actions from any of your processes, and depending on the [scope](#scoped-actions) the main store will broadcast them across your application.
 
 Please check out the [docs](#todo) for more recipes and examples!
 
 ## Actions
 
-Actions fired **MUST be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant**, i.e. have a type and payload property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
+Actions fired **MUST be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant**, i.e. have a `type` and `payload` property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
 
 > Nota bene, `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.
 
@@ -69,7 +69,7 @@ Furthermore, actions (and that includes payloads) **MUST be serializable**.
 
 ### Scoped actions
 
-By default, all actions are broadcasted to all registered stores. However, some state should only live in the renderer (e.g. isPanelOpen). electron-redux introduces the concept of action scopes.
+By default, all actions are broadcast to all registered stores. However, some state should only live in the renderer (e.g. `isPanelOpen`). electron-redux introduces the concept of action scopes.
 
 To stop an action from propagating from renderer to main store, simply set the scope to local by decorating your action with `stopForwarding` function. Read more about it in the [docs](#todo)
 
