@@ -4,7 +4,7 @@ import { RendererStateSyncEnhancerOptions } from '../options/RendererStateSyncEn
 
 function fetchInitialState<T>(options: RendererStateSyncEnhancerOptions): T {
     const state = ipcRenderer.sendSync(IPCEvents.INIT_STATE)
-    return JSON.parse(state, options.reviver)
+    return JSON.parse(state, options.deserializer)
 }
 
 export default fetchInitialState

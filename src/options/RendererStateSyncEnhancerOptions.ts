@@ -4,7 +4,7 @@ export type RendererStateSyncEnhancerOptions = {
      * This function is called for each member of the object. If a member contains nested objects,
      * the nested objects are transformed before the parent object is.
      */
-    reviver?: (this: unknown, key: string, value: unknown) => unknown
+    deserializer?: (this: unknown, key: string, value: unknown) => unknown
 
     /**
      * By default, the renderer store is initialized from the main store synchronously.

@@ -11,11 +11,11 @@ import { preventDoubleInitialization, stopForwarding, validateAction } from './u
 function createMiddleware(options: MainStateSyncEnhancerOptions) {
     const middleware: Middleware = (store) => {
         ipcMain.handle(IPCEvents.INIT_STATE_ASYNC, async () => {
-            return JSON.stringify(store.getState(), options.replacer)
+            return JSON.stringify(store.getState(), options.serializer)
         })
 
         ipcMain.on(IPCEvents.INIT_STATE, (event) => {
-            event.returnValue = JSON.stringify(store.getState(), options.replacer)
+            event.returnValue = JSON.stringify(store.getState(), options.serializer)
         })
 
         // When receiving an action from a renderer
