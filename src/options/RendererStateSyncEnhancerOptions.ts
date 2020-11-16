@@ -9,7 +9,7 @@ export type RendererStateSyncEnhancerOptions = {
     /**
      * By default, the renderer store is initialized from the main store synchronously.
      * Since the synchronous fetching of the state is blocking the renderer process until it gets the state
-     * from the main process, it might be better with huge stores to initialized them in an asynchronous matter,
+     * from the main process, it might be better with huge stores to initialize them in an asynchronous manner,
      * by setting this flag to true
      */
     lazyInit?: boolean
