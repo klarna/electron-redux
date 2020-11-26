@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2020-present Burkhard Reffeling, Maciej Malkowski, McKayla Washburn
+Copyright (c) 2016 Burkhard Reffeling
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
