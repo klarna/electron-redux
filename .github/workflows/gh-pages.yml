@@ -3,8 +3,7 @@ name: deploy-docs
 on:
   push:
     branches:
-    - master
-    - alpha # remove this once v2 is released
+    - alpha # replace with master once merged
 
 # install dependencies, build, and push to `gh-pages`
 jobs:
@@ -18,8 +17,8 @@ jobs:
     - name: Install and build
       working-directory: docs
       run: |
-        npm install
-        npm run build
+        yarn
+        yarn build
 
     - name: Deploy to gh-pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
