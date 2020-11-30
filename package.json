@@ -94,8 +94,7 @@
         },
         "renderer": {
             "sourceDirectory": "tests/e2e/renderer"
-        },
-        "commonDistDirectory": "e2e_dist"
+        }
     },
     "husky": {
         "hooks": {
