@@ -1,8 +1,5 @@
 import { isFSA, FluxStandardAction } from './isFSA'
 
-// Certain actions that we should never replay across stores
-const blacklist = [/^@@/, /^redux-form/]
-
 // Gives us just enough action type info to work for the functions below
 export type ActionMeta = {
     scope?: 'local' | string
@@ -23,10 +20,14 @@ export const stopForwarding = (action: FluxStandardAction<ActionMeta>) => ({
 /**
  * validateAction ensures that the action meets the right format and isn't scoped locally
  */
-export const validateAction = (action: any): action is FluxStandardAction<ActionMeta> => {
+export const validateAction = (
+    action: any,
+    // Actions that we should never replay across stores
+    denyList: RegExp[] = [/^@@/, /^redux-form/]
+): action is FluxStandardAction<ActionMeta> => {
     return (
         isFSA(action) &&
         action.meta?.scope !== 'local' &&
-        blacklist.every((rule) => !rule.test(action.type))
+        denyList.every((rule) => !rule.test(action.type))
     )
 }
