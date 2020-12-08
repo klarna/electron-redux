@@ -77,7 +77,7 @@ export const mainStateSyncEnhancer = (options = defaultMainOptions): StoreEnhanc
             dispatch,
         }
 
-        dispatch = compose<Dispatch>(middleware(middlewareAPI))(store.dispatch)
+        dispatch = compose<Dispatch>(middleware(middlewareAPI))(dispatch)
 
         return {
             ...store,

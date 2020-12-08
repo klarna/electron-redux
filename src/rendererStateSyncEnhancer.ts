@@ -66,7 +66,7 @@ export const rendererStateSyncEnhancer = (options = defaultRendererOptions): Sto
             dispatch,
         }
 
-        dispatch = compose<Dispatch>(middleware(middlewareAPI))(store.dispatch)
+        dispatch = compose<Dispatch>(middleware(middlewareAPI))(dispatch)
 
         return {
             ...store,
