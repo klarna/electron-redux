@@ -1,11 +1,18 @@
 import { ipcMain, webContents } from 'electron'
-import { Action, applyMiddleware, Middleware, StoreCreator, StoreEnhancer } from 'redux'
+import {
+    Action,
+    compose,
+    Dispatch,
+    Middleware,
+    MiddlewareAPI,
+    StoreCreator,
+    StoreEnhancer,
+} from 'redux'
 import { IPCEvents } from './constants'
 import {
     defaultMainOptions,
     MainStateSyncEnhancerOptions,
 } from './options/MainStateSyncEnhancerOptions'
-
 import { preventDoubleInitialization, stopForwarding, validateAction } from './utils'
 
 function createMiddleware(options: MainStateSyncEnhancerOptions) {
@@ -60,7 +67,21 @@ export const mainStateSyncEnhancer = (options = defaultMainOptions): StoreEnhanc
 ) => {
     preventDoubleInitialization()
     const middleware = createMiddleware(options)
-    return (reducer, state) => {
-        return createStore(reducer, state, applyMiddleware(middleware))
+    return (reducer, preloadedState) => {
+        const store = createStore(reducer, preloadedState)
+
+        let dispatch = store.dispatch
+
+        const middlewareAPI: MiddlewareAPI<Dispatch<any>> = {
+            getState: store.getState,
+            dispatch,
+        }
+
+        dispatch = compose<Dispatch>(middleware(middlewareAPI))(store.dispatch)
+
+        return {
+            ...store,
+            dispatch,
+        }
     }
 }

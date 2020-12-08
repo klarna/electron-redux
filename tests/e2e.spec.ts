@@ -48,4 +48,37 @@ describe('End to End Tests', () => {
         // eslint-disable-next-line @typescript-eslint/await-thenable
         expect(await app.browserWindow.getTitle()).toEqual('9')
     })
+
+    it('should be able to increment value from main process', async () => {
+        expect(await getText('#value')).toEqual('10')
+        expect(await app.browserWindow.getTitle()).toEqual('10')
+
+        await click('#mainIncrement')
+
+        expect(await getText('#value')).toEqual('11')
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        expect(await app.browserWindow.getTitle()).toEqual('11')
+    })
+
+    it('should be able to use middleware when dispatching from renderer process', async () => {
+        expect(await getText('#value')).toEqual('10')
+        expect(await app.browserWindow.getTitle()).toEqual('10')
+
+        await click('#setCountMiddleware')
+
+        expect(await getText('#value')).toEqual('99')
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        expect(await app.browserWindow.getTitle()).toEqual('99')
+    })
+
+    it('should be able to use middleware when dispatching from main process', async () => {
+        expect(await getText('#value')).toEqual('10')
+        expect(await app.browserWindow.getTitle()).toEqual('10')
+
+        await click('#mainsetCountMiddleware')
+
+        expect(await getText('#value')).toEqual('99')
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        expect(await app.browserWindow.getTitle()).toEqual('99')
+    })
 })
