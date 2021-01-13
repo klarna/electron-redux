@@ -1,9 +1,10 @@
 import path from 'path'
 import url from 'url'
-import { app, BrowserWindow } from 'electron'
-import { createStore } from 'redux'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import { applyMiddleware, compose, createStore } from 'redux'
 import { reducer } from '../../counter'
 import { mainStateSyncEnhancer } from '../../..'
+import { countMiddleware } from '../../middleware'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -11,7 +12,9 @@ const defaultState = {
     count: 10,
 }
 
-const store = createStore(reducer, defaultState, mainStateSyncEnhancer())
+const middleware = applyMiddleware(countMiddleware)
+const enhancer = compose(middleware, mainStateSyncEnhancer())
+const store = createStore(reducer, defaultState, enhancer)
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -43,6 +46,14 @@ function createWindow() {
         )
     }
     renderValue()
+
+    ipcMain.once('mainsetCountMiddleware', () => {
+        store.dispatch({ type: 'SET_COUNT_MIDDLEWARE', payload: 9 })
+    })
+
+    ipcMain.once('mainIncrement', () => {
+        store.dispatch({ type: 'INCREMENT' })
+    })
 
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {

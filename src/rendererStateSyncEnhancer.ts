@@ -1,10 +1,20 @@
 import { ipcRenderer } from 'electron'
-import { Action, applyMiddleware, Middleware, StoreCreator, StoreEnhancer } from 'redux'
+import {
+    Action,
+    compose,
+    Dispatch,
+    Middleware,
+    MiddlewareAPI,
+    StoreCreator,
+    StoreEnhancer,
+} from 'redux'
 import { IPCEvents } from './constants'
 import { fetchInitialState, fetchInitialStateAsync } from './fetchState'
 import { replaceState, withStoreReplacer } from './fetchState/replaceState'
-import { defaultRendererOptions, RendererStateSyncEnhancerOptions } from './options/RendererStateSyncEnhancerOptions'
-
+import {
+    defaultRendererOptions,
+    RendererStateSyncEnhancerOptions,
+} from './options/RendererStateSyncEnhancerOptions'
 import { preventDoubleInitialization, stopForwarding, validateAction } from './utils'
 
 const createMiddleware = (options: RendererStateSyncEnhancerOptions): Middleware => (store) => {
@@ -35,11 +45,12 @@ export const rendererStateSyncEnhancer = (options = defaultRendererOptions): Sto
     preventDoubleInitialization()
 
     return (reducer, state) => {
+        const middleware = createMiddleware(options)
+
         const initialState = options.lazyInit ? state : fetchInitialState<typeof state>(options)
         const store = createStore(
             options.lazyInit ? withStoreReplacer(reducer) : reducer,
-            initialState,
-            applyMiddleware(createMiddleware(options))
+            initialState
         )
 
         if (options.lazyInit) {
@@ -48,14 +59,18 @@ export const rendererStateSyncEnhancer = (options = defaultRendererOptions): Sto
             })
         }
 
-        // TODO: this needs some ❤️
-        // XXX: TypeScript is dumb. If you return the call to createStore
-        // immediately it's fine, but even assigning it to a constant and returning
-        // will make it freak out. We fix this with the line below the return.
-        return store
+        let dispatch = store.dispatch
 
-        // TODO: this needs some ❤️
-        // XXX: Even though this is unreachable, it fixes the type signature????
-        return (store as unknown) as any
+        const middlewareAPI: MiddlewareAPI<Dispatch<any>> = {
+            getState: store.getState,
+            dispatch,
+        }
+
+        dispatch = compose<Dispatch>(middleware(middlewareAPI))(dispatch)
+
+        return {
+            ...store,
+            dispatch,
+        }
     }
 }
