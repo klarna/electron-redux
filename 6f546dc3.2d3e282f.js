@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[12],{71:function(e){e.exports=JSON.parse('{"allTagsPath":"/electron-redux/blog/tags","slug":"hello","name":"hello","count":2,"permalink":"/electron-redux/blog/tags/hello"}')}}]);
