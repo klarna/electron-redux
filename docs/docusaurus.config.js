@@ -35,7 +35,7 @@ module.exports = {
                     items: [
                         {
                             label: 'Getting Started',
-                            to: 'docs/',
+                            to: 'introduction/getting-started/',
                         },
                     ],
                 },
@@ -55,10 +55,6 @@ module.exports = {
                 {
                     title: 'More',
                     items: [
-                        {
-                            label: 'Blog',
-                            to: 'blog',
-                        },
                         {
                             label: 'GitHub',
                             href: 'https://github.com/klarna/electron-redux',

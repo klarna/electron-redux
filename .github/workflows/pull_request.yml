@@ -26,3 +26,8 @@ jobs:
                   CI: true
             - name: Cleanup xvfb pidx
               uses: bcomnes/cleanup-xvfb@v1
+            - name: Install and build docs
+              working-directory: docs
+              run: |
+                  yarn
+                  yarn build
