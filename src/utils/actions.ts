@@ -1,4 +1,4 @@
-import { isFSA, FluxStandardAction } from './isFSA'
+import { FluxStandardAction, isFSA } from './isFSA'
 
 // Gives us just enough action type info to work for the functions below
 export type ActionMeta = {
@@ -9,7 +9,7 @@ export type ActionMeta = {
  * stopForwarding allows you to give it an action, and it will return an
  * equivalent action that will only play in the current process
  */
-export const stopForwarding = (action: FluxStandardAction<ActionMeta>) => ({
+export const stopForwarding = (action: FluxStandardAction<ActionMeta>): any => ({
     ...action,
     meta: {
         ...action.meta,
