@@ -4503,11 +4503,6 @@ electron-devtools-installer@^2.2.4:
     rimraf "^2.5.2"
     semver "^5.3.0"
 
-electron-process-type@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/electron-process-type/-/electron-process-type-4.2.0.tgz#ee2882c0e400f92937a1b840d40ce6b7cdeb261b"
-  integrity sha512-UpyWhelm69gD/QG2cb1A0xvRDh9FX+7CQYpKFuJRGBKwj53AxVFnBGwUWblGbgpVnsjJUKfksigvDSuDp5N6Ww==
-
 electron-to-chromium@^1.3.570:
   version "1.3.570"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.570.tgz#3f5141cc39b4e3892a276b4889980dabf1d29c7f"

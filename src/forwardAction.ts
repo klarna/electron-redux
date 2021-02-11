@@ -1,9 +1,9 @@
 import { ipcRenderer, webContents } from 'electron'
 import { Store } from 'redux'
-import { StateSyncOptions } from './composeWithStateSync'
 import { IPCEvents } from './constants'
 import { MainStateSyncEnhancerOptions } from './options/MainStateSyncEnhancerOptions'
 import { RendererStateSyncEnhancerOptions } from './options/RendererStateSyncEnhancerOptions'
+import { StateSyncOptions } from './options/StateSyncOptions'
 import { isMain, isRenderer, validateAction } from './utils'
 
 export const processActionMain = <A>(

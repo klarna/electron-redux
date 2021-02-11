@@ -1,5 +1,3 @@
-import { v4 as electronProcessType } from 'electron-process-type'
-
 // We use this variable to store a stack trace of where the middleware
 // is first initialized, to assist in debugging if someone accidentally enables
 // it twice. This can easily be caused by importing files that are shared between
@@ -34,7 +32,5 @@ export const trimProperties = <T extends keyof X, X>(props: T[], obj: X) => {
     ) as Omit<X, T>
 }
 
-const processType = electronProcessType.GetElectronProcessType()
-
-export const isRenderer = processType === 'electron-browser'
-export const isMain = processType === 'electron-main-node'
+export const isRenderer = process.type === 'renderer'
+export const isMain = process.type === 'browser'

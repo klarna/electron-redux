@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import { StoreEnhancer, StoreEnhancerStoreCreator } from 'redux'
+import { StoreEnhancer } from 'redux'
 import { forwardAction } from './forwardAction'
-import { MainStateSyncEnhancerOptions } from './options/MainStateSyncEnhancerOptions'
-import { RendererStateSyncEnhancerOptions } from './options/RendererStateSyncEnhancerOptions'
+import { StateSyncOptions } from './options/StateSyncOptions'
 import { stateSyncEnhancer } from './stateSyncEnhancer'
-
-export type StateSyncOptions = MainStateSyncEnhancerOptions | RendererStateSyncEnhancerOptions
 
 const forwardActionEnhancer = (options?: StateSyncOptions): StoreEnhancer => (createStore) => (
     reducer,
@@ -17,10 +14,10 @@ const forwardActionEnhancer = (options?: StateSyncOptions): StoreEnhancer => (cr
     return forwardAction(store, options)
 }
 
-const extensionCompose = (options: StateSyncOptions) => <D extends StoreEnhancerStoreCreator>(
-    ...funcs: Function[]
-) => {
-    return (createStore: D) => {
+const extensionCompose = (options: StateSyncOptions) => (
+    ...funcs: StoreEnhancer[]
+): StoreEnhancer => {
+    return (createStore) => {
         return [
             stateSyncEnhancer({ ...options, preventActionReplay: true }),
             ...funcs,
@@ -29,19 +26,19 @@ const extensionCompose = (options: StateSyncOptions) => <D extends StoreEnhancer
     }
 }
 
-export function composeWithStateSync<R>(
-    options: StateSyncOptions
-): (...funcs: Function[]) => (...args: any[]) => R
-export function composeWithStateSync<R>(...funcs: Function[]): (...args: any[]) => R
 export function composeWithStateSync(
-    firstFuncOrOpts: Function | StateSyncOptions,
-    ...funcs: Function[]
-) {
+    options: StateSyncOptions
+): (...funcs: Function[]) => StoreEnhancer
+export function composeWithStateSync(...funcs: StoreEnhancer[]): StoreEnhancer
+export function composeWithStateSync(
+    firstFuncOrOpts: StoreEnhancer | StateSyncOptions,
+    ...funcs: StoreEnhancer[]
+): StoreEnhancer | ((...funcs: StoreEnhancer[]) => StoreEnhancer) {
     if (arguments.length === 0) {
         return stateSyncEnhancer()
     }
     if (arguments.length === 1 && typeof firstFuncOrOpts === 'object') {
         return extensionCompose(firstFuncOrOpts)
     }
-    return extensionCompose({})(firstFuncOrOpts as Function, ...funcs)
+    return extensionCompose({})(firstFuncOrOpts as StoreEnhancer, ...funcs)
 }

@@ -1,6 +1,6 @@
 import { StoreEnhancer } from 'redux'
-import { StateSyncOptions } from './composeWithStateSync'
 import { mainStateSyncEnhancer } from './mainStateSyncEnhancer'
+import { StateSyncOptions } from './options/StateSyncOptions'
 import { rendererStateSyncEnhancer } from './rendererStateSyncEnhancer'
 import { isMain, isRenderer, preventDoubleInitialization } from './utils'
 
@@ -13,5 +13,5 @@ export const stateSyncEnhancer = (config: StateSyncOptions = {}): StoreEnhancer 
         return mainStateSyncEnhancer(config)
     }
 
-    throw new Error(`Unsupported process: ${process?.type}`)
+    throw new Error(`Unsupported process: process.type = ${process?.type}`)
 }

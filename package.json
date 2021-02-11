@@ -34,7 +34,6 @@
         "node": ">= 12"
     },
     "dependencies": {
-        "electron-process-type": "^4.2.0",
         "lodash.isplainobject": "^4.0.6",
         "lodash.isstring": "^4.0.1"
     },
