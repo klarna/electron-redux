@@ -4,7 +4,7 @@ import { StateSyncOptions } from './options/StateSyncOptions'
 import { rendererStateSyncEnhancer } from './rendererStateSyncEnhancer'
 import { isMain, isRenderer, preventDoubleInitialization } from './utils'
 
-export const stateSyncEnhancer = (config: StateSyncOptions = {}): StoreEnhancer => {
+export const stateSyncEnhancer = (config: StateSyncOptions = {}): StoreEnhancer<any> => {
     preventDoubleInitialization()
 
     if (isRenderer) {

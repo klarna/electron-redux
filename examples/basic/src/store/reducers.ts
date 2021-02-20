@@ -20,7 +20,6 @@ export const globalCounterReducer = (state = 0, action: ActionTypes): number => 
 }
 
 export const localCounterReducer = (state = 0, action: ActionTypes): number => {
-    console.log(action)
     switch (action.type) {
         case INCREMENT_LOCAL: {
             return state + 1

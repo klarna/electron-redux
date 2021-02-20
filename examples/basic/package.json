@@ -3,8 +3,10 @@
     "version": "0.0.0",
     "license": "MIT",
     "scripts": {
+        "postinstall": "yarn build",
         "dev": "electron-webpack dev",
-        "compile": "electron-webpack"
+        "build": "electron-webpack",
+        "check-types": "tsc --noEmit"
     },
     "dependencies": {
         "source-map-support": "^0.5.16"
