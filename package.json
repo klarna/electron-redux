@@ -27,7 +27,7 @@
         "test": "jest",
         "lint": "eslint . --ext .ts",
         "format": "prettier --write .",
-        "pretests": "yarn build && yarn build:examples",
+        "pretest": "yarn build && yarn build:examples",
         "commit": "cz"
     },
     "engines": {
