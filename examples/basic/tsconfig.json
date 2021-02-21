@@ -1,6 +1,17 @@
 {
-    "extends": "./node_modules/electron-webpack/tsconfig-base.json",
+    "compileOnSave": false,
     "compilerOptions": {
-        "skipLibCheck": true
-    }
+        "target": "es2015",
+        "moduleResolution": "node",
+        "pretty": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "jsx": "preserve"
+    },
+    "exclude": ["node_modules"]
 }

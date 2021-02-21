@@ -14,9 +14,5 @@ module.exports = {
             },
         ],
     ],
-    plugins: [
-        '@babel/proposal-object-rest-spread',
-        '@babel/plugin-proposal-optional-chaining',
-        NODE_ENV === 'test' && '@babel/transform-modules-commonjs',
-    ].filter(Boolean),
+    plugins: [NODE_ENV === 'test' && '@babel/transform-modules-commonjs'].filter(Boolean),
 }
