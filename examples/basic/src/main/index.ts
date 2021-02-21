@@ -16,10 +16,9 @@ async function createWindow() {
             nodeIntegration: true,
         },
     })
-
     await mainWindow.loadURL(
         url.format({
-            pathname: `/dist/index.html`,
+            pathname: `${__dirname}/index.html`,
             protocol: 'file',
             slashes: true,
         })

@@ -13,7 +13,8 @@ module.exports = {
     target: 'electron-renderer',
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'src/renderer/index.html',
+            template: './src/renderer/index.html',
+            publicPath: './',
         }),
     ],
 }

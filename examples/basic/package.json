@@ -13,7 +13,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.12.17",
-        "electron": "8.2.0",
+        "electron": "^9.2.0",
         "electron-redux": "link:../..",
         "html-webpack-plugin": "^5.2.0",
         "redux": "^4.0.5",
