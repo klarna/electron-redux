@@ -12,21 +12,18 @@ import {
 
 const store = createStore(rootReducer, stateSyncEnhancer())
 
-const globalCounterEl = document.getElementById('globalCounter')!
-document
-    .getElementById('incrementGlobalCounter')!
-    .addEventListener('click', () => store.dispatch(incrementGlobalCounter()))
-document
-    .getElementById('decrementGlobalCounter')!
-    .addEventListener('click', () => store.dispatch(decrementGlobalCounter()))
+const registerClickHandler = (id: string, handler: () => void) =>
+    document.getElementById(id)!.addEventListener('click', handler)
 
+const registerEvents = () => {
+    registerClickHandler('incrementGlobalCounter', () => store.dispatch(incrementGlobalCounter()))
+    registerClickHandler('decrementGlobalCounter', () => store.dispatch(decrementGlobalCounter()))
+    registerClickHandler('incrementLocalCounter', () => store.dispatch(incrementLocalCounter()))
+    registerClickHandler('decrementLocalCounter', () => store.dispatch(decrementLocalCounter()))
+}
+
+const globalCounterEl = document.getElementById('globalCounter')!
 const localCounterEl = document.getElementById('localCounter')!
-document
-    .getElementById('incrementLocalCounter')!
-    .addEventListener('click', () => store.dispatch(incrementLocalCounter()))
-document
-    .getElementById('decrementLocalCounter')!
-    .addEventListener('click', () => store.dispatch(decrementLocalCounter()))
 
 const render = () => {
     const { globalCounter, localCounter } = store.getState()
@@ -36,3 +33,4 @@ const render = () => {
 
 store.subscribe(render)
 render() // initial render
+registerEvents() // register click events to dispatch actions
