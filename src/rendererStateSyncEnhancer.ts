@@ -16,7 +16,7 @@ import { stopForwarding } from './utils'
  */
 export const rendererStateSyncEnhancer = (
     options: RendererStateSyncEnhancerOptions = {}
-): StoreEnhancer => (createStore) => {
+): StoreEnhancer<any> => (createStore) => {
     return (reducer, state) => {
         const initialState = options.lazyInit ? state : fetchInitialState<typeof state>(options)
 

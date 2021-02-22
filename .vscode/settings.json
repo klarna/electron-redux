@@ -12,5 +12,6 @@
         "**/es": true,
         "**/lib": true,
         "**/types": true
-    }
+    },
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

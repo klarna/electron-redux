@@ -12,7 +12,7 @@ import { stopForwarding } from './utils'
  */
 export const mainStateSyncEnhancer = (
     options: MainStateSyncEnhancerOptions = {}
-): StoreEnhancer => (createStore) => {
+): StoreEnhancer<any> => (createStore) => {
     return (reducer, preloadedState) => {
         const store = createStore(reducer, preloadedState)
 
