@@ -1,24 +1,15 @@
-import { composeWithStateSync } from '../../types'
-import { applyMiddleware, createStore, Store, StoreEnhancer } from 'redux'
-import { reducer, CounterState, Actions } from '../counter'
+import { applyMiddleware, createStore } from 'redux'
+import { reducer } from '../counter'
 import { countMiddleware } from '../middleware'
+import { composeWithStateSync } from '../../main'
 
-// This is just a dummy enhancer, this does nothing
-const someOtherEnhancer: StoreEnhancer = (next) => {
-    return (reducer, state) => {
-        return next(reducer, state)
-    }
-}
+const middleware = [countMiddleware]
 
-const middleware = applyMiddleware(countMiddleware)
+const _store1 = createStore(reducer, composeWithStateSync(applyMiddleware(...middleware)))
 
-const enhancerWithoutOptions: StoreEnhancer = composeWithStateSync(middleware, someOtherEnhancer)
+const _store2 = createStore(reducer, composeWithStateSync({}, applyMiddleware(...middleware)))
 
-const store: Store<CounterState, Actions> = createStore(reducer, enhancerWithoutOptions)
-
-const enhancerWithOptions: StoreEnhancer = composeWithStateSync({ denyList: [] })(
-    middleware,
-    someOtherEnhancer
+const _store3 = createStore(
+    reducer,
+    composeWithStateSync({ denyList: [] }, applyMiddleware(...middleware))
 )
-
-const store2: Store<CounterState, Actions> = createStore(reducer, enhancerWithOptions)

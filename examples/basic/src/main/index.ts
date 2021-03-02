@@ -1,6 +1,6 @@
 import url from 'url'
 import { app, BrowserWindow } from 'electron'
-import { stateSyncEnhancer } from 'electron-redux'
+import { stateSyncEnhancer } from 'electron-redux/main'
 import { createStore } from 'redux'
 import { rootReducer } from '../store'
 
@@ -13,7 +13,8 @@ async function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
-            nodeIntegration: true,
+            preload: `${__dirname}/preload.js`,
+            contextIsolation: true,
         },
     })
     await mainWindow.loadURL(

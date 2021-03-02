@@ -2,7 +2,7 @@
 
 import { createStore } from 'redux'
 import { rootReducer } from '../store'
-import { stateSyncEnhancer } from 'electron-redux'
+import { stateSyncEnhancer } from 'electron-redux/renderer'
 import {
     decrementGlobalCounter,
     decrementLocalCounter,

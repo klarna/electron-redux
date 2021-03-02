@@ -1,0 +1,6 @@
+{
+    "internal": true,
+    "main": "../lib/renderer.js",
+    "module": "../es/renderer.js",
+    "types": "../types/renderer.d.ts"
+}

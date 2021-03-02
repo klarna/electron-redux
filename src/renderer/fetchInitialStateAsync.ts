@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron'
 import { IPCEvents } from '../constants'
 import { RendererStateSyncEnhancerOptions } from '../options/RendererStateSyncEnhancerOptions'
 
-async function fetchInitialStateAsync(
+export async function fetchInitialStateAsync(
     options: RendererStateSyncEnhancerOptions,
     callback: (state: unknown) => void
 ): Promise<void> {
@@ -18,5 +18,3 @@ async function fetchInitialStateAsync(
         )
     }
 }
-
-export default fetchInitialStateAsync

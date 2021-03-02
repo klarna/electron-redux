@@ -1,0 +1,6 @@
+{
+    "internal": true,
+    "main": "../lib/preload.js",
+    "module": "../es/preload.js",
+    "types": "../types/preload.d.ts"
+}

@@ -10,13 +10,16 @@
     ],
     "license": "MIT",
     "private": false,
-    "main": "lib/electron-redux.js",
-    "module": "es/electron-redux.js",
+    "main": "lib/index.js",
+    "module": "es/index.js",
     "types": "types/index.d.ts",
     "files": [
         "lib",
         "es",
-        "types"
+        "types",
+        "main",
+        "renderer",
+        "preload"
     ],
     "scripts": {
         "clean": "rimraf lib es coverage types",

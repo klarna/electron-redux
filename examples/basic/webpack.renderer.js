@@ -9,6 +9,7 @@ module.exports = {
     mode: 'production',
     entry: {
         renderer: './src/renderer/index.ts',
+        preload: './src/renderer/preload.ts',
     },
     target: 'electron-renderer',
     plugins: [
