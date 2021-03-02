@@ -2,7 +2,7 @@ import { Action, StoreEnhancer } from 'redux'
 import { forwardAction } from './utils/forwardAction'
 import { replaceState, withStoreReplacer } from './utils/replaceState'
 import { RendererStateSyncEnhancerOptions } from './options/RendererStateSyncEnhancerOptions'
-import { stopForwarding } from './utils'
+import { preventDoubleInitialization, stopForwarding } from './utils'
 import { StateSyncOptions } from './options/StateSyncOptions'
 import { createComposer } from './composeWithStateSync'
 
@@ -16,6 +16,8 @@ import { createComposer } from './composeWithStateSync'
 export const stateSyncEnhancer = (
     options: RendererStateSyncEnhancerOptions = {}
 ): StoreEnhancer => (createStore) => {
+    preventDoubleInitialization()
+
     return (reducer, state) => {
         if (typeof __ElectronReduxBridge === undefined) {
             throw new Error(

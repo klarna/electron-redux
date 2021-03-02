@@ -4,7 +4,7 @@ import { IPCEvents } from './constants'
 import { forwardAction } from './utils/forwardAction'
 import { forwardActionToRenderers } from './main/forwardActionToRenderers'
 import { MainStateSyncEnhancerOptions } from './options/MainStateSyncEnhancerOptions'
-import { stopForwarding } from './utils'
+import { preventDoubleInitialization, stopForwarding } from './utils'
 import { StateSyncOptions } from './options/StateSyncOptions'
 import { createComposer } from './composeWithStateSync'
 
@@ -16,6 +16,8 @@ import { createComposer } from './composeWithStateSync'
 export const stateSyncEnhancer = (options: MainStateSyncEnhancerOptions = {}): StoreEnhancer => (
     createStore
 ) => {
+    preventDoubleInitialization()
+
     return (reducer, preloadedState) => {
         const store = createStore(reducer, preloadedState)
 
