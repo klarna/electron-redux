@@ -14,11 +14,14 @@ describe('End to End Tests', () => {
                 startTimeout: 5000,
                 host: process.env.CHROMEDRIVER_HOST || 'localhost',
                 port: parseInt(process.env.CHROMEDRIVER_PORT || '9222'),
+                env: {
+                    SPECTRON: 'true',
+                },
             })
 
             await app.start()
-            // eslint-disable-next-line @typescript-eslint/await-thenable
-            await app.browserWindow.isVisible()
+
+            await app.client.waitUntilWindowLoaded()
         })
 
         afterEach(async () => {

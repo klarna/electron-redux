@@ -19,7 +19,6 @@ declare global {
 }
 
 export const preload = (): void => {
-    console.log('preloading...')
     const bridge = {
         fetchInitialState,
         fetchInitialStateAsync,
@@ -30,7 +29,6 @@ export const preload = (): void => {
     try {
         contextBridge.exposeInMainWorld('__ElectronReduxBridge', bridge)
     } catch {
-        console.log('exposeInMainWorld not avaiable')
         window.__ElectronReduxBridge = bridge
     }
 }
