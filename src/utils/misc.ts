@@ -31,6 +31,3 @@ export const trimProperties = <T extends keyof X, X>(props: T[], obj: X) => {
         Object.entries(obj).filter(([key]) => !props.includes(key as T))
     ) as Omit<X, T>
 }
-
-export const isRenderer = process.type === 'renderer'
-export const isMain = process.type === 'browser'

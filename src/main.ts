@@ -1,18 +1,23 @@
 import { ipcMain, webContents } from 'electron'
 import { Action, StoreEnhancer } from 'redux'
 import { IPCEvents } from './constants'
-import { forwardAction } from './forwardAction'
+import { forwardAction } from './utils/forwardAction'
+import { forwardActionToRenderers } from './main/forwardActionToRenderers'
 import { MainStateSyncEnhancerOptions } from './options/MainStateSyncEnhancerOptions'
-import { stopForwarding } from './utils'
+import { preventDoubleInitialization, stopForwarding } from './utils'
+import { StateSyncOptions } from './options/StateSyncOptions'
+import { createComposer } from './composeWithStateSync'
 
 /**
  * Creates new instance of main process redux enhancer.
  * @param {MainStateSyncEnhancerOptions} options Additional enhancer options
  * @returns StoreEnhancer
  */
-export const mainStateSyncEnhancer = (
-    options: MainStateSyncEnhancerOptions = {}
-): StoreEnhancer<any> => (createStore) => {
+export const stateSyncEnhancer = (options: MainStateSyncEnhancerOptions = {}): StoreEnhancer => (
+    createStore
+) => {
+    preventDoubleInitialization()
+
     return (reducer, preloadedState) => {
         const store = createStore(reducer, preloadedState)
 
@@ -42,6 +47,13 @@ export const mainStateSyncEnhancer = (
             })
         })
 
-        return forwardAction(store, options)
+        return forwardAction(store, forwardActionToRenderers, options)
     }
 }
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const composeWithStateSync = (
+    firstFuncOrOpts: StoreEnhancer | StateSyncOptions,
+    ...funcs: StoreEnhancer[]
+): StoreEnhancer =>
+    createComposer(stateSyncEnhancer, forwardActionToRenderers)(firstFuncOrOpts, ...funcs)

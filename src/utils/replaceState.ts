@@ -1,6 +1,6 @@
 import { AnyAction, Reducer } from 'redux'
-import { FluxStandardAction } from '../utils/isFSA'
-import { ActionMeta } from '../utils'
+import { FluxStandardAction } from './isFSA'
+import { ActionMeta } from '.'
 
 interface ReplaceStateAction<S> extends FluxStandardAction<ActionMeta> {
     payload: S

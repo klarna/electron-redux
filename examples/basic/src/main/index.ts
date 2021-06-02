@@ -1,9 +1,10 @@
 import url from 'url'
 import { app, BrowserWindow } from 'electron'
-import { stateSyncEnhancer } from 'electron-redux'
+import { stateSyncEnhancer } from 'electron-redux/main'
 import { createStore } from 'redux'
 import { rootReducer } from '../store'
 
+const TESTING = process.env.SPECTRON === 'true'
 // ==================================================================
 // electron related boiler-plate to create window with singe renderer
 let mainWindow: BrowserWindow | null
@@ -13,7 +14,11 @@ async function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
-            nodeIntegration: true,
+            preload: `${__dirname}/preload.js`,
+            // PROD app should be running with contextIsolation: true for security reasons. Disabled only while running e2e tests
+            contextIsolation: !TESTING,
+            // ONLY TRUE FOR TESTING - SPECTRON needs node integration to be able to access the remote modules.
+            nodeIntegration: TESTING,
         },
     })
     await mainWindow.loadURL(

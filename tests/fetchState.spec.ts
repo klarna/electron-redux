@@ -1,4 +1,6 @@
-import { fetchInitialState, fetchInitialStateAsync } from '../src/fetchState'
+import { fetchInitialStateAsync } from '../src/renderer/fetchInitialStateAsync'
+import { fetchInitialState } from '../src/renderer/fetchInitialState'
+
 import { IPCEvents } from '../src/constants'
 jest.mock('electron', () => ({
     ipcRenderer: {
