@@ -1,11 +1,11 @@
-import { remote } from 'electron';
+import { ipcRenderer } from 'electron';
 
 export default function getInitialStateRenderer() {
-  const getReduxState = remote.getGlobal('getReduxState');
-  if (!getReduxState) {
+  const reduxState = ipcRenderer.sendSync('get-redux-state');
+  if (!reduxState) {
     throw new Error(
       'Could not find reduxState global in main process, did you forget to call replayActionMain?',
     );
   }
-  return JSON.parse(getReduxState());
+  return JSON.parse(reduxState);
 }

@@ -8,7 +8,9 @@ export default function replayActionMain(store) {
    *
    * Refer to https://github.com/electron/electron/blob/master/docs/api/remote.md#remote-objects
    */
-  global.getReduxState = () => JSON.stringify(store.getState());
+  ipcMain.on('get-redux-state', (event) => {
+    event.returnValue = JSON.stringify(store.getState());
+  });
 
   ipcMain.on('redux-action', (event, payload) => {
     store.dispatch(payload);
