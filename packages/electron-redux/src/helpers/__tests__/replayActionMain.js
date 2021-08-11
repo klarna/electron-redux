@@ -4,16 +4,19 @@ import replayActionMain from '../replayActionMain';
 jest.unmock('../replayActionMain');
 
 describe('replayActionMain', () => {
-  const store = {
-    dispatch: jest.fn(),
-    getState: jest.fn(),
-    subscribe: jest.fn(),
-  };
-
-  replayActionMain(store);
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
   it('should replay any actions received', () => {
+    const store = {
+      dispatch: jest.fn(),
+      getState: jest.fn(),
+      subscribe: jest.fn(),
+    };
     const payload = 123;
+
+    replayActionMain(store);
 
     expect(ipcMain.on).toHaveBeenCalledTimes(2);
     expect(ipcMain.on.mock.calls[1][0]).toBe('redux-action');
@@ -27,12 +30,21 @@ describe('replayActionMain', () => {
   });
 
   it('should reply current state', () => {
+    const store = {
+      dispatch: jest.fn(),
+      getState: jest.fn(),
+      subscribe: jest.fn(),
+    };
+
     const initialState = { initial: 'state' };
     const newState = { new: 'state' };
+
+    replayActionMain(store);
 
     store.getState.mockReturnValueOnce(initialState);
     store.getState.mockReturnValueOnce(newState);
 
+    expect(ipcMain.on).toHaveBeenCalledTimes(2);
     expect(ipcMain.on.mock.calls[0][0]).toBe('get-redux-state');
     expect(ipcMain.on.mock.calls[0][1]).toBeInstanceOf(Function);
 
