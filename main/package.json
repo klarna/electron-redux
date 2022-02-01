@@ -1,0 +1,6 @@
+{
+    "internal": true,
+    "main": "../lib/main.js",
+    "module": "../es/main.js",
+    "types": "../types/main.d.ts"
+}

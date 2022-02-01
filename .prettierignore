@@ -1,0 +1,7 @@
+# Ignore artifacts:
+**/dist/**
+**/node_modules/**
+e2e_dist/**
+es/**
+lib/**
+types/**

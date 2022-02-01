@@ -1,193 +1,113 @@
+🚧 THIS IS **ALPHA** version of the library - the API still might change 🚧
+
 # electron-redux
 
-[![CircleCI](https://circleci.com/gh/klarna/electron-redux/tree/master.svg?style=svg)](https://circleci.com/gh/klarna/electron-redux/tree/master)
+Electron-Redux is an Redux Store Enhancer that helps you loosely synchronize the redux stores in multiple electron processes.
 
-- [electron-redux](#electron-redux)
-  - [Motivation](#motivation)
-    - [The solution](#the-solution)
-  - [Install](#install)
-  - [Actions](#actions)
-    - [Local actions (renderer process)](#local-actions-renderer-process)
-    - [Aliased actions (main process)](#aliased-actions-main-process)
-    - [Blacklisted actions](#blacklisted-actions)
-  - [F.A.Q.](#faq)
-  - [Contributions](#contributions)
-  - [Contributors](#contributors)
+When working with Electron, using Redux poses couple of problems, since main and renderer processes are isolated and IPC is a single way of communication between them. This library, enables you to register all your Redux stores in the main & renderer process, and enable cross-process action dispatching & _loose_ store synchronization.
 
-## Motivation
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/klarna/electron-redux/Release)](https://github.com/klarna/electron-redux/actions?query=workflow%3ARelease)
+[![npm (tag)](https://img.shields.io/npm/v/electron-redux/alpha)](https://www.npmjs.com/package/electron-redux/)
+[![npm](https://img.shields.io/npm/dm/electron-redux)](https://www.npmjs.com/package/electron-redux/)
+[![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/electron-redux/alpha)](https://bundlephobia.com/result?p=electron-redux)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
-Using redux with electron poses a couple of problems. Processes ([main](https://github.com/electron/electron/blob/master/docs/tutorial/quick-start.md#main-process) and [renderer](https://github.com/electron/electron/blob/master/docs/tutorial/quick-start.md#renderer-process)) are completely isolated, and the only mode of communication is [IPC](https://github.com/electron/electron/blob/master/docs/api/ipc-main.md).
+## Installation
 
-- Where do you keep the state?
-- How do you keep the state in sync across processes?
+```sh
+# with yarn
+yarn add electron-redux@alpha
 
-### The solution
-
-`electron-redux` offers an easy to use solution. The redux store on the main process becomes the single source of truth, and stores in the renderer processes become mere proxies. See [under the hood](#under-the-hood).
-
-![electron-redux basic](https://cloud.githubusercontent.com/assets/307162/20675737/385ce59e-b585-11e6-947e-3867e77c783d.png)
-
-## Install
-
-```
-npm install --save electron-redux
+# with npm
+npm install electron-redux@alpha
 ```
 
-`electron-redux` comes as redux middleware that is really easy to apply:
+For more details, please see [the Installation docs page](#todo).
 
-```javascript
-// in the main store
-import { forwardToRenderer, triggerAlias, replayActionMain } from 'electron-redux';
+## Documentation
 
-const todoApp = combineReducers(reducers);
+electron-redux docs are located at **electron-redux.js.org**. You can find there:
 
-const store = createStore(
-  todoApp,
-  initialState, // optional
-  applyMiddleware(
-    triggerAlias, // optional, see below
-    ...otherMiddleware,
-    forwardToRenderer, // IMPORTANT! This goes last
-  ),
-);
+-   [Getting started](#todo)
+-   [Recipes](#todo)
+-   [API Reference](#todo)
 
-replayActionMain(store);
+## Quick start
+
+### Basic setup
+
+If you have a setup without any enhancers, also including middleware, you can use the basic setup. For the basic setup, electron redux exposes a [Redux StoreEnhancer](https://redux.js.org/understanding/thinking-in-redux/glossary#store-enhancer). You simply add the enhancer to your createStore function to set it up.
+
+```ts
+// main.ts
+import { stateSyncEnhancer } from 'electron-redux'
+
+const store = createStore(reducer, stateSyncEnhancer())
 ```
 
-```javascript
-// in the renderer store
-import { forwardToMain, replayActionRenderer, getInitialStateRenderer } from 'electron-redux';
+```ts
+// renderer.ts
+import { stateSyncEnhancer } from 'electron-redux'
 
-const todoApp = combineReducers(reducers);
-const initialState = getInitialStateRenderer();
-
-const store = createStore(
-  todoApp,
-  initialState,
-  applyMiddleware(
-    forwardToMain, // IMPORTANT! This goes first
-    ...otherMiddleware,
-  ),
-);
-
-replayActionRenderer(store);
+const store = createStore(reducer, stateSyncEnhancer())
 ```
 
-Check out [timesheets](https://github.com/hardchor/timesheets/blob/4991fd472dbb12b0c6e6806c6a01ea3385ab5979/app/shared/store/configureStore.js) for a more advanced example.
+### Multi-enhancer setup
 
-And that's it! You are now ready to fire actions without having to worry about synchronising your state between processes.
+> This setup is required when you have other enhancers/middleware. This is especially the case for enhancers or middleware which dispatch actions, such as **redux-saga** and **redux-observable**
+
+For this setup we will use the `composeWithStateSync` function. This function is created to wrap around your enhancers, just like the [compose](https://redux.js.org/api/compose) function from redux. When using this, you will not need `stateSyncEnhancer` as this does the same thing under the hood. If you do, it will throw an error.
+
+```ts
+import { createStore, applyMiddleware, compose } from 'redux'
+import { composeWithStateSync } from 'electron-redux'
+
+const middleware = applyMiddleware(...middleware)
+
+// add other enhances here if you have any, works like `compose` from redux
+const enhancer: StoreEnhancer = composeWithStateSync(middleware /* ... other enhancers ... */)
+
+const store = createStore(reducer, enhancer)
+```
+
+That's it!
+
+You are now ready to fire actions from any of your processes, and depending on the [scope](#scoped-actions) the main store will broadcast them across your application.
+
+Please check out the [docs](#todo) for more recipes and examples!
 
 ## Actions
 
-Actions fired **MUST** be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant, i.e. have a `type` and `payload` property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
+Actions fired **MUST be [FSA](https://github.com/acdlite/flux-standard-action#example)-compliant**, i.e. have a `type` and `payload` property. Any actions not passing this test will be ignored and simply passed through to the next middleware.
 
-> NB: `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.
+> Nota bene, `redux-thunk` is not FSA-compliant out of the box, but can still produce compatible actions once the async action fires.
 
-Furthermore, actions (and that includes `payload`s) **MUST** be (de-)serialisable, i.e. either POJOs (simple `object`s - that excludes native JavaScript or DOM objects like `FileList`, `Map`, etc.), `array`s, or primitives. For workarounds, check out [aliased actions](#aliased-actions-main-process)
+Furthermore, actions (and that includes payloads) **MUST be serializable**.
 
-### Local actions (renderer process)
+> You can extend default JSON serialization used, by [providing your own serialization/deserialization functions](#todo).
 
-By default, all actions are being broadcast from the main store to the renderer processes. However, some state should only live in the renderer (e.g. `isPanelOpen`). `electron-redux` introduces the concept of action scopes.
+### Scoped actions
 
-To stop an action from propagating from renderer to main store, simply set the scope to `local`:
+By default, all actions are broadcast to all registered stores. However, some state should only live in the renderer (e.g. `isPanelOpen`). electron-redux introduces the concept of action scopes.
 
-```javascript
-function myLocalActionCreator() {
-  return {
-    type: 'MY_ACTION',
-    payload: 123,
-    meta: {
-      scope: 'local',
-    },
-  };
-}
-```
+To stop an action from propagating from renderer to main store, simply set the scope to local by decorating your action with `stopForwarding` function. Read more about it in the [docs](#todo)
 
-### Aliased actions (main process)
+### Blocked actions
 
-Most actions will originate from the renderer side, but not all should be executed there as well. A great example is fetching of data from an external source, e.g. using [promise middleware](https://github.com/acdlite/redux-promise), which should only ever be executed once (i.e. in the main process). This can be achieved using the `triggerAlias` middleware mentioned [above](#install).
+By default, some of the actions are blocked from broadcasting / propagating, those include actions starting with `@@` and `redux-form`. The list of ignored actions can be modified with [options](#todo).
 
-Using the `createAliasedAction` helper, you can quite easily create actions that are are only being executed in the main process, and the result of which is being broadcast to the renderer processes.
+## Changelog
 
-```javascript
-import { createAliasedAction } from 'electron-redux';
+This project adheres to [Semantic Versioning](http://semver.org/).
+Every release, along with the migration instructions, is documented on the GitHub [Releases](https://github.com/klarna/electron-redux/releases) page.
 
-export const importGithubProjects = createAliasedAction(
-  'IMPORT_GITHUB_PROJECTS', // unique identifier
-  (accessToken, repoFullName) => ({
-    type: 'IMPORT_GITHUB_PROJECTS',
-    payload: importProjects(accessToken, repoFullName),
-  }),
-);
-```
+## Contributing
 
-Check out [timesheets](https://github.com/hardchor/timesheets/blob/4ccaf08dee4e1a02850b5bf36e37c537fef7d710/app/shared/actions/github.js) for more examples.
+Contributions via [issues](https://github.com/klarna/electron-redux/issues/new) or [pull requests](https://github.com/klarna/electron-redux/compare) are hugely welcome! Remember to read our [contributing guidelines](.github/CONTRIBUTING.md) to get started!
 
-### Blacklisted actions
+By contributing to electron-redux, you agree to abide by [the code of conduct](.github/CODE_OF_CONDUCT.md).
 
-By default actions of certain type (e.g. starting with '@@') are not propagated to the main thread. You can change this behaviour by using `forwardToMainWithParams` function.
+## License
 
-```javascript
-// in the renderer store
-import {
-  forwardToMainWithParams,
-  replayActionRenderer,
-  getInitialStateRenderer,
-} from 'electron-redux';
-
-const todoApp = combineReducers(reducers);
-const initialState = getInitialStateRenderer();
-
-const store = createStore(
-  todoApp,
-  initialState,
-  applyMiddleware(
-    forwardToMainWithParams(), // IMPORTANT! This goes first
-    ...otherMiddleware,
-  ),
-);
-
-replayActionRenderer(store);
-```
-
-You can specify patterns for actions that should not be propagated to the main thread.
-
-```javascript
-forwardToMainWithParams({
-  blacklist: [/^@@/, /^redux-form/],
-});
-```
-
-## F.A.Q
-
-### `electron-redux` crashes with electron 10.x
-
-As of Electron 10, the `remote` module is removed by default.
-
-We can get it back by adding `enableRemoteModule=true` to the `webPreferences`:
-
-```js
-const w = new BrowserWindow({
-  webPreferences: {
-    enableRemoteModule: true,
-  },
-});
-```
-
-## Contributions
-
-Contributions via [issues](https://github.com/klarna/electron-redux/issues/new) or [pull requests](https://github.com/klarna/electron-redux/compare) are hugely welcome!
-
-Feel free to let me know whether you're successfully using `electron-redux` in your project and I'm happy to add them here as well!
-
-## Contributors
-
-Special thanks go out to:
-
-- [Charlie Hess](https://github.com/CharlieHess)
-- [Roman Paradeev](https://github.com/sameoldmadness)
-- [Pelle Jacobs](https://github.com/pellejacobs)
-- [Victor Quiroz Castro](https://github.com/victorhqc)
-- [musou1500](https://github.com/musou1500)
-- [Andreas Dolk](https://github.com/Treverix)
-- Everyone who has contributed by [asking questions & raising issues](https://github.com/klarna/electron-redux/issues?q=is%3Aissue+is%3Aclosed)
+[MIT](LICENSE.md)

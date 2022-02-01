@@ -1,11 +1,10 @@
 node_modules
-
 coverage
-
-dist
-lib
-es
-types
 *.log
 e2e_dist
+src
+tests
+.github
+.vscode
+
 .DS_Store

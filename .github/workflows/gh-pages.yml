@@ -1,0 +1,29 @@
+name: deploy-docs
+
+on:
+  push:
+    branches:
+    - alpha # replace with master once merged
+
+# install dependencies, build, and push to `gh-pages`
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - name: Install and build
+      working-directory: docs
+      run: |
+        yarn
+        yarn build
+
+    - name: Deploy to gh-pages
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages 
+        FOLDER: docs/build 
+        CLEAN: true 
