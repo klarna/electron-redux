@@ -25,7 +25,12 @@ export default [
         input: ['src/index.ts', 'src/main.ts', 'src/renderer.ts', 'src/preload.ts'],
         output: [
             { dir: 'lib', format: 'cjs' },
-            { dir: 'es', format: 'es' },
+            {
+                dir: 'es',
+                format: 'es',
+                entryFileNames: '[name].mjs',
+                chunkFileNames: '[name]-[hash].mjs',
+            },
         ],
     },
 ]
