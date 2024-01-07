@@ -1,4 +1,4 @@
-import { stateSyncEnhancer } from '../../renderer'
+import { stateSyncEnhancer } from 'electron-redux/renderer'
 import { createStore, Store } from 'redux'
 import { reducer, CounterState, Actions } from '../counter'
 

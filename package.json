@@ -11,15 +11,34 @@
     "license": "MIT",
     "private": false,
     "main": "lib/index.js",
-    "module": "es/index.js",
     "types": "types/index.d.ts",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./types/index.d.ts",
+            "import": "./es/index.mjs",
+            "default": "./lib/index.js"
+        },
+        "./main": {
+            "types": "./types/main.d.ts",
+            "import": "./es/main.mjs",
+            "default": "./lib/main.js"
+        },
+        "./renderer": {
+            "types": "./types/renderer.d.ts",
+            "import": "./es/renderer.mjs",
+            "default": "./lib/renderer.js"
+        },
+        "./preload": {
+            "types": "./types/preload.d.ts",
+            "import": "./es/preload.mjs",
+            "default": "./lib/preload.js"
+        }
+    },
     "files": [
         "lib",
         "es",
-        "types",
-        "main",
-        "renderer",
-        "preload"
+        "types"
     ],
     "scripts": {
         "clean": "rimraf lib es coverage types",
@@ -79,7 +98,7 @@
         "rollup-plugin-typescript2": "^0.27.2",
         "semantic-release": "^17.2.1",
         "spectron": "^11.1.0",
-        "typescript": "^4.0.3",
+        "typescript": "~4.7.4",
         "typings-tester": "^0.3.2"
     },
     "npmName": "electron-redux",

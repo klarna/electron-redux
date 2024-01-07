@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "lib": ["es2017", "dom"],
+        "module": "Node16",
         "strict": true,
         "baseUrl": "../.."
     }

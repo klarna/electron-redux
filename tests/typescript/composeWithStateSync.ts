@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore } from 'redux'
 import { reducer } from '../counter'
 import { countMiddleware } from '../middleware'
-import { composeWithStateSync } from '../../main'
+import { composeWithStateSync } from 'electron-redux/main'
 
 const middleware = [countMiddleware]
 
