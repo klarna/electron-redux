@@ -1,15 +1,18 @@
 name: 'Pull Request SemVer lint'
+
 on:
-    pull_request_target:
-        types:
-            - opened
-            - edited
-            - synchronize
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
 
 jobs:
-    main:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: amannn/action-semantic-pull-request@v1.2.0
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: amannn/action-semantic-pull-request@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
