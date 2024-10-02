@@ -3,31 +3,33 @@ name: Validate Pull Request
 on: [pull_request]
 
 jobs:
-    run:
-        runs-on: ubuntu-latest
+  run:
+    runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                node-version: [12.x]
-        env:
-            CI: true
-        steps:
-            - uses: actions/checkout@v2
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v1
-              with:
-                  node-version: ${{ matrix.node-version }}
-            - run: sudo apt-get install xvfb
-            - name: yarn install, build & tests
-              run: |
-                  yarn install --frozen-lockfile
-                  xvfb-run --auto-servernum yarn test
-              env:
-                  CI: true
-            - name: Cleanup xvfb pidx
-              uses: bcomnes/cleanup-xvfb@v1
-            - name: Install and build docs
-              working-directory: docs
-              run: |
-                  yarn
-                  yarn build
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x] # Updated to use more recent LTS versions
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: sudo apt-get install xvfb
+
+      - name: yarn install, build & tests
+        run: |
+          yarn install --frozen-lockfile
+          xvfb-run --auto-servernum yarn test
+
+      - name: Cleanup xvfb pidx
+        uses: bcomnes/cleanup-xvfb@v1
+
+      - name: Install and build docs
+        working-directory: docs
+        run: |
+          yarn
+          yarn build
