@@ -1,5 +1,3 @@
-🚧 THIS IS **ALPHA** version of the library - the API still might change 🚧
-
 # electron-redux
 
 Electron-Redux is an Redux Store Enhancer that helps you loosely synchronize the redux stores in multiple electron processes.
@@ -17,10 +15,10 @@ When working with Electron, using Redux poses couple of problems, since main and
 
 ```sh
 # with yarn
-yarn add electron-redux@alpha
+yarn add electron-redux
 
 # with npm
-npm install electron-redux@alpha
+npm install electron-redux
 ```
 
 For more details, please see [the Installation docs page](#todo).
