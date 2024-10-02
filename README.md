@@ -5,9 +5,9 @@ Electron-Redux is an Redux Store Enhancer that helps you loosely synchronize the
 When working with Electron, using Redux poses couple of problems, since main and renderer processes are isolated and IPC is a single way of communication between them. This library, enables you to register all your Redux stores in the main & renderer process, and enable cross-process action dispatching & _loose_ store synchronization.
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/klarna/electron-redux/Release)](https://github.com/klarna/electron-redux/actions?query=workflow%3ARelease)
-[![npm (tag)](https://img.shields.io/npm/v/electron-redux/alpha)](https://www.npmjs.com/package/electron-redux/)
+[![npm (tag)](https://img.shields.io/npm/v/electron-redux)](https://www.npmjs.com/package/electron-redux/)
 [![npm](https://img.shields.io/npm/dm/electron-redux)](https://www.npmjs.com/package/electron-redux/)
-[![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/electron-redux/alpha)](https://bundlephobia.com/result?p=electron-redux)
+[![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/electron-redux)](https://bundlephobia.com/result?p=electron-redux)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
