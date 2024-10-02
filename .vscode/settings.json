@@ -1,0 +1,17 @@
+{
+    "files.exclude": {
+        "**/dist": true,
+        "**/e2e_dist": true,
+        "**/es": true,
+        "**/lib": true,
+        "**/types": true
+    },
+    "search.exclude": {
+        "**/dist": true,
+        "**/e2e_dist": true,
+        "**/es": true,
+        "**/lib": true,
+        "**/types": true
+    },
+    "typescript.tsdk": "node_modules\\typescript\\lib"
+}
